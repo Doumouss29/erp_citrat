@@ -5,7 +5,7 @@ import { FONCTIONS } from "@/lib/userFonctions";
 import { effectiveAccess, fetchProfiles, profileApps } from "@/lib/accessProfiles";
 import { OrgTiles, OrgTile } from "@/components/administration/OrgTiles";
 
-// Onglet « CGESN-Board » de l'administration du portail : uniquement les personnes qui ont accès au Board
+// Onglet « CITRAT-Board » de l'administration du portail : uniquement les personnes qui ont accès au Board
 // (ou y sont inscrites), leur fonction et leurs bureaux, et l'ajout de nouvelles personnes.
 const NONE = "__none__";
 const ADMIN = "__admin__";
@@ -32,7 +32,7 @@ function BureauChips({ bureaux, bureauIds, disabled, locked, onToggle }) {
             onClick={() => onToggle(b.id)}
             disabled={disabled || locked}
             title={locked ? "La Direction est rattachée à tous les bureaux" : b.nom}
-            style={{ padding: "5px 10px", borderRadius: 100, fontSize: 12, cursor: disabled || locked ? "default" : "pointer", border: `1px solid ${on ? "#0f5c52" : "oklch(0.92 0.005 90)"}`, background: on ? "#0f5c52" : "#fff", color: on ? "#fff" : "oklch(0.4 0.005 90)" }}
+            style={{ padding: "5px 10px", borderRadius: 100, fontSize: 12, cursor: disabled || locked ? "default" : "pointer", border: `1px solid ${on ? "#0C3D85" : "oklch(0.92 0.005 90)"}`, background: on ? "#0C3D85" : "#fff", color: on ? "#fff" : "oklch(0.4 0.005 90)" }}
           >
             {b.code}
           </button>
@@ -70,8 +70,8 @@ function Row({ name, email, fonction, bureauIds, bureaux, disabled, onFonction, 
           type="button"
           onClick={() => setConfirm(true)}
           disabled={disabled || removeDisabled}
-          title={removeDisabled ? "Vous ne pouvez pas vous retirer vous-même" : `Retirer ${name} du CGESN-Board`}
-          aria-label={`Retirer ${name} du CGESN-Board`}
+          title={removeDisabled ? "Vous ne pouvez pas vous retirer vous-même" : `Retirer ${name} du CITRAT-Board`}
+          aria-label={`Retirer ${name} du CITRAT-Board`}
           style={{ marginLeft: "auto", height: 30, padding: "0 12px", borderRadius: 8, border: "1px solid #fdc9c4", background: "#fff", color: "#b32228", fontSize: 12, fontWeight: 600, cursor: disabled || removeDisabled ? "default" : "pointer", opacity: removeDisabled ? 0.5 : 1 }}
         >
           Retirer
@@ -163,7 +163,7 @@ export default function BoardUsersManager({ users, setUsers, currentUser, refres
     }
   };
 
-  // Retire une personne du Board : fonction et bureaux vidés, accès individuel CGESN-Board supprimé,
+  // Retire une personne du Board : fonction et bureaux vidés, accès individuel CITRAT-Board supprimé,
   // et affectation préparée éventuelle supprimée (sinon la personne resterait listée).
   const removeMember = async (u) => {
     const access = (u.access || []).filter((a) => a !== "cgesnboard");
@@ -179,7 +179,7 @@ export default function BoardUsersManager({ users, setUsers, currentUser, refres
       }
     }
     if (profileApps(profiles, u.grade).includes("cgesnboard")) {
-      setError(`${accountName(u)} garde l'accès au Board via son grade. Retirez CGESN-Board du grade dans l'onglet Profils, ou changez son grade dans Utilisateurs.`);
+      setError(`${accountName(u)} garde l'accès au Board via son grade. Retirez CITRAT-Board du grade dans l'onglet Profils, ou changez son grade dans Utilisateurs.`);
     }
   };
 
@@ -271,7 +271,7 @@ export default function BoardUsersManager({ users, setUsers, currentUser, refres
 
   return (
     <div style={{ background: "#fff", border: "1px solid oklch(0.92 0.005 90)", borderRadius: 16, padding: "clamp(16px,3vw,28px)" }}>
-      <h2 style={{ fontSize: 18, fontWeight: 700, margin: 0 }}>CGESN-Board</h2>
+      <h2 style={{ fontSize: 18, fontWeight: 700, margin: 0 }}>CITRAT-Board</h2>
       <p style={{ fontSize: 13, color: "oklch(0.52 0.005 90)", margin: "4px 0 16px" }}>Personnes ayant accès au Board, avec leur fonction et leurs bureaux.</p>
 
       {!loading && tiles.length > 0 && (
@@ -314,7 +314,7 @@ export default function BoardUsersManager({ users, setUsers, currentUser, refres
 
       <div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginTop: 12 }}>
         <input style={{ ...inputStyle, flex: "1 1 220px" }} placeholder="Rechercher un nom ou un e-mail" value={search} onChange={(e) => setSearch(e.target.value)} />
-        <button type="button" onClick={() => { setAdding((v) => !v); setError(null); }} disabled={loading} style={{ height: 36, padding: "0 14px", borderRadius: 10, border: "none", background: "#0f5c52", color: "#fff", fontSize: 13, fontWeight: 600, cursor: loading ? "default" : "pointer" }}>
+        <button type="button" onClick={() => { setAdding((v) => !v); setError(null); }} disabled={loading} style={{ height: 36, padding: "0 14px", borderRadius: 10, border: "none", background: "#0C3D85", color: "#fff", fontSize: 13, fontWeight: 600, cursor: loading ? "default" : "pointer" }}>
           {adding ? "Annuler" : "Ajouter une personne"}
         </button>
       </div>
@@ -329,7 +329,7 @@ export default function BoardUsersManager({ users, setUsers, currentUser, refres
             {FONCTIONS.map((f) => <option key={f.value} value={f.value}>{f.label}</option>)}
           </FormSelect>
           <BureauChips bureaux={bureaux} bureauIds={form.bureau_ids} disabled={saving} locked={form.fonction === "admin"} onToggle={(id) => setForm({ ...form, bureau_ids: toggled(form.bureau_ids, id) })} />
-          <button type="submit" disabled={saving} style={{ height: 36, padding: "0 14px", borderRadius: 10, border: "none", background: "#0f5c52", color: "#fff", fontSize: 13, fontWeight: 600, cursor: saving ? "default" : "pointer" }}>
+          <button type="submit" disabled={saving} style={{ height: 36, padding: "0 14px", borderRadius: 10, border: "none", background: "#0C3D85", color: "#fff", fontSize: 13, fontWeight: 600, cursor: saving ? "default" : "pointer" }}>
             {saving ? "Enregistrement…" : "Ajouter"}
           </button>
         </form>
