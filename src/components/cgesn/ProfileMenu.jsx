@@ -20,7 +20,7 @@ function displayName(user) {
 }
 
 const GOLD = "oklch(0.82 0.15 80)";
-const INK = "#0d3b3f";
+const INK = "#081F69";
 
 function Avatar({ initials, size, ring }) {
   return (
@@ -78,7 +78,7 @@ export default function ProfileMenu({ user, darkMode, onToggleDarkMode, onLogout
         title={name}
         style={{ display: "flex", alignItems: "center", gap: 8, padding: "4px 10px 4px 4px", borderRadius: 100, border: "1.5px solid rgba(255,255,255,0.25)", background: "rgba(255,255,255,0.12)", cursor: "pointer" }}
       >
-        <Avatar initials={initials} size={36} ring="#0f5c52" />
+        <Avatar initials={initials} size={36} ring="#0C3D85" />
         <ChevronDown style={{ width: 16, height: 16, color: "#fff", transition: "transform .15s", transform: open ? "rotate(180deg)" : "none" }} />
       </button>
 
@@ -95,7 +95,7 @@ export default function ProfileMenu({ user, darkMode, onToggleDarkMode, onLogout
             <button type="button" role="menuitemcheckbox" aria-checked={darkMode} className="cgesn-profile-item" onClick={onToggleDarkMode} style={{ ...itemStyle, color: text }}>
               {darkMode ? <Sun style={{ width: 17, height: 17 }} /> : <Moon style={{ width: 17, height: 17 }} />}
               Mode sombre
-              <span aria-hidden="true" style={{ marginLeft: "auto", position: "relative", width: 34, height: 19, borderRadius: 100, background: darkMode ? "#0f5c52" : "oklch(0.85 0.005 90)", transition: "background .15s", flex: "none" }}>
+              <span aria-hidden="true" style={{ marginLeft: "auto", position: "relative", width: 34, height: 19, borderRadius: 100, background: darkMode ? "#0C3D85" : "oklch(0.85 0.005 90)", transition: "background .15s", flex: "none" }}>
                 <span style={{ position: "absolute", top: 2, left: darkMode ? 17 : 2, width: 15, height: 15, borderRadius: "50%", background: "#fff", boxShadow: "0 1px 3px rgba(0,0,0,0.2)", transition: "left .15s" }} />
               </span>
             </button>
