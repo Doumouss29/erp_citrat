@@ -2,9 +2,9 @@ import React from "react";
 
 /**
  * Tuiles d'organisation (bureaux, grades, Administration) partagées par les onglets
- * de l'Administration : Utilisateurs, CGESN-Board, Validateur RH, Consentements, Profils.
+ * de l'Administration : Utilisateurs, CITRAT-Board, Validateur RH, Consentements, Profils.
  *
- * Charte du Portail Digital CGESN : vert #0f5c52 / #0d3b3f, accent or, police Poppins.
+ * Charte du Portail Digital CITRAT : vert #0C3D85 / #081F69, accent or, police Poppins.
  * Grille : 4 colonnes sur grand écran, 3 sur PC, 2 sur tablette, 1 sur mobile.
  */
 const CSS = `
@@ -13,7 +13,7 @@ const CSS = `
 @media (max-width:860px){.ot-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}}
 @media (max-width:520px){.ot-grid{grid-template-columns:minmax(0,1fr);gap:10px}}
 
-.ot-tile{--ac:#0f5c52;--ac2:#14806f;--soft:oklch(0.965 0.025 165);position:relative;min-width:0;display:flex;flex-direction:column;gap:14px;text-align:left;
+.ot-tile{--ac:#0C3D85;--ac2:#14806f;--soft:oklch(0.965 0.025 165);position:relative;min-width:0;display:flex;flex-direction:column;gap:14px;text-align:left;
   padding:18px 18px 14px;border-radius:18px;border:1px solid oklch(0.915 0.006 165);background:#fff;cursor:pointer;color:oklch(0.24 0.01 90);
   font:inherit;box-shadow:0 1px 2px rgba(13,59,63,.04),0 6px 18px -12px rgba(13,59,63,.18);overflow:hidden;
   transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease}
@@ -53,10 +53,10 @@ const CSS = `
 .ot-stat strong{font-size:14px;font-weight:700;color:oklch(0.25 0.02 165);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .ot-stat.small strong{font-size:12px;font-weight:600}
 .ot-stat.warn strong{color:oklch(0.56 0.14 55)}
-.ot-stat.ok strong{color:#0f5c52}
+.ot-stat.ok strong{color:#0C3D85}
 
 /* Administration : bloc premium vert profond et or */
-.ot-tile.is-admin{--ac:oklch(0.78 0.13 80);--ac2:oklch(0.7 0.14 65);background:linear-gradient(145deg,#0d3b3f 0%,#0f5c52 100%);border-color:#0d3b3f;color:#fff}
+.ot-tile.is-admin{--ac:oklch(0.78 0.13 80);--ac2:oklch(0.7 0.14 65);background:linear-gradient(145deg,#081F69 0%,#0C3D85 100%);border-color:#081F69;color:#fff}
 .ot-tile.is-admin .ot-ico{background:rgba(255,255,255,.12);color:oklch(0.82 0.13 85)}
 .ot-tile.is-admin .ot-label,.ot-tile.is-admin .ot-value b{color:#fff}
 .ot-tile.is-admin .ot-sub,.ot-tile.is-admin .ot-value span,.ot-tile.is-admin .ot-note,.ot-tile.is-admin .ot-bar-label{color:oklch(0.88 0.03 165)}
@@ -68,8 +68,8 @@ const CSS = `
 .ot-tile.is-admin .ot-stat small{color:oklch(0.82 0.03 165)}
 .ot-tile.is-admin .ot-stat strong{color:#fff}
 .ot-tile.is-admin .ot-stat.warn strong{color:oklch(0.84 0.13 80)}
-.ot-tile.is-admin:hover{border-color:#0d3b3f}
-.ot-tile.is-admin.is-on{box-shadow:0 0 0 3px oklch(0.78 0.13 80),0 18px 36px -18px rgba(13,59,63,.6);background:linear-gradient(145deg,#0d3b3f 0%,#0f5c52 100%)}
+.ot-tile.is-admin:hover{border-color:#081F69}
+.ot-tile.is-admin.is-on{box-shadow:0 0 0 3px oklch(0.78 0.13 80),0 18px 36px -18px rgba(13,59,63,.6);background:linear-gradient(145deg,#081F69 0%,#0C3D85 100%)}
 
 /* Non affectés / sans bureau */
 .ot-tile.is-warn{--ac:oklch(0.62 0.14 60);--ac2:oklch(0.7 0.13 75);--soft:oklch(0.97 0.035 85)}
