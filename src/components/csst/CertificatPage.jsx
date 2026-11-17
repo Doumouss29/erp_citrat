@@ -178,7 +178,7 @@ export default function CertificatPage({ cert }) {
           <div style={{ position: "relative", textAlign: "center" }}>
             <img
               src={CERTIFICATE_LOGO}
-              alt="Logo CGESN"
+              alt="Logo CITRAT"
               style={{ position: "absolute", right: "calc(100% + 20px)", top: "50%", transform: "translateY(-50%)", height: "70px", width: "auto", maxWidth: "124px", objectFit: "contain", display: "block" }}
             />
             <div style={{ fontFamily: "var(--font-heading)", fontSize: "22px", color: INK, letterSpacing: "0.01em", lineHeight: 1.2 }}>
