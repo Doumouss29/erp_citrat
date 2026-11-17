@@ -43,6 +43,7 @@ with db() as c:
         c.execute("ALTER TABLE users ADD COLUMN profile_json TEXT NOT NULL DEFAULT '{}'")
     c.execute('CREATE TABLE IF NOT EXISTS sessions (token_hash TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id), expires INTEGER NOT NULL)')
     c.execute('CREATE TABLE IF NOT EXISTS records (entity TEXT NOT NULL, id TEXT NOT NULL, payload TEXT NOT NULL, created_date TEXT NOT NULL, updated_date TEXT NOT NULL, PRIMARY KEY(entity,id))')
+    c.execute('CREATE TABLE IF NOT EXISTS consent_events (id TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id), version TEXT NOT NULL, decision TEXT NOT NULL, recorded_at TEXT NOT NULL)')
     if not c.execute('SELECT 1 FROM users').fetchone():
         c.execute('INSERT INTO users VALUES (?,?,?,?,?)', (str(uuid.uuid4()),ADMIN_EMAIL,'Administrateur',hash_pw(ADMIN_PASSWORD),'admin'))
     # Later boots do not reset credentials; use a dedicated admin password reset procedure.
@@ -155,6 +156,31 @@ def update_me(data:dict=Body(...),current=Depends(user)):
         c.execute('UPDATE users SET name=?,profile_json=? WHERE id=?',
                   (name.strip() if name is not None else row['name'],json.dumps(merged,ensure_ascii=False),current['id']))
     return {**current,**merged,'name':name.strip() if name is not None else row['name']}
+
+@app.post('/api/auth/consent')
+def accept_consent(data:dict=Body(...), current=Depends(user)):
+    # Version de la notice pilotée côté serveur, jamais modifiable par le client.
+    version = '1'
+    if data.get('version') != version:
+        raise HTTPException(409, 'La notice a changé, rechargez la page.')
+    now = datetime.now(timezone.utc).isoformat()
+    with db() as c:
+        try:
+            c.execute('BEGIN IMMEDIATE')
+            row = c.execute('SELECT profile_json FROM users WHERE id=?',(current['id'],)).fetchone()
+            if not row:
+                raise HTTPException(404,'Account not found')
+            profile = json.loads(row['profile_json'] or '{}')
+            profile.update({'consentement_version': version, 'consentement_date': now})
+            c.execute('UPDATE users SET profile_json=? WHERE id=?',
+                      (json.dumps(profile,ensure_ascii=False),current['id']))
+            c.execute('INSERT INTO consent_events VALUES (?,?,?,?,?)',
+                      (str(uuid.uuid4()),current['id'],version,'accepte',now))
+            c.execute('COMMIT')
+        except Exception:
+            c.execute('ROLLBACK')
+            raise
+    return {'success': True, 'consentement_version': version, 'consentement_date': now}
 
 @app.post('/api/auth/logout')
 def logout(request:Request,response:Response):
