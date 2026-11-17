@@ -19,16 +19,20 @@ export default function ResetPassword() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    if (newPassword.length < 14) {
+      setError("Le mot de passe doit comporter au moins 14 caractères.");
+      return;
+    }
     if (newPassword !== confirmPassword) {
-      setError("Passwords do not match");
+      setError("Les mots de passe ne correspondent pas");
       return;
     }
     setLoading(true);
     try {
       await base44.auth.resetPassword({ resetToken, newPassword });
-      window.location.href = "/login";
+      window.location.href = "/connexion";
     } catch (err) {
-      setError(err.message || "Failed to reset password");
+      setError(err.message || "Impossible de réinitialiser le mot de passe");
     } finally {
       setLoading(false);
     }
@@ -38,16 +42,16 @@ export default function ResetPassword() {
     return (
       <AuthLayout
         icon={AlertTriangle}
-        title="Invalid reset link"
-        subtitle="This password reset link is missing or invalid"
+        title="Lien de réinitialisation invalide"
+        subtitle="Le lien est incomplet ou invalide"
         footer={
           <Link to="/forgot-password" className="text-primary font-medium hover:underline">
-            Request a new link
+            Demander un nouveau lien
           </Link>
         }
       >
         <p className="text-sm text-foreground text-center">
-          The link you used appears to be incomplete. Please request a new password reset email.
+          Demandez un nouveau lien de réinitialisation depuis la page de connexion.
         </p>
       </AuthLayout>
     );
@@ -56,8 +60,8 @@ export default function ResetPassword() {
   return (
     <AuthLayout
       icon={Lock}
-      title="New password"
-      subtitle="Enter your new password below"
+      title="Nouveau mot de passe"
+      subtitle="Choisissez un nouveau mot de passe sécurisé."
     >
       {error && (
         <div className="mb-4 p-3 rounded-lg bg-destructive/10 text-destructive text-sm">
@@ -83,7 +87,7 @@ export default function ResetPassword() {
           </div>
         </div>
         <div className="space-y-2">
-          <Label htmlFor="confirm">Confirm Password</Label>
+          <Label htmlFor="confirm">Confirmer le mot de passe</Label>
           <div className="relative">
             <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" aria-hidden="true" />
             <Input
@@ -102,10 +106,10 @@ export default function ResetPassword() {
           {loading ? (
             <>
               <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-              Resetting...
+              Réinitialisation…
             </>
           ) : (
-            "Reset password"
+            "Réinitialiser le mot de passe"
           )}
         </Button>
       </form>
