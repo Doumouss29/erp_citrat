@@ -341,3 +341,67 @@ html[data-app] {
 body { background-color: var(--citrat-ice); }
 button, a, input { transition: background-color .18s ease, border-color .18s ease, box-shadow .18s ease; }
 :focus-visible { outline-color: var(--citrat-cyan); outline-offset: 2px; }
+
+/* CITRAT : source de vérité commune des thèmes sur l'ensemble de l'ERP.
+   Les couleurs sémantiques (erreur, succès, alerte) restent distinctes. */
+:root,
+html[data-app],
+html[data-app="rhcgesn"],
+html[data-app="cgesnboard"],
+html[data-app="ecadastre"],
+html[data-app="lotissement"],
+html[data-app="assistancenum"],
+html[data-app="csst"],
+html[data-app="hse"],
+html[data-app="coprociv"] {
+  --citrat-navy: #081F69;
+  --citrat-blue: #0C3D85;
+  --citrat-cyan: #0A95C7;
+  --citrat-ice: #F3F8FC;
+  --primary: 223 85% 23%;
+  --primary-foreground: 0 0% 100%;
+  --brand: 223 85% 23%;
+  --brand-foreground: 0 0% 100%;
+  --brand-light: 202 67% 96%;
+  --ring: 196 89% 42%;
+  --accent: 200 62% 92%;
+  --accent-foreground: 223 85% 23%;
+  --secondary: 210 56% 96%;
+  --secondary-foreground: 223 65% 24%;
+  --sidebar-primary: 223 85% 23%;
+  --sidebar-ring: 196 89% 42%;
+  --chart-1: 223 85% 32%;
+  --app: 8 31 105;
+  --app-soft: 243 248 252;
+  --tw-blue-50: 239 247 253;
+  --tw-blue-100: 220 237 250;
+  --tw-blue-200: 180 216 245;
+  --tw-blue-300: 130 187 234;
+  --tw-blue-400: 70 149 215;
+  --tw-blue-500: 31 110 189;
+  --tw-blue-600: 12 61 133;
+  --tw-blue-700: 9 46 110;
+  --tw-blue-800: 8 31 105;
+  --tw-blue-900: 6 24 77;
+  --tw-blue-950: 3 14 48;
+  --tw-indigo-50: 239 247 253;
+  --tw-indigo-100: 220 237 250;
+  --tw-indigo-200: 180 216 245;
+  --tw-indigo-300: 130 187 234;
+  --tw-indigo-400: 70 149 215;
+  --tw-indigo-500: 31 110 189;
+  --tw-indigo-600: 12 61 133;
+  --tw-indigo-700: 9 46 110;
+  --tw-indigo-800: 8 31 105;
+  --tw-indigo-900: 6 24 77;
+  --tw-indigo-950: 3 14 48;
+  --tw-violet-600: 12 61 133;
+  --tw-violet-700: 9 46 110;
+  --tw-purple-600: 12 61 133;
+  --tw-purple-700: 9 46 110;
+}
+/* Arrière-plan harmonisé des panneaux RH et autres modules à thèmes. */
+html[data-app] .min-h-screen.bg-gradient-to-br:not([style]) {
+  background-image: none;
+  background-color: #F3F8FC;
+}
