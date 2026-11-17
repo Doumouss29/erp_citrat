@@ -85,7 +85,7 @@ export default function PwaInstallButton({ darkMode: _darkMode = false }) {
           >
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                <div style={{ width: 40, height: 40, borderRadius: 10, background: "linear-gradient(135deg,#0f5c52,#14806f)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <div style={{ width: 40, height: 40, borderRadius: 10, background: "linear-gradient(135deg,#0C3D85,#14806f)", display: "flex", alignItems: "center", justifyContent: "center" }}>
                   {isDesktopFlow ? <Monitor size={20} color="#fff" /> : <Smartphone size={20} color="#fff" />}
                 </div>
                 <span style={{ fontSize: 16, fontWeight: 700, color: "#0a0a0a" }}>
@@ -101,7 +101,7 @@ export default function PwaInstallButton({ darkMode: _darkMode = false }) {
               <ol style={{ margin: 0, paddingLeft: 20, fontSize: 14, lineHeight: 1.7, color: "#404040" }}>
                 <li style={{ marginBottom: 10 }}>
                   Cliquez sur l'icône <strong>Installer</strong>{" "}
-                  <Plus size={14} style={{ display: "inline", verticalAlign: "middle", color: "#0f5c52" }} />
+                  <Plus size={14} style={{ display: "inline", verticalAlign: "middle", color: "#0C3D85" }} />
                   {" "}dans la barre d'adresse du navigateur (Chrome/Edge).
                 </li>
                 <li style={{ marginBottom: 10 }}>
@@ -140,7 +140,7 @@ export default function PwaInstallButton({ darkMode: _darkMode = false }) {
                 height: 42,
                 borderRadius: 100,
                 border: "none",
-                background: "#0f5c52",
+                background: "#0C3D85",
                 color: "#fff",
                 fontSize: 14,
                 fontWeight: 600,
