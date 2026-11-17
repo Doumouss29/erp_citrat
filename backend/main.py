@@ -252,8 +252,27 @@ def admin_delete_user(uid:str,current=Depends(user)):
     return {'success':True}
 
 @app.get('/api/entities/{name}')
-def list_records(name:str,sort:str='-created_date',limit:int=100,skip:int=0,current=Depends(user)):
-    return select(name,sort=sort,limit=limit,skip=skip)
+def list_records(name:str,sort:str='-created_date',limit:int=100,skip:int=0,current=Depends(account_user)):
+    if current['role'] == 'admin':
+        return select(name,sort=sort,limit=limit,skip=skip)
+    # Seuls les référentiels d'autorisation nécessaires au portail sont accessibles.
+    # Aucune entité métier ne peut être lue par un utilisateur ordinaire tant que
+    # ses politiques de confidentialité par module/bureau ne sont pas migrées.
+    if name == 'AccessProfile':
+        grade=current.get('grade','')
+        if not grade: return []
+        return select(name, q={'profile_id':grade}, sort=sort,limit=limit,skip=skip)
+    if name == 'PortalApp':
+        allowed=set(current.get('access') or [])
+        grade=current.get('grade')
+        if grade:
+            with db() as c:
+                for p in c.execute("SELECT payload FROM records WHERE entity='AccessProfile'"):
+                    record=json.loads(p['payload'])
+                    if record.get('profile_id') == grade:
+                        allowed.update(record.get('apps') or [])
+        return [row for row in select(name,sort=sort,limit=limit,skip=skip) if row.get('app_id') in allowed]
+    raise HTTPException(403, 'Données métier non autorisées pour ce rôle')
 
 @app.post('/api/entities/{name}/filter')
 def filter_records(name:str,data:dict=Body(...),current=Depends(user)):
