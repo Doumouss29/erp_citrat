@@ -190,6 +190,52 @@ def logout(request:Request,response:Response):
         with db() as c: c.execute('DELETE FROM sessions WHERE token_hash=?',(hashlib.sha256(token.encode()).hexdigest(),))
     response.delete_cookie('pm_session',path='/'); return {'ok':True}
 
+# Les comptes réels ne sont pas une entité métier dans la table records.
+# API administrateur spécifique : aucune donnée d'authentification sensible n'est exposée.
+@app.get('/api/admin/users')
+def admin_users(current=Depends(user)):
+    with db() as c:
+        rows=c.execute('SELECT id,email,name,role,profile_json FROM users ORDER BY email').fetchall()
+    result=[]
+    for row in rows:
+        profile=json.loads(row['profile_json'] or '{}')
+        result.append({'id':row['id'],'email':row['email'],'name':row['name'],
+                       'full_name':row['name'],'role':row['role'],
+                       **profile,'super_admin':row['role']=='admin'})
+    return result
+
+@app.patch('/api/admin/users/{uid}')
+def admin_update_user(uid:str, changes:dict=Body(...),current=Depends(user)):
+    allowed={'name','first_name','last_name','telephone','office','department','grade','access','fonction','bureau_ids'}
+    if not set(changes).issubset(allowed): raise HTTPException(422,'Unsupported user property')
+    if 'access' in changes and (not isinstance(changes['access'],list) or len(changes['access'])>100 or not all(isinstance(v,str) for v in changes['access'])):
+        raise HTTPException(422,'Invalid access list')
+    if 'bureau_ids' in changes and (not isinstance(changes['bureau_ids'],list) or len(changes['bureau_ids'])>100 or not all(isinstance(v,str) for v in changes['bureau_ids'])):
+        raise HTTPException(422,'Invalid bureau list')
+    for k,v in changes.items():
+        if k not in ('access','bureau_ids') and (not isinstance(v,str) or len(v)>160):
+            raise HTTPException(422,'Invalid '+k)
+    with db() as c:
+        row=c.execute('SELECT * FROM users WHERE id=?',(uid,)).fetchone()
+        if not row: raise HTTPException(404,'Utilisateur introuvable')
+        profile=json.loads(row['profile_json'] or '{}')
+        profile.update({k:v for k,v in changes.items() if k!='name'})
+        name=changes.get('name',row['name'])
+        c.execute('UPDATE users SET name=?,profile_json=? WHERE id=?',(name,json.dumps(profile,ensure_ascii=False),uid))
+    return {'id':uid,'email':row['email'],'name':name,'full_name':name,'role':row['role'],**profile,'super_admin':row['role']=='admin'}
+
+@app.delete('/api/admin/users/{uid}')
+def admin_delete_user(uid:str,current=Depends(user)):
+    if uid==current['id']: raise HTTPException(409,'Impossible de supprimer votre compte')
+    with db() as c:
+        row=c.execute('SELECT role FROM users WHERE id=?',(uid,)).fetchone()
+        if not row: raise HTTPException(404,'Utilisateur introuvable')
+        if row['role']=='admin': raise HTTPException(403,'Suppression des administrateurs désactivée')
+        c.execute('DELETE FROM sessions WHERE user_id=?',(uid,))
+        c.execute('DELETE FROM consent_events WHERE user_id=?',(uid,))
+        c.execute('DELETE FROM users WHERE id=?',(uid,))
+    return {'success':True}
+
 @app.get('/api/entities/{name}')
 def list_records(name:str,sort:str='-created_date',limit:int=100,skip:int=0,current=Depends(user)):
     return select(name,sort=sort,limit=limit,skip=skip)
