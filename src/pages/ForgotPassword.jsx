@@ -25,14 +25,14 @@ export default function ForgotPassword() {
 
   return (
     <>
-      <style>{`.cgesn-reset-btn:hover{background:#0d4b43 !important}`}</style>
+      <style>{`.cgesn-reset-btn:hover{background:#08245F !important}`}</style>
       <div
         style={{
           minHeight: "100vh",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "linear-gradient(120deg,#0d3b3f 0%,#0f5c52 55%,#0d3b3f 100%)",
+          background: "linear-gradient(120deg,#081F69 0%,#0C3D85 55%,#081F69 100%)",
           padding: 24,
           fontFamily: "'Poppins',Helvetica,Arial,sans-serif"
         }}
@@ -40,12 +40,12 @@ export default function ForgotPassword() {
         <div style={{ background: "#fff", borderRadius: 20, boxShadow: "0 20px 50px rgba(0,0,0,0.25)", padding: "clamp(32px,5vw,48px)", width: "100%", maxWidth: 400, boxSizing: "border-box" }}>
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 14, marginBottom: 28 }}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center"}}>
-              <img src={logos.login} alt="CGESN" style={{ width: 82, height: 82, objectFit: "contain", display: "block" }} />
+              <img src={logos.login} alt="CITRAT" style={{ width: 82, height: 82, objectFit: "contain", display: "block" }} />
             </div>
             <div style={{ textAlign: "center" }}>
               <div style={{ fontSize: 18, fontWeight: 800, letterSpacing: "0.01em" }}>
                 <span style={{ color: "oklch(0.62 0.13 55)" }}>PORTAIL DIGITAL</span>{" "}
-                <span style={{ color: "oklch(0.22 0.01 90)" }}>CGESN</span>
+                <span style={{ color: "oklch(0.22 0.01 90)" }}>CITRAT</span>
               </div>
               <div style={{ fontSize: 11, fontWeight: 500, color: "oklch(0.55 0.005 90)", letterSpacing: "0.02em", marginTop: 4 }}>
                 CABINET DE GÉOMÈTRE EXPERT SORO NANGA
@@ -82,7 +82,7 @@ export default function ForgotPassword() {
                 type="submit"
                 disabled={loading}
                 className="cgesn-reset-btn"
-                style={{ marginTop: 6, padding: 13, border: "none", borderRadius: 10, background: "#0f5c52", color: "#fff", fontSize: 14, fontWeight: 700, letterSpacing: "0.02em", cursor: loading ? "wait" : "pointer", fontFamily: "'Poppins',sans-serif", transition: "background .15s", opacity: loading ? 0.8 : 1, display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}
+                style={{ marginTop: 6, padding: 13, border: "none", borderRadius: 10, background: "#0C3D85", color: "#fff", fontSize: 14, fontWeight: 700, letterSpacing: "0.02em", cursor: loading ? "wait" : "pointer", fontFamily: "'Poppins',sans-serif", transition: "background .15s", opacity: loading ? 0.8 : 1, display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}
               >
                 {loading ? (
                   <>
@@ -97,7 +97,7 @@ export default function ForgotPassword() {
           )}
 
           <div style={{ marginTop: 22, textAlign: "center" }}>
-            <Link to="/connexion" style={{ fontSize: 12.5, fontWeight: 700, color: "#0f5c52", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 6 }}>
+            <Link to="/connexion" style={{ fontSize: 12.5, fontWeight: 700, color: "#0C3D85", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 6 }}>
               <ArrowLeft size={14} /> Retour à la connexion
             </Link>
           </div>
