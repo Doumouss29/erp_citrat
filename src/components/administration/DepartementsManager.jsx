@@ -59,7 +59,7 @@ export default function DepartementsManager() {
           </select>
         </label>
         <div style={{display:"flex",gap:8}}>
-          <button type="submit" disabled={busy} style={{...button,opacity:busy?.6:1}}>{editing?"Enregistrer":"Créer"}</button>
+          <button type="submit" disabled={busy} style={{...button,opacity:busy ? 0.6 : 1}}>{editing?"Enregistrer":"Créer"}</button>
           {editing && <button type="button" onClick={reset} style={{...button,background:"#E8EEF7",color:"#081F69"}}>Annuler</button>}
         </div>
       </form>
