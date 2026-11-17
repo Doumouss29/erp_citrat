@@ -34,6 +34,7 @@ export const base44 = {
     loginViaEmailPassword: (email,password) => request('/auth/login',{method:'POST',body:body({email,password})}),
     logout: async () => { await request('/auth/logout',{method:'POST'}); window.location.href='/connexion'; },
     updateMe: data => request('/auth/me',{method:'PATCH',body:body(data)}),
+    acceptConsent: data => request('/auth/consent',{method:'POST',body:body(data)}),
     setToken: () => { throw new Error('Token-based sign-in is disabled; use cookie auth'); },
     redirectToLogin: () => { window.location.href='/connexion'; },
     isAuthenticated: async () => !!(await request('/auth/me').catch(() => null)),
