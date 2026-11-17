@@ -122,6 +122,8 @@ export default function Administration() {
   const [newUserGrade, setNewUserGrade] = useState("");
   // Profils d'accès (grades) : chaque grade donne automatiquement un ensemble d'applis
   const [profiles, setProfiles] = useState([]);
+  const [newProfileName, setNewProfileName] = useState("");
+  const [creatingProfile, setCreatingProfile] = useState(false);
   const [profilesLoading, setProfilesLoading] = useState(false);
   const [profilesError, setProfilesError] = useState(null);
   const [userSearch, setUserSearch] = useState("");
@@ -241,6 +243,29 @@ export default function Administration() {
   useEffect(() => {
     if (isAdmin) loadProfiles();
   }, [isAdmin]);
+
+  const createAccessProfile = async () => {
+    const name = newProfileName.trim();
+    if (!name || creatingProfile) return;
+    const profile_id = name.toLowerCase().normalize("NFD").replace(/[\\u0300-\\u036f]/g, "")
+      .replace(/[^a-z0-9]+/g, "_").replace(/^_|_$/g, "");
+    if (!profile_id || profiles.some(p => p.profile_id === profile_id)) {
+      setProfilesError("Ce profil existe déjà ou son nom est invalide.");
+      return;
+    }
+    setCreatingProfile(true);
+    setProfilesError(null);
+    try {
+      await base44.entities.AccessProfile.create({ profile_id, name, description: "", apps: [], order: profiles.length + 1 });
+      invalidateProfiles();
+      setNewProfileName("");
+      await loadProfiles();
+    } catch (err) {
+      setProfilesError(err?.message || "Création du profil impossible.");
+    } finally {
+      setCreatingProfile(false);
+    }
+  };
 
   // Coche / décoche une appli pour tout un grade
   const toggleProfileApp = async (profile, appId) => {
@@ -1073,6 +1098,27 @@ export default function Administration() {
                   <div style={{ fontSize: "12.5px", color: "oklch(0.5 0.005 90)", marginBottom: 18, lineHeight: 1.5 }}>
                     Cochez les applications de chaque grade. Tous les utilisateurs de ce grade y ont accès automatiquement, et un changement ici s'applique à tous en une fois.
                   </div>
+
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: 10, alignItems: "center", marginBottom: 18 }}>
+                    <input
+                      type="text"
+                      aria-label="Nom du nouveau profil"
+                      placeholder="Nouveau profil (ex. Géomètre expert)"
+                      value={newProfileName}
+                      onChange={(e) => setNewProfileName(e.target.value)}
+                      onKeyDown={(e) => { if (e.key === "Enter") createAccessProfile(); }}
+                      style={{ padding: "10px 12px", border: "1px solid #d6dce5", borderRadius: 10, flex: "1 1 220px", minWidth: 0 }}
+                    />
+                    <button type="button" onClick={createAccessProfile} disabled={creatingProfile || !newProfileName.trim()}
+                      style={{ padding: "10px 16px", color: "#fff", border: 0, background: "#0C3D85", borderRadius: 10, cursor: "pointer", opacity: creatingProfile ? 0.6 : 1 }}>
+                      {creatingProfile ? "Création…" : "+ Créer un profil"}
+                    </button>
+                  </div>
+                  {!profilesLoading && profiles.length === 0 && (
+                    <div style={{ background: "#F3F8FC", color: "#23416b", padding: 16, borderRadius: 10, marginBottom: 16 }}>
+                      Aucun profil configuré pour ce client. Créez votre premier profil ci-dessus.
+                    </div>
+                  )}
 
                   {profilesError && (
                     <div style={{ marginBottom: 16, padding: "10px 14px", borderRadius: 10, background: "oklch(0.96 0.03 25)", border: "1px solid oklch(0.85 0.1 25)", fontSize: "12.5px", fontWeight: 600, color: "oklch(0.42 0.16 25)" }}>
