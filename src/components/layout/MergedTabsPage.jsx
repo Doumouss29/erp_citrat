@@ -31,7 +31,7 @@ export default function MergedTabsPage({ tabs }) {
   return (
     <div className="min-h-screen bg-[#f1f6f7]">
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 pt-3 sm:pt-6 lg:pt-8">
-        {/* Sélecteur d'onglets aux couleurs RH-CGESN (vert pétrole, actif doré) */}
+        {/* Sélecteur d'onglets aux couleurs RH-CITRAT (vert pétrole, actif doré) */}
         <div className="grid gap-1 p-1 rounded-2xl h-auto shadow-sm ring-1 ring-[#0d5c66]/10 bg-white" style={{ gridTemplateColumns: `repeat(${tabs.length}, minmax(0, 1fr))` }}>
           {tabs.map(({ key, label, icon: Icon, activeColor }) => (
             <button
