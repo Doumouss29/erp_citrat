@@ -107,16 +107,23 @@ export default function Consentement({ mode = "accord" }) {
     setSaving(true);
     try {
       const d = data();
-      await base44.auth.updateMe({
-        last_name: d.nom, first_name: d.prenom, date_naissance: d.date_naissance, telephone: d.telephone,
-        consentement_version: CONSENT_VERSION,
-        ...(manage ? {} : { consentement_date: new Date().toISOString() }),
-      });
-      await logConsentDecision(user, manage ? "mise_a_jour" : "accepte", d);
+      if (manage) {
+        await base44.auth.updateMe({
+          last_name: d.nom, first_name: d.prenom,
+          date_naissance: d.date_naissance, telephone: d.telephone,
+        });
+        await logConsentDecision(user, "mise_a_jour", d);
+      } else {
+        // Accord enregistré de façon atomique côté serveur (preuve + profil).
+        await base44.auth.acceptConsent({ version: CONSENT_VERSION });
+      }
+      const savedUser = await refreshUser();
+      if (!savedUser || (!manage && !hasValidConsent(savedUser))) {
+        throw new Error("Le consentement n'a pas été confirmé par le serveur.");
+      }
       try { localStorage.removeItem("cgesn_signup_name"); } catch (e) { /* ignore */ }
-      await refreshUser();
       setDone(true);
-      if (!manage) setTimeout(() => navigate(returnTo, { replace: true }), 1200);
+      if (!manage) navigate("/portail", { replace: true });
     } catch (e) {
       setError("L'enregistrement a échoué. Vérifiez votre connexion et réessayez.");
     }
