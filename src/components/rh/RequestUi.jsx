@@ -104,18 +104,18 @@ export function BandTile({ label, sub, value, Icon, onClick, selected, highlight
       onClick={onClick}
       aria-pressed={onClick ? !!selected : undefined}
       className={`group w-full flex items-center gap-3 rounded-lg px-2.5 py-2 text-left transition-colors ring-1 ${
-        selected ? "bg-[#E8F2F3] ring-2 ring-[#0D5C66]/30" : "bg-white ring-[#DFE8EA]"
+        selected ? "bg-[#E8F2F3] ring-2 ring-[#0C3D85]/30" : "bg-white ring-[#DFE8EA]"
       } ${onClick ? "hover:bg-[#F0F6F7] cursor-pointer" : ""}`}
     >
       <span className="w-8 h-8 rounded-lg flex items-center justify-center flex-none bg-[#F6EBD5]" style={{ color: "#A7792E" }}>
         <Icon className="w-4 h-4" aria-hidden="true" />
       </span>
       <span className="flex-1 min-w-0">
-        <span className="block text-xs sm:text-sm font-medium text-[#0D5C66] truncate">{label}</span>
+        <span className="block text-xs sm:text-sm font-medium text-[#0C3D85] truncate">{label}</span>
         {sub && <span className="hidden xl:block text-[11px] text-[#667A82] truncate">{sub}</span>}
       </span>
-      <span className="min-w-[2.5rem] text-right text-xl font-semibold tabular-nums" style={{ color: highlight ? "#B8862E" : "#0D5C66" }}>{value}</span>
-      <ChevronRight className={`w-4 h-4 flex-none ${onClick ? "text-[#8BA3AA] group-hover:text-[#0D5C66]" : "invisible"}`} aria-hidden="true" />
+      <span className="min-w-[2.5rem] text-right text-xl font-semibold tabular-nums" style={{ color: highlight ? "#B8862E" : "#0C3D85" }}>{value}</span>
+      <ChevronRight className={`w-4 h-4 flex-none ${onClick ? "text-[#8BA3AA] group-hover:text-[#0C3D85]" : "invisible"}`} aria-hidden="true" />
     </Comp>
   );
 }
@@ -133,7 +133,7 @@ export function BandTitle({ children, right }) {
 export const THEMES = {
   leave: {
     background: "linear-gradient(180deg,#f1f6f7 0%,#ffffff 70%)",
-    vars: { "--accent": "#0d5c66", "--accent-on": "#d4af6a", "--accent-soft": "rgba(13,92,102,0.07)", "--accent-ring": "rgba(13,92,102,0.12)" },
+    vars: { "--accent": "#0C3D85", "--accent-on": "#d4af6a", "--accent-soft": "rgba(13,92,102,0.07)", "--accent-ring": "rgba(13,92,102,0.12)" },
   },
   absence: {
     background: "linear-gradient(180deg,#fff4ec 0%,#ffffff 70%)",
