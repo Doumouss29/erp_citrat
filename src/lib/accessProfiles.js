@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { base44 } from "@/api/base44Client";
+import { INTERNAL_APP_IDS } from "@/lib/cgesnData";
 
 // Accès aux applications = applis du grade (profil AccessProfile) + accès supplémentaires
 // accordés individuellement (User.access).
@@ -54,6 +55,9 @@ export function extraApps(user) {
 
 export function effectiveAccess(user, profiles) {
   if (!user) return [];
+  // Administrateur local identifié par l'API : accès aux modules internes de recette.
+  // Ne s'applique pas aux utilisateurs standard et n'autorise aucune route backend.
+  if (user.super_admin === true && user.role === 'admin') return [...INTERNAL_APP_IDS];
   return Array.from(new Set([...profileApps(profiles, user.grade), ...extraApps(user)]));
 }
 
