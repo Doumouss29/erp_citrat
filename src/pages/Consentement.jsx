@@ -76,7 +76,7 @@ export default function Consentement({ mode = "accord" }) {
         nom,
         prenom,
         date_naissance: (user.date_naissance || emp?.birth_date || "").slice(0, 10),
-        telephone: user.telephone || emp?.phone || "",
+        telephone: user.telephone || signup?.telephone || emp?.phone || "",
       });
       setLoaded(true);
     })();
@@ -85,7 +85,7 @@ export default function Consentement({ mode = "accord" }) {
 
   const age = ageFromDate(form.date_naissance);
   const infosOk = !!(form.nom.trim() && form.prenom.trim() && age !== null && age >= 16 && age < 100 && form.telephone.replace(/\D/g, "").length >= 8);
-  const ready = infosOk && c1 && c2;
+  const ready = c1 && c2; // Première approbation : aucune ressaisie de données personnelles exigée.
   const returnTo = useMemo(() => { const r = safeReturnTo(); return r === "/" ? "/portail" : r; }, []);
   const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
   const logout = () => base44.auth.logout("/connexion");
@@ -103,7 +103,7 @@ export default function Consentement({ mode = "accord" }) {
   const accept = async () => {
     setTried(true);
     setError("");
-    if (!ready || saving) return;
+    if (!(manage ? infosOk : ready) || saving) return;
     setSaving(true);
     try {
       const d = data();
@@ -237,7 +237,7 @@ export default function Consentement({ mode = "accord" }) {
           <p style={{ margin: 0, fontSize: 15, lineHeight: 1.65, color: C.muted, maxWidth: 680 }}>
             {manage
               ? `Vous avez donné votre accord${user.consentement_date ? ` le ${new Date(user.consentement_date).toLocaleDateString("fr-FR")}` : ""}. Vous pouvez corriger vos informations ou retirer votre accord.`
-              : "Avant d'utiliser le portail et ses applications, prenez connaissance de l'usage qui est fait de vos données, confirmez vos informations et donnez ou refusez votre accord."}
+              : "Avant d’utiliser le portail, consultez les informations associées à votre compte, puis donnez ou refusez votre accord. Aucune saisie supplémentaire n’est nécessaire."}
           </p>
           {!manage && lastRefusal && (
             <p style={{ margin: 0, fontSize: 13, color: "#7a1f16", background: "#fdecea", borderRadius: 10, padding: "10px 14px" }}>
@@ -262,6 +262,7 @@ export default function Consentement({ mode = "accord" }) {
           </p>
         </section>
 
+        {manage ? (
         <section aria-labelledby="form-title" style={{ ...card, gap: 16 }}>
           <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
             <h2 id="form-title" style={h2}>2. Vos informations</h2>
@@ -304,6 +305,29 @@ export default function Consentement({ mode = "accord" }) {
             </div>
           )}
         </section>
+        ) : (
+          <section aria-labelledby="form-title" style={{ ...card, gap: 16 }}>
+            <h2 id="form-title" style={h2}>2. Vos informations enregistrées</h2>
+            <p style={{ margin: 0, fontSize: 13, color: C.soft }}>
+              Ces informations proviennent de votre compte ou de votre fiche employé. Il n'est pas nécessaire de les saisir pour donner votre accord.
+            </p>
+            {!loaded ? <Spinner inline /> : (
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 240px), 1fr))", gap: 12 }}>
+                {[
+                  ["Identité", [form.prenom, form.nom].filter(Boolean).join(" ") || user.name || user.full_name || "Non renseignée"],
+                  ["Adresse e-mail", user.email || "Non renseignée"],
+                  ["Téléphone", form.telephone || "Non renseigné"],
+                  ["Date de naissance", form.date_naissance ? new Date(form.date_naissance + "T12:00:00").toLocaleDateString("fr-FR") : "Non renseignée"],
+                ].map(([labelText, value]) => (
+                  <div key={labelText} style={{ background: C.tile, borderRadius: 10, padding: "12px 14px", minWidth: 0 }}>
+                    <div style={{ fontSize: 12, fontWeight: 700, color: C.green, marginBottom: 4 }}>{labelText}</div>
+                    <div style={{ fontSize: 14, overflowWrap: "anywhere", color: C.ink }}>{value}</div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </section>
+        )}
 
         {!manage && (
           <section aria-labelledby="accord-title" style={{ ...card, gap: 14 }}>
@@ -316,7 +340,7 @@ export default function Consentement({ mode = "accord" }) {
             </Check>
             {tried && !ready && !done && (
               <p role="status" style={{ margin: 0, fontSize: 13, color: "#8a4b08", background: "#fdf3e2", borderRadius: 10, padding: "10px 14px" }}>
-                Complétez les champs obligatoires et cochez les deux cases pour continuer.
+                Cochez les deux cases pour continuer.
               </p>
             )}
           </section>
