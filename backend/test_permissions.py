@@ -31,6 +31,9 @@ class PermissionTests(unittest.TestCase):
                     (uid,email,"Compte limité",hash_pw(pw),"user",
                      '{"grade":"'+profile_id+'","office":"ABIDJAN"}',"active"))
             self.assertEqual(staff.post("/api/auth/login",json={"email":email,"password":pw}).status_code,200)
+            self.assertEqual(staff.get("/api/entities/Employee").status_code,403)
+            consent=staff.post("/api/auth/consent",json={"version":"1"})
+            self.assertEqual(consent.status_code,200,consent.text)
             listing=staff.get("/api/entities/Employee")
             self.assertEqual(listing.status_code,200,listing.text)
             self.assertIn(ab.json()["id"],[x["id"] for x in listing.json()])
