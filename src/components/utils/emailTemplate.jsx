@@ -1,6 +1,6 @@
 /**
- * Gabarit HTML unique pour TOUS les emails envoyés par le Portail Digital CGESN (ERP CGESN).
- * Même identité que l'email de code de vérification : bandeau vert #0f5c52, logo, police Poppins.
+ * Gabarit HTML unique pour TOUS les emails envoyés par le Portail Digital CITRAT (ERP CITRAT).
+ * Même identité que l'email de code de vérification : bandeau vert #0C3D85, logo, police Poppins.
  *
  * - sendMail({ to, subject, body | html }) : point d'envoi unique.
  *   Un texte simple (body) est mis en forme automatiquement :
@@ -10,10 +10,10 @@
  */
 import { base44 } from "@/api/base44Client";
 
-export const ERP_NAME = "ERP CGESN";
-export const BRAND_NAME = "Portail Digital CGESN";
+export const ERP_NAME = "ERP CITRAT";
+export const BRAND_NAME = "Portail Digital CITRAT";
 export const ORG_NAME = "Cabinet de Géomètre Expert Soro Nanga";
-export const SENDER_NAME = "PORTAIL DIGITAL CGESN";
+export const SENDER_NAME = "PORTAIL DIGITAL CITRAT";
 export const PORTAL_URL = "https://portail-digital-cgesn.com";
 const GREEN = "0f5c52";
 const LOGO_URL = "https://base44.app/api/apps/6aa96886350e13fe6882c8af/files/mp/public/6aa96886350e13fe6882c8af/ca2891085_Page1.png";
@@ -251,7 +251,7 @@ export async function sendMail({ to, subject, html, body, ...rest }) {
   if (finalHtml && !/<html/i.test(finalHtml) && !/<(div|table)\b/i.test(finalHtml)) {
     finalHtml = buildEmailHtml({ preheader: subject, title: subject, content: finalHtml });
   }
-  // Le service attend le contenu dans `body` (même fonctionnement que CGESN-Board), sous forme de bloc HTML
+  // Le service attend le contenu dans `body` (même fonctionnement que CITRAT-Board), sous forme de bloc HTML
   // sans enveloppe de document complet.
   const bodyMatch = /<body[^>]*>([\s\S]*)<\/body>/i.exec(finalHtml || "");
   return base44.integrations.Core.SendEmail({
