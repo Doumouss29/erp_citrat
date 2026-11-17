@@ -1,0 +1,18 @@
+{
+  "name": "ERP CITRAT — Portail Digital",
+  "short_name": "ERP CITRAT",
+  "description": "Portail digital du Cabinet Ivoirien des Travaux Topographiques",
+  "start_url": "/bienvenue",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#F3F8FC",
+  "theme_color": "#081F69",
+  "icons": [
+    {
+      "src": "/logo-citrat.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
