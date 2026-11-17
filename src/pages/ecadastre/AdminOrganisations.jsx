@@ -58,7 +58,7 @@ export default function AdminOrganisations() {
   const refreshCabinet = () => queryClient.invalidateQueries({ queryKey: ['cabinet-org'] });
 
   const initMutation = useMutation({
-    mutationFn: () => base44.entities.Organisation.create({ nom: 'CGESN', description: 'Cabinet de Géomètre Expert Soro Nanga', statut: 'active', communes: [] }),
+    mutationFn: () => base44.entities.Organisation.create({ nom: 'CITRAT', description: 'Cabinet Ivoirien des Travaux Topographiques', statut: 'active', communes: [] }),
     onSuccess: () => { refreshCabinet(); toast.success('Projet initialisé'); },
     onError: () => toast.error("Erreur lors de l'initialisation"),
   });
