@@ -4,6 +4,7 @@ from pathlib import Path
 from contextlib import contextmanager
 from fastapi import FastAPI, Request, Response, HTTPException, Depends, Body
 from fastapi.responses import JSONResponse
+from backend.permissions import public_catalog, validate_permissions, may, require_record, within_scope, ENTITY_MODULE, resolve_rule
 
 ROOT = Path(__file__).resolve().parent
 DATA = Path(os.environ.get('DATA_DIR', '/data'))
@@ -81,7 +82,7 @@ def require_entity(name):
 def decorate(row):
     return {**json.loads(row['payload']), 'id':row['id'],'created_date':row['created_date'],'updated_date':row['updated_date']}
 
-def select(name, q=None, sort='-created_date', limit=100, skip=0):
+def select(name, q=None, sort='-created_date', limit=100, skip=0, predicate=None):
     require_entity(name)
     if not (0 <= skip <= 100000 and 1 <= limit <= 5000): raise HTTPException(422,'Invalid pagination')
     with db() as c:
@@ -112,7 +113,7 @@ def select(name, q=None, sort='-created_date', limit=100, skip=0):
                     elif op not in ('$in','$ne','$gte','$lte'): raise HTTPException(422,f'Unsupported query operator {op}')
             elif record.get(key)!=value: return False
         return True
-    rows=[r for r in rows if matches(r,q)]
+    rows=[r for r in rows if matches(r,q) and (predicate is None or predicate(r))]
     key=sort.lstrip('-')
     rows.sort(key=lambda r: (r.get(key) is None,str(r.get(key,''))),reverse=sort.startswith('-'))
     return rows[skip:skip+limit]
@@ -263,74 +264,137 @@ def admin_delete_user(uid:str,current=Depends(user)):
         c.execute('DELETE FROM users WHERE id=?',(uid,))
     return {'success':True}
 
-@app.get('/api/entities/{name}')
-def list_records(name:str,sort:str='-created_date',limit:int=100,skip:int=0,current=Depends(account_user)):
-    if current['role'] == 'admin':
-        return select(name,sort=sort,limit=limit,skip=skip)
-    # Seuls les référentiels d'autorisation nécessaires au portail sont accessibles.
-    # Aucune entité métier ne peut être lue par un utilisateur ordinaire tant que
-    # ses politiques de confidentialité par module/bureau ne sont pas migrées.
-    if name == 'AccessProfile':
+@app.get('/api/permissions/catalog')
+def permission_catalog(current=Depends(account_user)):
+    return public_catalog()
+
+@app.get('/api/permissions/me')
+def my_permissions(current=Depends(account_user)):
+    from backend.permissions import CATALOG
+    if current['role']=='admin':
+        return {app:{module:{**{action:True for action in ("view","create","edit","delete","export","approve")},"scope":"all"}
+                     for module in modules} for app,modules in CATALOG.items()}
+    return {app:{module:rule for module in modules
+                 if (rule:=resolve_rule(current,db,app,module)) is not None}
+            for app,modules in CATALOG.items()}
+
+def scoped_list(name,current,query=None,sort='-created_date',limit=100,skip=0):
+    if current['role']=='admin':
+        return select(name,query,sort,limit,skip)
+    if name=='AccessProfile':
         grade=current.get('grade','')
         if not grade: return []
-        return select(name, q={'profile_id':grade}, sort=sort,limit=limit,skip=skip)
-    if name == 'PortalApp':
+        rows=select(name,{'profile_id':grade},sort,limit,skip)
+        # Do not expose the detailed rule matrix to ordinary users.
+        return [{k:v for k,v in r.items() if k!='permissions'} for r in rows]
+    if name=='PortalApp':
         allowed=set(current.get('access') or [])
         grade=current.get('grade')
         if grade:
             with db() as c:
                 for p in c.execute("SELECT payload FROM records WHERE entity='AccessProfile'"):
                     record=json.loads(p['payload'])
-                    if record.get('profile_id') == grade:
+                    if record.get('profile_id')==grade:
                         allowed.update(record.get('apps') or [])
-        return [row for row in select(name,sort=sort,limit=limit,skip=skip) if row.get('app_id') in allowed]
-    raise HTTPException(403, 'Données métier non autorisées pour ce rôle')
+        return [r for r in select(name,query,sort,limit,skip) if r.get('app_id') in allowed]
+    rule=may(current,db,name,"view")
+    return select(name,query,sort,limit,skip,
+                  predicate=lambda row: within_scope(current,row,rule['scope']))
+
+def validated_payload(name,data,existing=None):
+    if not isinstance(data,dict): raise HTTPException(422,"Objet JSON attendu")
+    if name=='AccessProfile' and 'permissions' in data:
+        data={**data,'permissions':validate_permissions(data['permissions'])}
+    if name=='AccessProfile' and 'apps' in data:
+        if not isinstance(data['apps'],list) or len(data['apps'])>32 or not all(isinstance(x,str) and len(x)<=64 for x in data['apps']):
+            raise HTTPException(422,"Liste d'applications invalide")
+        if 'permissions' in data:
+            if not set(data['permissions']).issubset(set(data['apps'])):
+                raise HTTPException(422,"Configurez seulement les applications attribuées")
+    return data
+
+@app.get('/api/entities/{name}')
+def list_records(name:str,sort:str='-created_date',limit:int=100,skip:int=0,current=Depends(account_user)):
+    return scoped_list(name,current,sort=sort,limit=limit,skip=skip)
 
 @app.post('/api/entities/{name}/filter')
-def filter_records(name:str,data:dict=Body(...),current=Depends(user)):
-    return select(name,data.get('query',{}),data.get('sort','-created_date'),data.get('limit',100),data.get('skip',0))
+def filter_records(name:str,data:dict=Body(...),current=Depends(account_user)):
+    return scoped_list(name,current,data.get('query',{}),data.get('sort','-created_date'),
+                       data.get('limit',100),data.get('skip',0))
 
 @app.get('/api/entities/{name}/{record_id}')
-def get_record(name:str,record_id:str,current=Depends(user)):
+def get_record(name:str,record_id:str,current=Depends(account_user)):
     require_entity(name)
-    with db() as c: row=c.execute('SELECT * FROM records WHERE entity=? AND id=?',(name,record_id)).fetchone()
+    with db() as c:
+        row=c.execute('SELECT * FROM records WHERE entity=? AND id=?',(name,record_id)).fetchone()
     if not row: raise HTTPException(404,'Record not found')
-    return decorate(row)
+    item=decorate(row)
+    if current['role']!='admin':
+        if name=='AccessProfile':
+            if item.get('profile_id')!=current.get('grade'): raise HTTPException(403,'Profil non autorisé')
+            return {k:v for k,v in item.items() if k!='permissions'}
+        if name=='PortalApp':
+            if not any(x.get('id')==record_id for x in scoped_list('PortalApp',current,limit=5000)):
+                raise HTTPException(403,'Application non attribuée')
+            return item
+        require_record(current,db,name,'view',item)
+    return item
 
-def create_one(name,data):
+def create_one(name,data,current):
     require_entity(name)
-    if not isinstance(data,dict): raise HTTPException(422,'Record must be object')
+    data=validated_payload(name,data)
     if len(json.dumps(data))>200000: raise HTTPException(413,'Record too large')
+    if current['role']!='admin':
+        require_record(current,db,name,'create',data)
     now=datetime.now(timezone.utc).isoformat(); record_id=str(uuid.uuid4())
     payload={k:v for k,v in data.items() if k not in ('id','created_date','updated_date')}
-    with db() as c: c.execute('INSERT INTO records VALUES (?,?,?,?,?)',(name,record_id,json.dumps(payload,ensure_ascii=False),now,now))
+    with db() as c:
+        c.execute('INSERT INTO records VALUES (?,?,?,?,?)',(name,record_id,json.dumps(payload,ensure_ascii=False),now,now))
     return {**payload,'id':record_id,'created_date':now,'updated_date':now}
 
 @app.post('/api/entities/{name}')
-def create_record(name:str,data:dict=Body(...),current=Depends(user)): return create_one(name,data)
+def create_record(name:str,data:dict=Body(...),current=Depends(account_user)):
+    return create_one(name,data,current)
 
 @app.post('/api/entities/{name}/bulk')
-def bulk(name:str, data:list=Body(...),current=Depends(user)):
+def bulk(name:str,data:list=Body(...),current=Depends(account_user)):
     if len(data)>100: raise HTTPException(422,'Batch maximum 100')
-    return [create_one(name,x) for x in data]
+    require_entity(name)
+    # Check all records before any insertion; no partial authorization.
+    clean=[validated_payload(name,x) for x in data]
+    if current['role']!='admin':
+        for item in clean: require_record(current,db,name,'create',item)
+    return [create_one(name,x,current) for x in clean]
 
 @app.patch('/api/entities/{name}/{record_id}')
-def update_record(name:str,record_id:str,data:dict=Body(...),current=Depends(user)):
+def update_record(name:str,record_id:str,data:dict=Body(...),current=Depends(account_user)):
+    require_entity(name)
+    data=validated_payload(name,data)
+    with db() as c:
+        row=c.execute('SELECT * FROM records WHERE entity=? AND id=?',(name,record_id)).fetchone()
+        if not row: raise HTTPException(404,'Record not found')
+        old=json.loads(row['payload'])
+        updated={**old,**{k:v for k,v in data.items() if k not in ('id','created_date','updated_date')}}
+        if name=='AccessProfile':
+            validated_payload(name,{'permissions':updated.get('permissions') or {},
+                                   'apps':updated.get('apps') or []})
+        if current['role']!='admin':
+            require_record(current,db,name,'edit',old)
+            require_record(current,db,name,'edit',updated)
+        now=datetime.now(timezone.utc).isoformat()
+        c.execute('UPDATE records SET payload=?,updated_date=? WHERE entity=? AND id=?',
+                  (json.dumps(updated,ensure_ascii=False),now,name,record_id))
+    return {**updated,'id':record_id,'created_date':row['created_date'],'updated_date':now}
+
+@app.delete('/api/entities/{name}/{record_id}')
+def delete_record(name:str,record_id:str,current=Depends(account_user)):
     require_entity(name)
     with db() as c:
         row=c.execute('SELECT * FROM records WHERE entity=? AND id=?',(name,record_id)).fetchone()
         if not row: raise HTTPException(404,'Record not found')
-        old=json.loads(row['payload']); old.update({k:v for k,v in data.items() if k not in ('id','created_date','updated_date')})
-        now=datetime.now(timezone.utc).isoformat()
-        c.execute('UPDATE records SET payload=?,updated_date=? WHERE entity=? AND id=?',(json.dumps(old,ensure_ascii=False),now,name,record_id))
-    return {**old,'id':record_id,'created_date':row['created_date'],'updated_date':now}
-
-@app.delete('/api/entities/{name}/{record_id}')
-def delete_record(name:str,record_id:str,current=Depends(user)):
-    require_entity(name)
-    with db() as c:
-        count=c.execute('DELETE FROM records WHERE entity=? AND id=?',(name,record_id)).rowcount
-    if not count: raise HTTPException(404,'Record not found')
+        if current['role']!='admin':
+            require_record(current,db,name,'delete',decorate(row))
+        c.execute('DELETE FROM records WHERE entity=? AND id=?',(name,record_id))
     return {'success':True}
 
 @app.post('/api/functions/{name}')
