@@ -248,7 +248,7 @@ export default function Administration() {
   const createAccessProfile = async () => {
     const name = newProfileName.trim();
     if (!name || creatingProfile) return;
-    const profile_id = name.toLowerCase().normalize("NFD").replace(/[\\u0300-\\u036f]/g, "")
+    const profile_id = name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
       .replace(/[^a-z0-9]+/g, "_").replace(/^_|_$/g, "");
     if (!profile_id || profiles.some(p => p.profile_id === profile_id)) {
       setProfilesError("Ce profil existe déjà ou son nom est invalide.");
