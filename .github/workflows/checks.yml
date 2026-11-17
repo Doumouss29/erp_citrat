@@ -1,27 +1,79 @@
-name: PortalManager - CI technique
+name: ERP CITRAT - CI
 on:
   push:
     branches: [main, 'feature/**']
   pull_request:
 
 jobs:
-  checks:
+  build-and-smoke:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Vérification de la structure du projet
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Vérification des fichiers sensibles
         shell: bash
         run: |
-          if [ ! -f backend/main.py ] || [ ! -f package.json ] || [ ! -f compose.yml ]; then
-            echo "::warning::Le code du paquet PortalManager n'est pas encore importé dans ce dépôt."
-            exit 0
-          fi
-          python -m py_compile backend/main.py
-          docker compose -f compose.yml config -q
-      - name: Vérification anti-fichiers sensibles
-        shell: bash
-        run: |
-          if git ls-files | grep -E '(^|/)(\.env|[^/]+\.(sqlite|sqlite3|db))$' | grep -v '^\.env.example$'; then
-            echo "::error::Fichier de configuration sensible ou base SQLite suivi par Git."
+          if git ls-files | grep -E '(^|/)(\\.env|[^/]+\\.(sqlite|sqlite3|db))$' | grep -v '^\\.env.example$'; then
+            echo "::error::Une configuration privée ou base SQLite est suivie par Git."
             exit 1
           fi
+
+      - name: Compilation React / Vite
+        run: |
+          npm install --no-audit --no-fund
+          npm run build
+
+      - name: Installation API et vérification Python
+        run: |
+          pip install -r backend/requirements.txt httpx
+          python -m compileall -q backend
+
+      - name: Recette SQLite / API d'administration
+        env:
+          DATA_DIR: ${{ runner.temp }}/erp-citrat-ci
+          ADMIN_EMAIL: admin@example.invalid
+          ADMIN_PASSWORD: TestAdministrationMotDePasse2026!
+          SESSION_SECRET: ci-test-secret-longue-cle-de-test-ne-pas-utiliser-en-production
+          COOKIE_SECURE: 'true'
+        run: |
+          python - <<'PY'
+          from fastapi.testclient import TestClient
+          from backend.main import app
+          with TestClient(app, base_url="https://testserver") as c:
+              assert c.get("/api/health").status_code == 200
+              assert c.get("/api/admin/users").status_code == 401
+              login=c.post("/api/auth/login",json={"email":"admin@example.invalid","password":"TestAdministrationMotDePasse2026!"})
+              assert login.status_code == 200,login.text
+              accounts=c.get("/api/admin/users")
+              assert accounts.status_code == 200 and len(accounts.json()) == 1,accounts.text
+              office=c.post("/api/entities/OfficeTerminal",json={"office_name":"TEST","email":"test@example.invalid"})
+              assert office.status_code == 200,office.text
+              dep=c.post("/api/entities/Department",json={"value":"topographie","label":"Topographie"})
+              assert dep.status_code == 200,dep.text
+              profile=c.post("/api/entities/AccessProfile",json={"profile_id":"geom","name":"Géomètre","apps":["ecadastre"]})
+              assert profile.status_code == 200,profile.text
+              accept=c.post("/api/auth/consent",json={"version":"1"})
+              assert accept.status_code == 200,accept.text
+              me=c.get("/api/auth/me").json()
+              assert me["consentement_version"]=="1"
+              journal=c.get("/api/entities/ConsentementDonnees").json()
+              assert any(row["decision"]=="accepte" for row in journal),journal
+              result=c.patch("/api/admin/users/"+me["id"],json={"grade":"geom","office":"TEST"})
+              assert result.status_code == 200,result.text
+              assert result.json()["grade"]=="geom"
+              print("CI ERP CITRAT: utilisateurs, bureaux, départements, profils, consentement OK")
+          PY
+
+      - name: Validation Docker Compose
+        run: |
+          cp .env.example .env
+          docker compose -p erp_citrat config --quiet
+          rm -f .env
