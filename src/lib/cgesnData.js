@@ -1,4 +1,4 @@
-// Données et constantes partagées du Portail Digital CGESN
+// Données et constantes partagées du Portail Digital CITRAT
 // Reproduction fidèle du design importé (logique localStorage d'origine).
 
 // Applications intégrées au portail (développées en interne) ; les autres sont des services externes
@@ -12,19 +12,19 @@ export const isRemovedApp = (id) => REMOVED_APP_IDS.includes(id);
 
 export const APP_DEFS = [
   {
-    id: 'cgesncom', name: 'CGESN.COM', href: 'https://cgesn.com',
+    id: 'cgesncom', name: 'CITRAT.COM', href: 'https://cgesn.com',
     icon: '/uploads/pasted-1786225046598-0.png', iconBg: null,
     color: '#9d174d', badgeBg: '#fce7f0', hoverBorder: '#9d174d',
     shadow: '0 4px 10px rgba(157,23,77,0.25)', iconFit: 'cover'
   },
   {
-    id: 'rhcgesn', name: 'RH-CGESN', href: 'https://rh-cgesn.com',
-    icon: '/uploads/logo_CGESN_RH.png', iconBg: '#0d5c66',
+    id: 'rhcgesn', name: 'RH-CITRAT', href: 'https://rh-cgesn.com',
+    icon: '/logo-citrat.svg', iconBg: '#0d5c66',
     color: '#0d5c66', badgeBg: '#dcf1ef', hoverBorder: '#0d5c66',
     shadow: '0 4px 10px rgba(13,92,102,0.3)', iconFit: 'cover'
   },
   {
-    id: 'cgesnboard', name: 'CGESN-BOARD', href: 'https://cgesn-board.com',
+    id: 'cgesnboard', name: 'CITRAT-BOARD', href: 'https://cgesn-board.com',
     icon: '/uploads/pasted-1786225011933-0.png', iconBg: null,
     color: '#0d2b52', badgeBg: '#e1e8f3', hoverBorder: '#0d2b52',
     shadow: '0 4px 10px rgba(13,43,82,0.3)', iconFit: 'cover'
@@ -76,9 +76,9 @@ export const APP_DEFS = [
 ];
 
 export const DEFAULT_APPS = [
-  { id: 'cgesncom', name: 'CGESN.COM', href: 'https://cgesn.com', status: 'ok' },
-  { id: 'rhcgesn', name: 'RH-CGESN', href: 'https://rh-cgesn.com', status: 'ok' },
-  { id: 'cgesnboard', name: 'CGESN-BOARD', href: 'https://cgesn-board.com', status: 'ok' },
+  { id: 'cgesncom', name: 'CITRAT.COM', href: 'https://cgesn.com', status: 'ok' },
+  { id: 'rhcgesn', name: 'RH-CITRAT', href: 'https://rh-cgesn.com', status: 'ok' },
+  { id: 'cgesnboard', name: 'CITRAT-BOARD', href: 'https://cgesn-board.com', status: 'ok' },
   { id: 'ecadastre', name: 'E-CADASTRE', href: 'https://lmcollecte.com', status: 'ok' },
   { id: 'lotissement', name: 'E-GUIDE', href: 'https://lotissement-manager.com', status: 'ok' },
   { id: 'assistancenum', name: 'ASSISTANCE', href: '/assistance', status: 'ok' },
