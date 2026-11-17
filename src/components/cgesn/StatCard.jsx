@@ -1,5 +1,5 @@
 /**
- * Indicateurs du Portail Digital CGESN.
+ * Indicateurs du Portail Digital CITRAT.
  *
  * StatGrid — grille qui choisit SEULE son nombre de colonnes selon la place disponible :
  *   autant de colonnes que possible, chacune d'au moins `min` px (1, 2, 3… colonnes).
