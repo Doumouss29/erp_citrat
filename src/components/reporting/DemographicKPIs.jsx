@@ -3,7 +3,7 @@ import { Users, Calendar, Briefcase, Building2, FileText, Badge as BadgeIcon, Gr
 import { BarChart, Bar, PieChart as RechartPie, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import { motion } from "framer-motion";
 
-// Charte RH-CGESN : vert pétrole, doré et nuances
+// Charte RH-CITRAT : vert pétrole, doré et nuances
 const COLORS = ['#137f8c', '#c9a24f', '#0d5c66', '#6facb6', '#e2c48a', '#4095a1', '#8a6d2f', '#a3c8ce'];
 const TEAL = '#0d5c66';
 const GOLD = '#d4af6a';
