@@ -68,7 +68,8 @@ def user(request: Request):
     if not row or row['role'] != 'admin': raise HTTPException(403,'Admin only (role policies not migrated)')
     account = dict(row)
     profile = json.loads(account.pop('profile_json') or '{}')
-    return {**account, **profile}
+    # L'administrateur initial a ses droits garantis par la base SQLite, pas par le client.
+    return {**account, **profile, 'super_admin': account['role'] == 'admin'}
 
 def require_entity(name):
     if name not in SCHEMA_NAMES: raise HTTPException(404,'Unknown entity')
@@ -122,7 +123,7 @@ def login(response:Response, data:dict=Body(...)):
         token=secrets.token_urlsafe(48)
         c.execute('INSERT INTO sessions VALUES (?,?,?)',(hashlib.sha256(token.encode()).hexdigest(),row['id'],int(time.time())+43200))
     response.set_cookie('pm_session',token,max_age=43200,httponly=True,secure=os.environ.get('COOKIE_SECURE','true')=='true',samesite='strict',path='/')
-    return {'id':row['id'],'email':row['email'],'name':row['name'],'role':row['role']}
+    return {'id':row['id'],'email':row['email'],'name':row['name'],'role':row['role'], 'super_admin': row['role'] == 'admin'}
 
 @app.get('/api/auth/me')
 def me(current=Depends(user)): return current
