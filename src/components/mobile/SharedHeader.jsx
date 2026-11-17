@@ -28,11 +28,11 @@ export default function SharedHeader() {
         {isRootPage && (
           <div className="flex items-center gap-2">
             <img 
-              src="/uploads/logo_CGESN_RH.png" 
-              alt="CGESN Logo" 
+              src="/logo-citrat.svg" 
+              alt="CITRAT Logo" 
               className="w-8 h-8 object-contain rounded-lg"
             />
-            <span className="text-sm font-bold text-slate-900">RH CGESN</span>
+            <span className="text-sm font-bold text-slate-900">RH CITRAT</span>
           </div>
         )}
         
