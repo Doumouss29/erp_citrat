@@ -47,9 +47,9 @@ export default function Bienvenue() {
   return (
     <>
       <style>{`
-        .cgesn-install-btn:hover{background:#0d4b43 !important}
+        .cgesn-install-btn:hover{background:#08245f !important}
         @media (max-width:480px){
-          .cgesn-install-logo{width:64px !important;height:64px !important}
+          .cgesn-install-logo{width:185px !important;height:70px !important}
           .cgesn-install-title{font-size:16px !important}
           .cgesn-install-sub{font-size:10px !important}
         }
@@ -60,7 +60,7 @@ export default function Bienvenue() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "linear-gradient(120deg,#0d3b3f 0%,#0f5c52 55%,#0d3b3f 100%)",
+          background: "linear-gradient(120deg,#0d3b3f 0%,#0A347B 55%,#0d3b3f 100%)",
           padding: 24,
           fontFamily: "'Poppins',Helvetica,Arial,sans-serif"
         }}
@@ -69,15 +69,15 @@ export default function Bienvenue() {
           {/* En-tête identique à Connexion */}
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 14, marginBottom: 24 }}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <img src={logos.login} alt="CGESN" className="cgesn-install-logo" style={{ width: 82, height: 82, objectFit: "contain", display: "block" }} />
+              <img src={logos.login} alt="CITRAT" className="cgesn-install-logo" style={{ width: 200, height: 74, objectFit: "contain", display: "block" }} />
             </div>
             <div style={{ textAlign: "center" }}>
               <div className="cgesn-install-title" style={{ fontSize: 18, fontWeight: 800, letterSpacing: "0.01em" }}>
-                <span style={{ color: "oklch(0.62 0.13 55)" }}>PORTAIL DIGITAL</span>{" "}
-                <span style={{ color: "oklch(0.22 0.01 90)" }}>CGESN</span>
+                <span style={{ color: "#00A4D6" }}>PORTAIL DIGITAL</span>{" "}
+                <span style={{ color: "#091F68" }}>CITRAT</span>
               </div>
               <div className="cgesn-install-sub" style={{ fontSize: 11, fontWeight: 500, color: "oklch(0.55 0.005 90)", letterSpacing: "0.02em", marginTop: 4 }}>
-                CABINET DE GÉOMÈTRE EXPERT SORO NANGA
+                CABINET IVOIRIEN DES TRAVAUX TOPOGRAPHIQUES · GÉOMÈTRE EXPERT
               </div>
             </div>
           </div>
@@ -91,7 +91,7 @@ export default function Bienvenue() {
               style={{
                 display: "flex", alignItems: "center", justifyContent: "center", gap: 10,
                 padding: 13, border: "none", borderRadius: 10,
-                background: "#0f5c52", color: "#fff", fontSize: 14, fontWeight: 700,
+                background: "#0A347B", color: "#fff", fontSize: 14, fontWeight: 700,
                 letterSpacing: "0.02em", cursor: installing ? "wait" : "pointer",
                 fontFamily: "'Poppins',sans-serif", transition: "background .15s",
                 opacity: installing ? 0.8 : 1
@@ -107,7 +107,7 @@ export default function Bienvenue() {
               style={{
                 display: "flex", alignItems: "center", justifyContent: "center", gap: 10,
                 padding: 13, border: "none", borderRadius: 10,
-                background: "#0f5c52", color: "#fff", fontSize: 14, fontWeight: 700,
+                background: "#0A347B", color: "#fff", fontSize: 14, fontWeight: 700,
                 letterSpacing: "0.02em", cursor: "pointer",
                 fontFamily: "'Poppins',sans-serif", transition: "background .15s"
               }}
@@ -123,7 +123,7 @@ export default function Bienvenue() {
               style={{
                 display: "flex", alignItems: "center", justifyContent: "center", gap: 10,
                 padding: 13, border: "none", borderRadius: 10,
-                background: "#0f5c52", color: "#fff", fontSize: 14, fontWeight: 700,
+                background: "#0A347B", color: "#fff", fontSize: 14, fontWeight: 700,
                 letterSpacing: "0.02em", cursor: installing ? "wait" : "pointer",
                 fontFamily: "'Poppins',sans-serif", transition: "background .15s",
                 opacity: installing ? 0.8 : 1
@@ -157,7 +157,7 @@ function InstallModal({ platform, onClose }) {
       >
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <div style={{ width: 38, height: 38, borderRadius: 10, background: "#0f5c52", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <div style={{ width: 38, height: 38, borderRadius: 10, background: "#0A347B", display: "flex", alignItems: "center", justifyContent: "center" }}>
               <Download size={18} color="#fff" />
             </div>
             <span style={{ fontSize: 16, fontWeight: 700, color: "#0a4d46" }}>
@@ -173,7 +173,7 @@ function InstallModal({ platform, onClose }) {
           <ol style={{ margin: 0, paddingLeft: 20, fontSize: 14, lineHeight: 1.7, color: "#4a5568" }}>
             <li style={{ marginBottom: 8 }}>
               Appuyez sur le bouton <strong>Partager</strong>{" "}
-              <Share size={15} style={{ display: "inline", verticalAlign: "middle", color: "#0f5c52" }} />
+              <Share size={15} style={{ display: "inline", verticalAlign: "middle", color: "#0A347B" }} />
               {" "}en bas de l'écran dans Safari.
             </li>
             <li style={{ marginBottom: 8 }}>
@@ -211,7 +211,7 @@ function InstallModal({ platform, onClose }) {
 
         <button
           onClick={onClose}
-          style={{ marginTop: 20, width: "100%", height: 42, borderRadius: 10, border: "none", background: "#0f5c52", color: "#fff", fontSize: 14, fontWeight: 700, cursor: "pointer", fontFamily: "'Poppins',sans-serif" }}
+          style={{ marginTop: 20, width: "100%", height: 42, borderRadius: 10, border: "none", background: "#0A347B", color: "#fff", fontSize: 14, fontWeight: 700, cursor: "pointer", fontFamily: "'Poppins',sans-serif" }}
         >
           J'ai compris
         </button>
