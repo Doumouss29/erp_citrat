@@ -17,6 +17,7 @@ import BoardUsersManager from "@/components/administration/BoardUsersManager";
 import { OrgTiles, OrgTile } from "@/components/administration/OrgTiles";
 import ConsentementsManager from "@/components/administration/ConsentementsManager";
 import BureauxManager from "@/components/administration/BureauxManager";
+import DepartementsManager from "@/components/administration/DepartementsManager";
 
 // Liens d'applications externes : http(s) uniquement (pas de javascript:/data:).
 function isHttpUrl(value) {
@@ -747,6 +748,9 @@ export default function Administration() {
                 </button>
                 <button onClick={() => setTab("bureaux")} style={{ ...tabBase, ...(tab === "bureaux" ? tabActive : tabInactive) }}>
                   Bureaux
+                </button>
+                <button onClick={() => setTab("departments")} style={{ ...tabBase, ...(tab === "departments" ? tabActive : tabInactive) }}>
+                  Départements
                 </button>
                 <button onClick={() => setTab("validators")} style={{ ...tabBase, ...(tab === "validators" ? tabActive : tabInactive) }}>
                   Validateur RH
