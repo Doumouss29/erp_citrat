@@ -58,7 +58,7 @@ function Svg({ name, size = 16, style }) {
 }
 
 const CSS = `
-.uo{--g:#0f5c52;--g2:#14806f;--gt:oklch(0.96 0.03 165);--ink:oklch(0.24 0.01 90);--mut:oklch(0.52 0.005 90);--sub:oklch(0.66 0.005 90);--ln:oklch(0.92 0.004 90);--ln2:oklch(0.95 0.003 90);--bg:oklch(0.985 0.002 90);--warn:oklch(0.62 0.13 65);--warnbg:oklch(0.97 0.035 85);font-family:'Poppins',Helvetica,Arial,sans-serif;color:var(--ink)}
+.uo{--g:#0C3D85;--g2:#14806f;--gt:oklch(0.96 0.03 165);--ink:oklch(0.24 0.01 90);--mut:oklch(0.52 0.005 90);--sub:oklch(0.66 0.005 90);--ln:oklch(0.92 0.004 90);--ln2:oklch(0.95 0.003 90);--bg:oklch(0.985 0.002 90);--warn:oklch(0.62 0.13 65);--warnbg:oklch(0.97 0.035 85);font-family:'Poppins',Helvetica,Arial,sans-serif;color:var(--ink)}
 .uo *{box-sizing:border-box}
 .uo-card{background:#fff;border:1px solid var(--ln);border-radius:18px;overflow:hidden}
 .uo-head{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:22px 26px;border-bottom:1px solid var(--ln)}
@@ -287,7 +287,7 @@ export default function UsersByOrgManager({
   const [showInvite, setShowInvite] = useState(false);
   const [inv, setInv] = useState({ email: "", office: "", department: "", grade: "", role: "user" });
 
-  // Fiches employés du portail (source officielle depuis la fermeture de RH-CGESN).
+  // Fiches employés du portail (source officielle depuis la fermeture de RH-CITRAT).
   // Elles servent à relier les comptes et à préparer grade et applications des personnes à inviter.
   const [erpEmployees, setErpEmployees] = useState(EMP_CACHE || []);
   const [empStatus, setEmpStatus] = useState(EMP_CACHE ? "ok" : "loading");
@@ -681,7 +681,7 @@ export default function UsersByOrgManager({
               value={r.office}
               onChange={(e) => saveOrg(u.id, { office: e.target.value })}
               disabled={saving}
-              title={r.officeFromRh ? "Repris de la fiche RH-CGESN" : "Bureau"}
+              title={r.officeFromRh ? "Repris de la fiche RH-CITRAT" : "Bureau"}
             >
               <option value="">À définir</option>
               {BUREAUX.map((b) => <option key={b} value={b}>{b}</option>)}
@@ -696,7 +696,7 @@ export default function UsersByOrgManager({
               value={r.department}
               onChange={(e) => changeDepartment(r, e.target.value)}
               disabled={saving}
-              title={r.deptFromRh ? "Repris de la fiche RH-CGESN" : deptLabel(r.department)}
+              title={r.deptFromRh ? "Repris de la fiche RH-CITRAT" : deptLabel(r.department)}
             >
               <option value="">À définir</option>
               {DEPARTEMENTS.map((d) => <option key={d.value} value={d.value}>{d.label}</option>)}
@@ -762,7 +762,7 @@ export default function UsersByOrgManager({
                     saveOrg(u.id, on ? { super_admin: true, office: "", department: "" } : { super_admin: false });
                     if (on && u.role !== "admin") onSetRole(u.id, "admin");
                   }}
-                  style={{ accentColor: "#0f5c52", width: 15, height: 15 }}
+                  style={{ accentColor: "#0C3D85", width: 15, height: 15 }}
                 />
                 Super administrateur
               </label>
@@ -772,7 +772,7 @@ export default function UsersByOrgManager({
                   checked={u.statut === "suspendu"}
                   disabled={saving || isMe}
                   onChange={(e) => saveOrg(u.id, { statut: e.target.checked ? "suspendu" : "actif" })}
-                  style={{ accentColor: "#0f5c52", width: 15, height: 15 }}
+                  style={{ accentColor: "#0C3D85", width: 15, height: 15 }}
                 />
                 Compte suspendu
               </label>
