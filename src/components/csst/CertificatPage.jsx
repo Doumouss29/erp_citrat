@@ -182,7 +182,7 @@ export default function CertificatPage({ cert }) {
               style={{ position: "absolute", right: "calc(100% + 20px)", top: "50%", transform: "translateY(-50%)", height: "70px", width: "auto", maxWidth: "124px", objectFit: "contain", display: "block" }}
             />
             <div style={{ fontFamily: "var(--font-heading)", fontSize: "22px", color: INK, letterSpacing: "0.01em", lineHeight: 1.2 }}>
-              Cabinet de Géomètre-Expert Soro Nanga
+              Cabinet de Géomètre-Expert CITRAT
             </div>
             <div style={{ fontSize: "11.5px", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--color-accent-700)", marginTop: "5px", textAlign: "center" }}>
               Comité Santé Sécurité au Travail
