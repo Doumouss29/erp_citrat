@@ -92,8 +92,8 @@ function buildPrintHtml({ bureauLabel, periodLabel, metrics, rows }) {
       </head>
       <body>
         <section class="page cover page-break">
-          <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/696fe5195586fd61f32bcb08/47c566a2e_images.png" alt="CGESN Logo" />
-          <h1 class="brand">CGESN</h1>
+          <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/696fe5195586fd61f32bcb08/47c566a2e_images.png" alt="CITRAT Logo" />
+          <h1 class="brand">CITRAT</h1>
           <p class="subtitle">Cabinet de Géomètre-Expert Soro Nanga</p>
           <div class="divider"></div>
           <div class="cover-box">
@@ -110,7 +110,7 @@ function buildPrintHtml({ bureauLabel, periodLabel, metrics, rows }) {
               <h1>Rapport de caisse</h1>
               <p>${bureauLabel} • ${periodLabel}</p>
             </div>
-            <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/696fe5195586fd61f32bcb08/47c566a2e_images.png" alt="CGESN Logo" />
+            <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/696fe5195586fd61f32bcb08/47c566a2e_images.png" alt="CITRAT Logo" />
           </div>
 
           <div class="header-grid">
@@ -158,7 +158,7 @@ function buildPrintHtml({ bureauLabel, periodLabel, metrics, rows }) {
             </table>
           </div>
 
-          <div class="footer">Cabinet de Géomètre-Expert Soro Nanga — CGESN · Rapport de caisse</div>
+          <div class="footer">Cabinet de Géomètre-Expert Soro Nanga — CITRAT · Rapport de caisse</div>
         </section>
       </body>
     </html>
