@@ -12,7 +12,7 @@ import { base44 } from "@/api/base44Client";
 
 export const ERP_NAME = "ERP CITRAT";
 export const BRAND_NAME = "Portail Digital CITRAT";
-export const ORG_NAME = "Cabinet Ivoirien des Travaux Topographiques";
+export const ORG_NAME = "DAGNOKO HAMED";
 export const SENDER_NAME = "PORTAIL DIGITAL CITRAT";
 export const PORTAL_URL = "https://portail-digital-cgesn.com";
 const GREEN = "0f5c52";
