@@ -8,8 +8,9 @@
 4. Administration → **Inscriptions** : validation manuelle avec profil d'accès et bureau **déjà créés dans SQLite** ; département facultatif.
 5. Approbation : compte utilisateur activé et mot de passe haché. Refus : aucune activation. Notification e-mail si le SMTP répond.
 6. Connexion uniquement pour les comptes actifs. Suspension : toutes les sessions de ce compte sont supprimées.
-7. Mot de passe oublié : lien à usage unique, valable 30 minutes, et invalidation de toutes les anciennes sessions après réinitialisation.
-8. Consentement personnel à la première connexion après approbation.
+7. Invitation par l'administrateur : e-mail contenant un lien d'inscription, suivi des mêmes étapes de vérification et d'approbation.
+8. Mot de passe oublié : lien à usage unique, valable 30 minutes, et invalidation de toutes les anciennes sessions après réinitialisation.
+9. Consentement personnel à la première connexion après approbation.
 
 Les comptes ordinaires reçoivent toujours le rôle système `user`. Le profil métier et le bureau sont attribués par l'administrateur : l'inscription publique ne permet **jamais** de devenir administrateur.
 
