@@ -19,6 +19,7 @@ import ConsentementsManager from "@/components/administration/ConsentementsManag
 import BureauxManager from "@/components/administration/BureauxManager";
 import DepartementsManager from "@/components/administration/DepartementsManager";
 import RegistrationsManager from "@/components/administration/RegistrationsManager";
+import ProfilePermissionsEditor from "@/components/administration/ProfilePermissionsEditor";
 
 // Liens d'applications externes : http(s) uniquement (pas de javascript:/data:).
 function isHttpUrl(value) {
@@ -273,10 +274,11 @@ export default function Administration() {
   const toggleProfileApp = async (profile, appId) => {
     const current = Array.isArray(profile.apps) ? profile.apps : [];
     const apps = current.includes(appId) ? current.filter((a) => a !== appId) : [...current, appId];
-    setProfiles((prev) => prev.map((p) => (p.id === profile.id ? { ...p, apps } : p)));
+    const permissions = Object.fromEntries(Object.entries(profile.permissions || {}).filter(([key]) => apps.includes(key)));
+    setProfiles((prev) => prev.map((p) => (p.id === profile.id ? { ...p, apps, permissions } : p)));
     setProfilesError(null);
     try {
-      await base44.entities.AccessProfile.update(profile.id, { apps });
+      await base44.entities.AccessProfile.update(profile.id, { apps, permissions });
       invalidateProfiles();
       if (user && user.grade === profile.profile_id && refreshUser) refreshUser();
     } catch (err) {
@@ -1212,6 +1214,9 @@ export default function Administration() {
                                 );
                               })}
                             </div>
+                            {!p.isExternalGroup && p.id && p.profile_id !== "administration" && (
+                              <ProfilePermissionsEditor profile={p} onSaved={loadProfiles} />
+                            )}
                             <div style={{ marginTop: 14, paddingTop: 12, borderTop: "1px solid oklch(0.95 0.003 90)" }}>
                               <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase", color: "oklch(0.55 0.005 90)", marginBottom: 8 }}>Utilisateurs de ce grade</div>
                               {members.length ? (
