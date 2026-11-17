@@ -4,7 +4,7 @@ import { useAuth } from '@/lib/AuthContext';
 import Coprociv from '@/pages/Coprociv';
 import '@/styles/coprociv.css';
 
-// COPROCIV dans le portail CGESN : réservé aux comptes connectés ayant l'accès « COPROCIV »
+// COPROCIV dans le portail CITRAT : réservé aux comptes connectés ayant l'accès « COPROCIV »
 // (contrôlé en amont par RequireAppAccess). Le module garde sa propre mise en page et ses thèmes.
 const FONTS_ID = 'coprociv-fonts';
 const FONTS_URL = 'https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap';
@@ -32,7 +32,7 @@ export default function CoprocivModule() {
       document.head.appendChild(l);
     }
     const { icon: prevIcon, title: prevTitle } = prev.current || {};
-    document.title = 'COPROCIV — Portail Digital CGESN';
+    document.title = 'COPROCIV — Portail Digital CITRAT';
     return () => {
       const icon = document.querySelector('link[rel="icon"]');
       if (icon && prevIcon) icon.setAttribute('href', prevIcon);
