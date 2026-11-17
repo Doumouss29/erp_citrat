@@ -196,7 +196,7 @@ export default function ConsentementsManager() {
     setMailBusy(false);
   };
 
-  const pill = (active) => ({ border: `1px solid ${active ? "#0f5c52" : "oklch(0.9 0.005 90)"}`, background: active ? "#0f5c52" : "#fff", color: active ? "#fff" : "oklch(0.35 0.01 90)", borderRadius: 100, padding: "7px 14px", fontSize: 12.5, fontWeight: 600, cursor: "pointer", fontFamily: "inherit", whiteSpace: "nowrap" });
+  const pill = (active) => ({ border: `1px solid ${active ? "#0C3D85" : "oklch(0.9 0.005 90)"}`, background: active ? "#0C3D85" : "#fff", color: active ? "#fff" : "oklch(0.35 0.01 90)", borderRadius: 100, padding: "7px 14px", fontSize: 12.5, fontWeight: 600, cursor: "pointer", fontFamily: "inherit", whiteSpace: "nowrap" });
   const th = { textAlign: "left", fontSize: 11.5, fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase", color: "oklch(0.5 0.005 90)", padding: "10px 12px", borderBottom: "1px solid oklch(0.92 0.005 90)", whiteSpace: "nowrap" };
   const td = { fontSize: 13, color: "oklch(0.3 0.01 90)", padding: "10px 12px", borderBottom: "1px solid oklch(0.95 0.003 90)", verticalAlign: "top" };
 
@@ -228,7 +228,7 @@ export default function ConsentementsManager() {
             const small = { fontSize: 12.5, fontWeight: 500, color: "oklch(0.52 0.005 90)" };
             return (
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))", gap: 10 }}>
-                <div style={{ ...card, background: "#0f5c52", borderColor: "#0f5c52" }}>
+                <div style={{ ...card, background: "#0C3D85", borderColor: "#0C3D85" }}>
                   <div style={{ ...lbl, color: "#cfe6e1" }}>Taux d'accord</div>
                   <div style={{ ...big, color: "#fff" }}>{pct}<span style={{ fontSize: 16, fontWeight: 700 }}>%</span></div>
                   <div style={{ height: 5, borderRadius: 5, background: "rgba(255,255,255,.2)", overflow: "hidden" }}><i style={{ display: "block", height: "100%", width: `${pct}%`, background: "#fff", borderRadius: 5 }} /></div>
@@ -329,10 +329,10 @@ export default function ConsentementsManager() {
                       </td>
                       <td style={{ ...td, textAlign: "right", whiteSpace: "nowrap", verticalAlign: "middle" }}>
                         <div style={{ display: "inline-flex", gap: 6 }}>
-                          <button type="button" onClick={() => exportPdf(r)} disabled={!!pdfBusy || mailBusy} title={`Télécharger le rapport de consentement de ${personName(u)}`} style={{ ...pill(false), borderColor: "#0f5c52", color: "#0f5c52", padding: "5px 12px", cursor: pdfBusy ? "wait" : "pointer" }}>
+                          <button type="button" onClick={() => exportPdf(r)} disabled={!!pdfBusy || mailBusy} title={`Télécharger le rapport de consentement de ${personName(u)}`} style={{ ...pill(false), borderColor: "#0C3D85", color: "#0C3D85", padding: "5px 12px", cursor: pdfBusy ? "wait" : "pointer" }}>
                             {pdfBusy === u.id ? "Génération…" : "PDF"}
                           </button>
-                          <button type="button" onClick={() => (mailOpen ? setMailRowId(null) : openMail(r))} disabled={mailBusy} title={`Envoyer le rapport de ${personName(u)} par e-mail`} style={{ ...pill(mailOpen), padding: "5px 12px", borderColor: "#0f5c52", color: mailOpen ? "#fff" : "#0f5c52" }}>
+                          <button type="button" onClick={() => (mailOpen ? setMailRowId(null) : openMail(r))} disabled={mailBusy} title={`Envoyer le rapport de ${personName(u)} par e-mail`} style={{ ...pill(mailOpen), padding: "5px 12px", borderColor: "#0C3D85", color: mailOpen ? "#fff" : "#0C3D85" }}>
                             Envoyer par e-mail
                           </button>
                         </div>
