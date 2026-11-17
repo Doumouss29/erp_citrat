@@ -1,7 +1,7 @@
 import { FormSelect } from "@/components/ui/form-select";
 import React, { useEffect, useMemo, useState } from "react";
 import { base44 } from "@/api/base44Client";
-import { BUREAUX, DEPARTEMENTS } from "@/lib/rhReferentiels";
+import { DEPARTEMENTS } from "@/lib/rhReferentiels";
 import { profileApps, getProfile } from "@/lib/accessProfiles";
 import { OrgTiles, OrgTile } from "@/components/administration/OrgTiles";
 import { invalidateEmployees } from "@/lib/rhSession";
@@ -274,6 +274,15 @@ export default function UsersByOrgManager({
   users, setUsers, profiles, accessAppDefs, loading, saving, setSaving, error, setError, inviteMsg,
   currentUser, refreshUser, onSetGrade, onSetRole, onToggleAccess, onRemove, onInvite
 }) {
+  const [bureauList, setBureauList] = useState([]);
+  useEffect(() => {
+    let active = true;
+    base44.entities.OfficeTerminal.list("office_name", 200)
+      .then(rows => { if (active) setBureauList((rows || []).map(b => String(b.office_name || "").trim().toUpperCase()).filter(Boolean)); })
+      .catch(() => { if (active) setBureauList([]); });
+    return () => { active = false; };
+  }, []);
+  const BUREAUX = bureauList;
   const [search, setSearch] = useState("");
   const [officeFilter, setOfficeFilter] = useState(""); // "" = aucun bureau choisi (tuiles seules)
   const [deptFilter, setDeptFilter] = useState("all");
@@ -528,7 +537,7 @@ export default function UsersByOrgManager({
     ...(officeStats[NONE] && (officeStats[NONE].accounts || officeStats[NONE].pending) ? [NONE] : [])
   ];
   // Tous les chiffres ne s'affichent qu'une fois toutes les données chargées (comptes, fiches, grades, demandes traitées)
-  const ready = (!loading || users.length > 0) && empReady && reviewCfg !== null && profiles.length > 0;
+  const ready = (!loading || users.length > 0) && empReady && reviewCfg !== null ; // Les profils sont vides tant que l'administrateur ne les a pas créés.
   const tileLabel = (k) => (k === "all" ? "Tous les bureaux" : k === NONE ? "Non affectés" : k);
 
   const ageLabel = (age) => (age === null ? "" : age === 0 ? "aujourd'hui" : age === 1 ? "hier" : `il y a ${age} j`);
