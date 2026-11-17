@@ -3,7 +3,7 @@
   "properties": {
     "apps": {
       "default": [],
-      "description": "Identifiants des applications accord\u00e9es \u00e0 ce profil (app_id)",
+      "description": "Identifiants des applications accordées à ce profil (app_id)",
       "items": {
         "type": "string"
       },
@@ -14,7 +14,7 @@
       "type": "string"
     },
     "name": {
-      "description": "Nom affich\u00e9 du profil / grade",
+      "description": "Nom affiché du profil / grade",
       "type": "string"
     },
     "order": {
@@ -23,8 +23,13 @@
       "type": "number"
     },
     "profile_id": {
-      "description": "Identifiant stable du profil (ex: 'agent'), stock\u00e9 dans User.grade",
+      "description": "Identifiant stable du profil (ex: 'agent'), stocké dans User.grade",
       "type": "string"
+    },
+    "permissions": {
+      "type": "object",
+      "default": {},
+      "description": "Droits explicites par application/module: view, create, edit, delete, export, approve et scope (own|office|department|all). Refus par défaut."
     }
   },
   "required": [
