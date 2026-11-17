@@ -181,10 +181,10 @@ export default function ActivitesPDF() {
             <div className="flex-1 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white flex flex-col items-center justify-center px-12">
               <img
                 src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/696fe5195586fd61f32bcb08/47c566a2e_images.png"
-                alt="CGESN Logo"
+                alt="CITRAT Logo"
                 className="h-20 mx-auto mb-10"
               />
-              <h1 className="text-5xl font-bold mb-4 text-center">CGESN</h1>
+              <h1 className="text-5xl font-bold mb-4 text-center">CITRAT</h1>
               <p className="text-xl text-slate-300 mb-12 text-center">Cabinet de Géomètre-Expert Soro Nanga</p>
               <div className="w-24 h-1 bg-white/30 mb-12"></div>
 
@@ -212,7 +212,7 @@ export default function ActivitesPDF() {
               </div>
               <img
                 src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/696fe5195586fd61f32bcb08/47c566a2e_images.png"
-                alt="CGESN" className="h-12"
+                alt="CITRAT" className="h-12"
               />
             </div>
 
@@ -311,7 +311,7 @@ export default function ActivitesPDF() {
                 </div>
               </div>
               <div style={{ borderTop: '1px solid #e2e8f0', paddingTop: '12px', textAlign: 'center' }}>
-                <p style={{ fontSize: '11px', color: '#94a3b8' }}>Cabinet de Géomètre-Expert Soro Nanga — CGESN · Fiche de Suivi d'Activités — Semaine {numeroSemaine}/{annee}</p>
+                <p style={{ fontSize: '11px', color: '#94a3b8' }}>Cabinet de Géomètre-Expert Soro Nanga — CITRAT · Fiche de Suivi d'Activités — Semaine {numeroSemaine}/{annee}</p>
               </div>
             </div>
           </div>
