@@ -5,16 +5,16 @@ import { useEffect, useState } from "react";
 import { base44 } from "@/api/base44Client";
 
 export const BRAND_LOGOS_KEY = "logos_portail";
-const CACHE_KEY = "cgesn_logos_portail";
-const UPDATE_EVENT = "cgesn-logos-updated";
+const CACHE_KEY = "citrat_logos_portail_v1";
+const UPDATE_EVENT = "citrat-logos-updated";
 
 export const DEFAULT_BRAND_LOGOS = {
-  header: "https://base44.app/api/apps/6aa96886350e13fe6882c8af/files/mp/public/6aa96886350e13fe6882c8af/1c2b72069_logo-cgesn.png",
-  login: "/uploads/CGESN-LOGO.png"
+  header: "/logo-citrat.svg",
+  login: "/logo-citrat.svg"
 };
 
 export const BRAND_LOGO_SLOTS = [
-  { key: "header", label: "Logo de l'en-tête", hint: "Affiché sur fond vert (portail, administration, pages légales)." },
+  { key: "header", label: "Logo de l'en-tête", hint: "Affiché sur fond bleu (portail, administration, pages légales)." },
   { key: "login", label: "Logo de connexion", hint: "Affiché sur fond blanc (connexion, mot de passe oublié)." }
 ];
 
@@ -53,7 +53,7 @@ export async function saveBrandLogos(value) {
     await base44.entities.ConfigurationApp.create({
       cle: BRAND_LOGOS_KEY,
       valeur: clean,
-      description: "Logos du portail CGESN (en-tête et page de connexion)"
+      description: "Logos du portail CITRAT (en-tête et page de connexion)"
     });
   }
   writeCache(clean);
