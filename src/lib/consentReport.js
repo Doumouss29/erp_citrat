@@ -110,12 +110,12 @@ export async function buildConsentReport({ row, statusLabels, decisionLabels, lo
   }
   text("RAPPORT DE CONSENTEMENT", tx, 19, { bold: true, size: 17, color: [255, 255, 255] });
   text("Données personnelles du collaborateur", tx, 26, { size: 10.5, color: [220, 232, 229] });
-  text("Cabinet de Géomètre Expert Soro Nanga (CGESN) — Portail Digital", tx, 32.5, { size: 8.5, color: [190, 210, 206] });
+  text("Cabinet de Géomètre Expert Soro Nanga (CITRAT) — Portail Digital", tx, 32.5, { size: 8.5, color: [190, 210, 206] });
 
   y = 54;
   [
     ["Date du rapport", now.toLocaleString("fr-FR", { dateStyle: "long", timeStyle: "short", timeZone: TZ })],
-    ["Délivré par", "Cabinet de Géomètre Expert Soro Nanga (CGESN)"],
+    ["Délivré par", "Cabinet de Géomètre Expert Soro Nanga (CITRAT)"],
     ["Notice en vigueur", `Version ${CONSENT_VERSION} — mise à jour le ${CONSENT_UPDATED}`],
     ["Cadre légal", LEGAL_FRAMEWORK],
   ].forEach(([k, v]) => {
@@ -191,7 +191,7 @@ export async function buildConsentReport({ row, statusLabels, decisionLabels, lo
   doc.setFontSize(9);
   doc.setTextColor(...INK);
   const att = doc.splitTextToSize(
-    `Le présent rapport est extrait du journal horodaté des consentements du Portail Digital CGESN. Il reflète l'état du consentement de ${fullName} à la date du rapport. Chaque accord, mise à jour, refus ou retrait est enregistré au moment de la décision et n'est pas modifiable par les utilisateurs.`,
+    `Le présent rapport est extrait du journal horodaté des consentements du Portail Digital CITRAT. Il reflète l'état du consentement de ${fullName} à la date du rapport. Chaque accord, mise à jour, refus ou retrait est enregistré au moment de la décision et n'est pas modifiable par les utilisateurs.`,
     CW
   );
   ensure(att.length * 4.3);
@@ -204,7 +204,7 @@ export async function buildConsentReport({ row, statusLabels, decisionLabels, lo
     doc.setDrawColor(...LINE);
     doc.setLineWidth(0.2);
     doc.line(M, H - 12, W - M, H - 12);
-    text("Document confidentiel — CGESN", M, H - 7.5, { size: 7.5, color: MUTED });
+    text("Document confidentiel — CITRAT", M, H - 7.5, { size: 7.5, color: MUTED });
     text(`Page ${p} / ${total}`, W - M, H - 7.5, { size: 7.5, color: MUTED, align: "right" });
   }
 
