@@ -12,6 +12,8 @@ const ADMIN = "__admin__";
 const norm = (v) => String(v || "").trim().toLowerCase();
 const accountName = (u) => [u.first_name, u.last_name].filter(Boolean).join(" ") || u.full_name || u.email;
 const pendingName = (a) => [a.prenom, a.nom].filter(Boolean).join(" ") || a.email;
+// Le rôle d'administration est défini par l'API SQLite, distinct de la fonction Board.
+const isPortalAdmin = (u) => u?.role === "admin" && u?.super_admin === true;
 
 const inputStyle = { height: 36, padding: "0 10px", border: "1px solid oklch(0.92 0.005 90)", borderRadius: 10, background: "#fff", fontSize: 13, maxWidth: "100%" };
 
@@ -202,12 +204,12 @@ export default function BoardUsersManager({ users, setUsers, currentUser, refres
   // Bureau affiché : la tuile choisie ; une recherche sans tuile porte sur tous les bureaux
   const effFilter = bureauFilter || (term ? "all" : "");
   // Administration : la Direction et toute personne rattachée à tous les bureaux
-  const isAll = (ids, fonction) => fonction === "admin" || (allIds.length > 0 && allIds.every((id) => ids.includes(id)));
-  const matches = (name, email, ids, fonction) => {
+  const isAll = (ids, fonction, account) => isPortalAdmin(account) || fonction === "admin" || (allIds.length > 0 && allIds.every((id) => ids.includes(id)));
+  const matches = (name, email, ids, fonction, account) => {
     if (!effFilter) return false;
-    const all = isAll(ids, fonction);
+    const all = isAll(ids, fonction, account);
     if (effFilter === ADMIN && !all) return false;
-    if (effFilter === NONE && ids.length) return false;
+    if (effFilter === NONE && (ids.length || all)) return false;
     if (effFilter !== "all" && effFilter !== NONE && effFilter !== ADMIN && (all || !ids.includes(effFilter))) return false;
     return !term || norm(`${name} ${email}`).includes(term);
   };
@@ -217,7 +219,7 @@ export default function BoardUsersManager({ users, setUsers, currentUser, refres
   const accounts = useMemo(
     () => users
       .filter((u) => !terminalEmails.includes(norm(u.email)))
-      .filter((u) => u.fonction || annuaireEmails.has(norm(u.email)) || effectiveAccess(u, profiles).includes("cgesnboard"))
+      .filter((u) => isPortalAdmin(u) || u.fonction || annuaireEmails.has(norm(u.email)) || effectiveAccess(u, profiles).includes("cgesnboard"))
       .sort((a, b) => accountName(a).localeCompare(accountName(b))),
     [users, terminalEmails, annuaireEmails, profiles]
   );
@@ -231,14 +233,14 @@ export default function BoardUsersManager({ users, setUsers, currentUser, refres
   }, [users, accounts, terminalEmails]);
   const pending = annuaire.filter((a) => !accountEmails.has(norm(a.email)));
 
-  const shownAccounts = accounts.filter((u) => matches(accountName(u), u.email, u.bureau_ids || [], u.fonction));
+  const shownAccounts = accounts.filter((u) => matches(accountName(u), u.email, u.bureau_ids || [], u.fonction, u));
   const shownPending = pending.filter((a) => matches(pendingName(a), a.email, a.bureau_ids || [], a.fonction));
 
   const titleStyle = { fontSize: 14, fontWeight: 700, margin: "20px 0 4px" };
 
   // Chiffres de chaque tuile : comptes, affectations en attente, responsable du bureau
   const tiles = useMemo(() => {
-    const allOf = (x) => isAll(x.bureau_ids || [], x.fonction);
+    const allOf = (x) => isAll(x.bureau_ids || [], x.fonction, x);
     const admins = accounts.filter(allOf);
     const list = [{
       key: ADMIN,
@@ -261,7 +263,7 @@ export default function BoardUsersManager({ users, setUsers, currentUser, refres
         equipe: members.filter((u) => u.fonction === "adjoint" || u.fonction === "secretaire").length
       });
     });
-    const noneCount = accounts.filter((u) => !(u.bureau_ids || []).length).length;
+    const noneCount = accounts.filter((u) => !allOf(u) && !(u.bureau_ids || []).length).length;
     const noneWaiting = pending.filter((a) => !(a.bureau_ids || []).length).length;
     if (noneCount || noneWaiting) list.push({ key: NONE, label: "Sans bureau", title: "Personnes sans bureau", count: noneCount, waiting: noneWaiting, responsables: [], none: true });
     return list;
@@ -360,13 +362,13 @@ export default function BoardUsersManager({ users, setUsers, currentUser, refres
                 key={u.id}
                 name={accountName(u)}
                 email={u.email}
-                fonction={u.fonction}
+                fonction={isPortalAdmin(u) ? "admin" : u.fonction}
                 bureauIds={ids}
                 bureaux={bureaux}
-                disabled={saving}
+                disabled={saving || isPortalAdmin(u)}
                 onFonction={(fonction) => saveUser(u.id, fonction === "admin" ? { fonction, bureau_ids: allIds } : { fonction })}
                 onToggleBureau={(id) => saveUser(u.id, { bureau_ids: toggled(ids, id) })}
-                onRemove={() => removeMember(u)}
+                onRemove={isPortalAdmin(u) ? undefined : () => removeMember(u)}
                 removeDisabled={currentUser?.id === u.id}
               />
             );
