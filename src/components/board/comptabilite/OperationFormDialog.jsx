@@ -195,7 +195,7 @@ export default function OperationFormDialog({ open, onOpenChange, operation, ini
             <div className="border-b border-slate-200 pb-6">
               <div className="flex flex-col items-center gap-4 text-center">
                 <div className="flex flex-col items-center justify-center gap-4 sm:flex-row sm:justify-center">
-                  <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/696fe5195586fd61f32bcb08/47c566a2e_images.png" alt="CGESN" className="h-20 w-auto object-contain" />
+                  <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/696fe5195586fd61f32bcb08/47c566a2e_images.png" alt="CITRAT" className="h-20 w-auto object-contain" />
                   <div className="text-center">
                     <p className="text-2xl font-bold text-[#1f3f95]">Cabinet de Géomètre Expert Soro Nanga Sarl</p>
                     <p className="mt-1 text-base text-slate-600">Foncier – SIG – VRD – Topographie – Géodésie – Formations</p>
