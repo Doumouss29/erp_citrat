@@ -15,7 +15,7 @@ import {
 
 // Écran de consentement obligatoire (mode "accord") et page « Mes données personnelles » (mode "gestion").
 const C = {
-  green: "#0f5c52", greenDark: "#0a4038", greenSoft: "#e3efec", greenTint: "#eef6f4",
+  green: "#0C3D85", greenDark: "#0a4038", greenSoft: "#e3efec", greenTint: "#eef6f4",
   ink: "#16201d", text: "#343d3a", muted: "#4b5552", soft: "#5d6763",
   line: "#dfe5e3", field: "#c9d2cf", page: "#f2f4f3", tile: "#f6f8f7",
 };
@@ -190,7 +190,7 @@ export default function Consentement({ mode = "accord" }) {
             <span style={{ alignSelf: "flex-start", fontSize: 12, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "#b42318", background: "#fdecea", borderRadius: 999, padding: "5px 12px" }}>Refus enregistré</span>
             <h1 style={{ margin: 0, fontSize: 24, fontWeight: 800, color: C.ink }}>Vous avez refusé l'utilisation de vos données</h1>
             <p style={{ margin: 0, fontSize: 15, lineHeight: 1.65, color: C.muted }}>
-              Votre décision du {today} est enregistrée dans le journal des consentements. Sans votre accord, vous ne pouvez accéder à aucune application du Portail Digital CGESN.
+              Votre décision du {today} est enregistrée dans le journal des consentements. Sans votre accord, vous ne pouvez accéder à aucune application du Portail Digital CITRAT.
             </p>
             <p style={{ margin: 0, fontSize: 14, lineHeight: 1.6, color: C.soft }}>
               Vous pouvez changer d'avis à tout moment : reconnectez-vous et donnez votre accord pour retrouver l'accès.
@@ -312,7 +312,7 @@ export default function Consentement({ mode = "accord" }) {
               J'ai lu et compris la notice d'information sur l'utilisation de mes données personnelles.
             </Check>
             <Check id="c2" checked={c2} onChange={() => setC2((v) => !v)}>
-              J'accepte que le CGESN utilise mes nom, prénom, âge, téléphone et e-mail pour les finalités décrites ci-dessus, dans le cadre de l'utilisation du portail.
+              J'accepte que le CITRAT utilise mes nom, prénom, âge, téléphone et e-mail pour les finalités décrites ci-dessus, dans le cadre de l'utilisation du portail.
             </Check>
             {tried && !ready && !done && (
               <p role="status" style={{ margin: 0, fontSize: 13, color: "#8a4b08", background: "#fdf3e2", borderRadius: 10, padding: "10px 14px" }}>
@@ -400,7 +400,7 @@ function Check({ id, checked, onChange, children }) {
 function Spinner({ inline = false }) {
   return (
     <div style={inline ? { display: "flex", justifyContent: "center", padding: "24px 0" } : { position: "fixed", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
-      <div className="w-8 h-8 border-4 border-slate-200 border-t-[#0f5c52] rounded-full animate-spin" />
+      <div className="w-8 h-8 border-4 border-slate-200 border-t-[#0C3D85] rounded-full animate-spin" />
     </div>
   );
 }
