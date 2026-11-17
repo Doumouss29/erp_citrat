@@ -79,7 +79,7 @@ def decorate(row):
 
 def select(name, q=None, sort='-created_date', limit=100, skip=0):
     require_entity(name)
-    if not (0 <= skip <= 100000 and 1 <= limit <= 500): raise HTTPException(422,'Invalid pagination')
+    if not (0 <= skip <= 100000 and 1 <= limit <= 5000): raise HTTPException(422,'Invalid pagination')
     with db() as c:
         rows=[decorate(r) for r in c.execute('SELECT * FROM records WHERE entity=?',(name,))]
         if name == 'ConsentementDonnees':
