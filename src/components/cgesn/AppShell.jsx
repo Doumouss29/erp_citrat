@@ -148,7 +148,7 @@ export default function AppShell({ appId, app = {}, items = [], tabs = [], actio
       {[["personal", "Mon profil"], ["admin", "Administration"]].map(([value, label]) => (
         <button key={value} type="button" onClick={() => { navigationSwitch.onChange(value); close(); }}
           aria-pressed={navigationSwitch.value === value}
-          className={`min-w-0 rounded-lg px-1.5 py-2 text-xs font-semibold whitespace-normal leading-tight transition-colors ${navigationSwitch.value === value ? "bg-[#0D5C66] text-white shadow-sm" : "text-[#0D5C66] hover:bg-white"}`}>
+          className={`min-w-0 rounded-lg px-1.5 py-2 text-xs font-semibold whitespace-normal leading-tight transition-colors ${navigationSwitch.value === value ? "bg-[#0C3D85] text-white shadow-sm" : "text-[#0C3D85] hover:bg-white"}`}>
           {label}
         </button>
       ))}
