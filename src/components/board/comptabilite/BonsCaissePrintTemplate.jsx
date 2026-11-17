@@ -56,7 +56,7 @@ export function buildBonCaissePrintHtml(operation, bureauNom) {
   const copy = () => `
     <section class="bon">
       <header class="header">
-        <img class="logo" src="${CGESN_LOGO_DATA_URI}" alt="CGESN" />
+        <img class="logo" src="${CGESN_LOGO_DATA_URI}" alt="CITRAT" />
         <div class="header-text">
           <h1>Cabinet de Géomètre Expert Soro Nanga Sarl</h1>
           <p>Foncier – SIG – VRD – Topographie – Géodésie – Formations</p>
