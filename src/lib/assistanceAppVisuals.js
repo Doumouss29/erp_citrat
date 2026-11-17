@@ -3,7 +3,7 @@ import { Globe, Users, LayoutGrid, Map, BookOpen, ShieldCheck, Headset, HardHat,
 // Logos officiels des applications (alignés sur APP_DEFS du portail)
 export const APP_LOGOS = {
   'cgesn.com': '/uploads/pasted-1786225046598-0.png',
-  'rh-cgesn': '/uploads/logo_CGESN_RH.png',
+  'rh-cgesn': '/logo-citrat.svg',
   'cgesn-board': '/uploads/pasted-1786225011933-0.png',
   'e-cadastre': 'https://media.base44.com/images/public/6aa96886350e13fe6882c8af/72923d3d9_image.png',
   'e-guide': '/uploads/pasted-1786225450048-0.png',
