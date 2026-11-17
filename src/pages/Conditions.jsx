@@ -7,7 +7,7 @@ import SiteFooter from "@/components/cgesn/SiteFooter";
 export default function Conditions() {
   return (
     <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", background: "oklch(0.965 0.004 90)", fontFamily: "'Poppins',Helvetica,Arial,sans-serif", overflowX: "hidden" }}>
-      <BrandHeader subtitle="CABINET IVOIRIEN DES TRAVAUX TOPOGRAPHIQUES" nowrap maxWidth={820} />
+      <BrandHeader subtitle="DAGNOKO HAMED" nowrap maxWidth={820} />
       <ColorBar />
 
       <div style={{ flex: 1, maxWidth: 820, margin: "0 auto", width: "100%", boxSizing: "border-box", padding: "clamp(36px,5vw,56px) clamp(20px,4vw,32px) 60px" }}>
@@ -25,7 +25,7 @@ export default function Conditions() {
             <h2 style={{ fontSize: 15, fontWeight: 700, color: "oklch(0.28 0.01 90)", margin: "0 0 8px" }}>1. Champ d'application</h2>
             <p style={{ fontSize: 14, lineHeight: 1.7, color: "oklch(0.4 0.005 90)", margin: 0 }}>
               Les présentes conditions régissent l'accès et l'utilisation du Portail Digital CITRAT, réservé aux
-              collaborateurs du Cabinet Ivoirien des Travaux Topographiques (CITRAT). L'utilisation du Portail implique
+              collaborateurs du DAGNOKO HAMED (CITRAT). L'utilisation du Portail implique
               l'acceptation pleine et entière de ces conditions.
             </p>
           </section>
