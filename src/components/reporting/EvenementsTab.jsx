@@ -82,13 +82,13 @@ function getNextBirthdayInfo(birthDate) {
             user_email: birthdayEmp.email,
             type: "general",
             title: `🎂 Joyeux Anniversaire !`,
-            message: `Toute l'équipe CGESN vous souhaite un très joyeux anniversaire ! Bonne journée !`
+            message: `Toute l'équipe CITRAT vous souhaite un très joyeux anniversaire ! Bonne journée !`
           });
 
           await sendMail({
             to: birthdayEmp.email,
             subject: `🎂 Joyeux Anniversaire !`,
-            body: `Bonjour ${birthdayEmp.first_name} ${birthdayEmp.last_name},\n\nToute l'équipe CGESN vous souhaite un très joyeux anniversaire ! Nous espérons que cette journée soit remplie de joie et de bonheur.\n\nCordialement,\nLa Direction - CGESN`
+            body: `Bonjour ${birthdayEmp.first_name} ${birthdayEmp.last_name},\n\nToute l'équipe CITRAT vous souhaite un très joyeux anniversaire ! Nous espérons que cette journée soit remplie de joie et de bonheur.\n\nCordialement,\nLa Direction - CITRAT`
           });
 
           count++;
@@ -111,7 +111,7 @@ function getNextBirthdayInfo(birthDate) {
           await sendMail({
             to: colleague.email,
             subject: title,
-            body: `Bonjour ${colleague.first_name},\n\n${message}\n\nCordialement,\nLa Direction - CGESN`
+            body: `Bonjour ${colleague.first_name},\n\n${message}\n\nCordialement,\nLa Direction - CITRAT`
           });
 
           count++;
@@ -136,8 +136,8 @@ function getNextBirthdayInfo(birthDate) {
     });
     await sendMail({
       to: emp.email,
-      subject: `Message de la Direction CGESN - ${typeLabels[type]}`,
-      body: `Bonjour ${emp.first_name} ${emp.last_name},\n\n${message}\n\nCordialement,\nLa Direction - CGESN`
+      subject: `Message de la Direction CITRAT - ${typeLabels[type]}`,
+      body: `Bonjour ${emp.first_name} ${emp.last_name},\n\n${message}\n\nCordialement,\nLa Direction - CITRAT`
     });
   };
 
@@ -200,8 +200,8 @@ function getNextBirthdayInfo(birthDate) {
                   <div className="bg-blue-50 rounded-lg p-3 text-sm space-y-2 border-l-4 border-blue-500">
                     <p className="font-semibold text-slate-900">Sujet : 🎂 Joyeux Anniversaire !</p>
                     <p className="text-slate-700">Bonjour [Prénom] [Nom],</p>
-                    <p className="text-slate-700 italic">Toute l'équipe CGESN vous souhaite un très joyeux anniversaire ! Nous espérons que cette journée soit remplie de joie et de bonheur.</p>
-                    <p className="text-slate-700">Cordialement,<br />La Direction - CGESN</p>
+                    <p className="text-slate-700 italic">Toute l'équipe CITRAT vous souhaite un très joyeux anniversaire ! Nous espérons que cette journée soit remplie de joie et de bonheur.</p>
+                    <p className="text-slate-700">Cordialement,<br />La Direction - CITRAT</p>
                   </div>
                 </div>
               )}
@@ -216,7 +216,7 @@ function getNextBirthdayInfo(birthDate) {
                       : `L'anniversaire de votre collègue ${birthdaysIn3Days[0]?.first_name} ${birthdaysIn3Days[0]?.last_name?.toUpperCase()} est le ${format(birthdaysIn3Days[0]?.nextBirthday, "dd MMMM", { locale: fr })}. Pensez à lui souhaiter un joyeux anniversaire ! 🎂`
                     }
                   </p>
-                  <p className="text-slate-700">Cordialement,<br />La Direction - CGESN</p>
+                  <p className="text-slate-700">Cordialement,<br />La Direction - CITRAT</p>
                 </div>
               </div>
             </>
@@ -339,9 +339,9 @@ function ManualEventSender({ employees }) {
   const [sent, setSent] = useState(false);
 
   const messages = {
-    marriage: (emp) => `Cher(e) ${emp?.first_name}, toute l'équipe CGESN vous adresse ses plus sincères félicitations à l'occasion de votre mariage. Nous vous souhaitons tout le bonheur du monde !`,
-    birth: (emp) => `Cher(e) ${emp?.first_name}, toute l'équipe CGESN vous félicite chaleureusement pour l'heureux événement ! Nous souhaitons tout le bonheur à votre famille et beaucoup de santé à votre enfant.`,
-    mourning: (emp) => `Cher(e) ${emp?.first_name}, toute l'équipe CGESN vous présente ses plus sincères condoléances dans cette épreuve difficile. Nous pensons à vous et à votre famille.`,
+    marriage: (emp) => `Cher(e) ${emp?.first_name}, toute l'équipe CITRAT vous adresse ses plus sincères félicitations à l'occasion de votre mariage. Nous vous souhaitons tout le bonheur du monde !`,
+    birth: (emp) => `Cher(e) ${emp?.first_name}, toute l'équipe CITRAT vous félicite chaleureusement pour l'heureux événement ! Nous souhaitons tout le bonheur à votre famille et beaucoup de santé à votre enfant.`,
+    mourning: (emp) => `Cher(e) ${emp?.first_name}, toute l'équipe CITRAT vous présente ses plus sincères condoléances dans cette épreuve difficile. Nous pensons à vous et à votre famille.`,
   };
 
   const eventLabels = { marriage: "Mariage 💍", birth: "Naissance 👶", mourning: "Deuil 🕊️" };
@@ -363,8 +363,8 @@ function ManualEventSender({ employees }) {
       if (emp.email) {
         await sendMail({
           to: emp.email,
-          subject: `Message de la Direction CGESN`,
-          body: `Bonjour ${emp.first_name} ${emp.last_name},\n\n${msg}\n\nCordialement,\nLa Direction - CGESN`
+          subject: `Message de la Direction CITRAT`,
+          body: `Bonjour ${emp.first_name} ${emp.last_name},\n\n${msg}\n\nCordialement,\nLa Direction - CITRAT`
         });
       }
       setSent(true);
