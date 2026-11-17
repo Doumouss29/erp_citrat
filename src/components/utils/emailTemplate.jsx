@@ -1,6 +1,6 @@
 /**
  * Gabarit HTML unique pour TOUS les emails envoyés par le Portail Digital CITRAT (ERP CITRAT).
- * Même identité que l'email de code de vérification : bandeau vert #0C3D85, logo, police Poppins.
+ * Même identité que l'email de code de vérification : bandeau bleu #0C3D85, logo, police Poppins.
  *
  * - sendMail({ to, subject, body | html }) : point d'envoi unique.
  *   Un texte simple (body) est mis en forme automatiquement :
@@ -12,11 +12,11 @@ import { base44 } from "@/api/base44Client";
 
 export const ERP_NAME = "ERP CITRAT";
 export const BRAND_NAME = "Portail Digital CITRAT";
-export const ORG_NAME = "Cabinet de Géomètre Expert Soro Nanga";
+export const ORG_NAME = "Cabinet Ivoirien des Travaux Topographiques";
 export const SENDER_NAME = "PORTAIL DIGITAL CITRAT";
 export const PORTAL_URL = "https://portail-digital-cgesn.com";
 const GREEN = "0f5c52";
-const LOGO_URL = "https://base44.app/api/apps/6aa96886350e13fe6882c8af/files/mp/public/6aa96886350e13fe6882c8af/ca2891085_Page1.png";
+const LOGO_URL = 'https://erp-citrat.158-69-201-110.sslip.io/logo-citrat.svg';
 const FONT = "'Poppins', 'Segoe UI', Arial, Helvetica, sans-serif";
 
 /** Codes techniques → libellés (absences, périodes de congé, statuts). */
