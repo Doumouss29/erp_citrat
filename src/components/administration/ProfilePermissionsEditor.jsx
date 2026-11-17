@@ -53,7 +53,7 @@ export default function ProfilePermissionsEditor({profile,onSaved}) {
           Chaque permission est refusée par défaut. Les contrôles sont appliqués sur le serveur.
         </p>
       </div>
-      <button type="button" style={{...actionButton,opacity:saving?.55:1}} disabled={saving||!catalog} onClick={save}>
+      <button type="button" style={{...actionButton,opacity:saving ? 0.55 : 1}} disabled={saving||!catalog} onClick={save}>
         {saving?"Enregistrement…":"Enregistrer les droits"}
       </button>
     </div>
