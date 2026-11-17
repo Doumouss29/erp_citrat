@@ -28,6 +28,9 @@ class OnboardingTests(unittest.TestCase):
                     "name":"Test "+suffix,"profile_id":"test_"+suffix,"apps":["cgesnboard"]}).status_code,200)
                 self.assertEqual(admin.post("/api/entities/OfficeTerminal",json={
                     "office_name":"OFFICE_"+suffix,"email":"office-"+suffix+"@example.invalid"}).status_code,200)
+                invitation=admin.post("/api/admin/invitations",json={"email":em})
+                self.assertEqual(invitation.status_code,200,invitation.text)
+                self.assertIn("/inscription",messages[-1][2])
                 created=client.post("/api/public/signup",json={
                     "email":em,"password":"StrongSignupSecret2026!",
                     "first_name":"Prénom","last_name":"Nom","telephone":"+225 0700000000"})
@@ -54,6 +57,11 @@ class OnboardingTests(unittest.TestCase):
                 self.assertEqual(me.status_code,200,me.text)
                 self.assertEqual(me.json()["grade"],"test_"+suffix)
                 self.assertEqual(client.get("/api/admin/users").status_code,403)
+                self.assertEqual(client.patch("/api/admin/users/"+me.json()["id"],json={"role":"admin"}).status_code,403)
+                own_profiles=client.get("/api/entities/AccessProfile")
+                self.assertEqual(own_profiles.status_code,200,own_profiles.text)
+                self.assertEqual(len(own_profiles.json()),1)
+
                 self.assertEqual(client.get("/api/entities/Employee").status_code,403)
                 consent=client.post("/api/auth/consent",json={"version":"1"})
                 self.assertEqual(consent.status_code,200,consent.text)
