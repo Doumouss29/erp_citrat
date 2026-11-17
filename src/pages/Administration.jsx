@@ -9,7 +9,7 @@ import { UploadFile } from "@/api/integrations";
 import { useAuth } from "@/lib/AuthContext";
 import { BRAND_LOGO_SLOTS, DEFAULT_BRAND_LOGOS, fetchBrandLogosConfig, saveBrandLogos } from "@/lib/brandLogos";
 import { EXTERNAL_GRADES } from "@/lib/externalAccess";
-import { ensureExternalProfiles, fetchProfiles, invalidateProfiles, profileApps, getProfile } from "@/lib/accessProfiles";
+import { fetchProfiles, invalidateProfiles, profileApps, getProfile } from "@/lib/accessProfiles";
 import WorkflowValidatorsManager from "@/components/administration/WorkflowValidatorsManager";
 import HseAlertRecipientsManager from "@/components/administration/HseAlertRecipientsManager";
 import UsersByOrgManager from "@/components/administration/UsersByOrgManager";
@@ -228,9 +228,7 @@ export default function Administration() {
     setProfilesLoading(true);
     setProfilesError(null);
     try {
-      if (user?.role === "admin") {
-        await ensureExternalProfiles().catch((err) => console.error("Grades externes :", err));
-      }
+      // Aucune création automatique de profils hérités de CGESN.
       const list = await fetchProfiles({ force: true });
       setProfiles(list || []);
     } catch (err) {
