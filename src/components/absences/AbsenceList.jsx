@@ -242,7 +242,7 @@ export default function AbsenceList({ absences, employees = [], loading, isHR, c
                           </div>
                           <p className="text-xs font-bold text-slate-900">Niveau 3 - DG</p>
                           <p className="text-xs text-slate-600 mt-1 line-clamp-2">
-                            SORO NANGA
+                            CITRAT
                           </p>
                           {absence.level3_date && (
                             <p className="text-xs text-slate-500 mt-1">
