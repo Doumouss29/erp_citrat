@@ -35,6 +35,7 @@ export const base44 = {
         get: async id => (await request('/admin/users')).find(u => u.id === id),
         update: (id,data) => request('/admin/users/'+encodeURIComponent(id),{method:'PATCH',body:body(data)}),
         delete: id => request('/admin/users/'+encodeURIComponent(id),{method:'DELETE'}),
+        setStatus: (id,status) => request('/admin/accounts/'+encodeURIComponent(id)+'/status',{method:'PATCH',body:body({status})}),
         create: () => { throw new Error('Création de compte non disponible tant que les rôles et invitations ne sont pas migrés.'); }
       }
     : entity(name)}),
@@ -43,12 +44,23 @@ export const base44 = {
     loginViaEmailPassword: (email,password) => request('/auth/login',{method:'POST',body:body({email,password})}),
     logout: async () => { await request('/auth/logout',{method:'POST'}); window.location.href='/connexion'; },
     updateMe: data => request('/auth/me',{method:'PATCH',body:body(data)}),
+    register: data => request('/public/signup',{method:'POST',body:body(data)}),
+    verifyOtp: data => request('/public/signup/verify',{method:'POST',body:body({email:data.email,otp:data.otpCode || data.otp})}),
+    resendOtp: email => request('/public/signup/resend',{method:'POST',body:body({email})}),
+    resetPasswordRequest: email => request('/public/password/forgot',{method:'POST',body:body({email})}),
+    resetPassword: data => request('/public/password/reset',{method:'POST',body:body(data)}),
     acceptConsent: data => request('/auth/consent',{method:'POST',body:body(data)}),
     setToken: () => { throw new Error('Token-based sign-in is disabled; use cookie auth'); },
     redirectToLogin: () => { window.location.href='/connexion'; },
     isAuthenticated: async () => !!(await request('/auth/me').catch(() => null)),
   },
   app: {getPublicSettings: () => request('/public-settings')},
+  onboarding: {
+    config: () => request('/public/auth-config'),
+    registrations: () => request('/admin/registrations'),
+    decide: (id,data) => request('/admin/registrations/'+encodeURIComponent(id)+'/decision',{method:'POST',body:body(data)}),
+    accountStatus: (id,status) => request('/admin/accounts/'+encodeURIComponent(id)+'/status',{method:'PATCH',body:body({status})})
+  },
   functions: {invoke: async (name, payload = {}) => request(`/functions/${encodeURIComponent(name)}`,{method:'POST',body:body(payload)})},
   integrations: {Core: new Proxy({}, {get: (_, name) => async () => {throw new Error(`Integration ${String(name)} not migrated yet`);}})},
   users: new Proxy({}, {get: (_, name) => async () => {throw new Error(`User management ${String(name)} not migrated yet`);}}),
