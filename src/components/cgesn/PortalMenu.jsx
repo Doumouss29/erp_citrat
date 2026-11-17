@@ -1,5 +1,5 @@
 /**
- * MENU OFFICIEL du Portail Digital CGESN — à utiliser dans TOUS les modules
+ * MENU OFFICIEL du Portail Digital CITRAT — à utiliser dans TOUS les modules
  * (RH, Board, CSST, Assistance, e-Guide, e-Cadastre, HSE…). Ne pas recréer de menu à la main.
  *
  *  - MenuButton  : bouton hamburger officiel (carré arrondi vert marque, bordure claire, 3 traits).
@@ -119,7 +119,7 @@ export function MenuPortalLink({ onClick, to = "/portail" }) {
       to={to}
       onClick={onClick}
       className="flex items-center gap-2 text-sm font-semibold border-t border-slate-200 flex-shrink-0 hover:bg-slate-50"
-      style={{ padding: "14px 20px", color: "#0f5c52", textDecoration: "none" }}
+      style={{ padding: "14px 20px", color: "#0C3D85", textDecoration: "none" }}
     >
       <Home className="w-4 h-4" />
       Retour au portail
