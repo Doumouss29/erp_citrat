@@ -79,7 +79,7 @@ export default function DepartureDialog({ open, mode, employee, currentUser, onC
   };
 
   const title = mode === "leave" ? "Enregistrer le départ" : mode === "renew" ? "Renouveler ou faire évoluer le contrat" : "Réintégrer la personne";
-  const accent = mode === "leave" ? "bg-rose-600 hover:bg-rose-700" : "bg-[#0f5c52] hover:bg-[#0c4c44]";
+  const accent = mode === "leave" ? "bg-rose-600 hover:bg-rose-700" : "bg-[#0C3D85] hover:bg-[#0c4c44]";
 
   return (
     <Dialog open={open} onOpenChange={(v) => { if (!v && !busy) onClose(); }}>
@@ -145,7 +145,7 @@ export default function DepartureDialog({ open, mode, employee, currentUser, onC
               {f.kind !== "CDI" && (
                 <div className="flex flex-wrap gap-2">
                   {[3, 6, 12].map((n) => (
-                    <button key={n} type="button" onClick={() => set("endDate", addMonths(f.startDate, n))} className="h-8 px-3 rounded-full border border-slate-200 text-xs font-semibold text-slate-600 hover:border-[#0f5c52] hover:text-[#0f5c52]">
+                    <button key={n} type="button" onClick={() => set("endDate", addMonths(f.startDate, n))} className="h-8 px-3 rounded-full border border-slate-200 text-xs font-semibold text-slate-600 hover:border-[#0C3D85] hover:text-[#0C3D85]">
                       + {n} mois
                     </button>
                   ))}
