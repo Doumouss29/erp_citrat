@@ -135,7 +135,7 @@ export default function ValidationPage() {
     return (
       <div className="min-h-screen bg-slate-50 p-8 flex items-center justify-center">
         <div className="text-center">
-          <div className="w-16 h-16 border-4 border-slate-200 border-t-[#0d5c66] rounded-full animate-spin mx-auto mb-4"></div>
+          <div className="w-16 h-16 border-4 border-slate-200 border-t-[#0C3D85] rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-slate-600">Chargement...</p>
         </div>
       </div>
@@ -197,7 +197,7 @@ export default function ValidationPage() {
           mobileTitle="Validations"
         />
 
-        <section className="relative overflow-hidden rounded-2xl text-[#0D5C66] shadow-sm border border-[#DFE8EA]" style={{ background: "#F3F7F8" }}>
+        <section className="relative overflow-hidden rounded-2xl text-[#0C3D85] shadow-sm border border-[#DFE8EA]" style={{ background: "#F3F7F8" }}>
           <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full blur-3xl" style={{ background: "rgba(13,92,102,0.025)" }} aria-hidden="true" />
           <div className="absolute -bottom-28 -left-20 w-72 h-72 rounded-full bg-[#E8F2F3]/30 blur-3xl" aria-hidden="true" />
           <div className="absolute inset-x-0 top-0 h-1" style={{ background: `linear-gradient(90deg, transparent, ${RH_GOLD}, transparent)` }} aria-hidden="true" />
@@ -205,8 +205,8 @@ export default function ValidationPage() {
             <div className="p-4 sm:p-5">
               <BandTitle
                 right={totalTodo > 0
-                  ? <span className="rounded-full text-[11px] font-bold px-2.5 py-1" style={{ background: "#E8F2F3", color: "#0D5C66" }}>{totalTodo} en attente</span>
-                  : <span className="inline-flex items-center gap-1 rounded-full bg-white ring-1 ring-[#DFE8EA] text-[#0D5C66] text-[11px] font-bold px-2.5 py-1"><CheckCircle2 className="w-3.5 h-3.5" aria-hidden="true" />À jour</span>}
+                  ? <span className="rounded-full text-[11px] font-bold px-2.5 py-1" style={{ background: "#E8F2F3", color: "#0C3D85" }}>{totalTodo} en attente</span>
+                  : <span className="inline-flex items-center gap-1 rounded-full bg-white ring-1 ring-[#DFE8EA] text-[#0C3D85] text-[11px] font-bold px-2.5 py-1"><CheckCircle2 className="w-3.5 h-3.5" aria-hidden="true" />À jour</span>}
               >
                 À traiter
               </BandTitle>
@@ -249,7 +249,7 @@ export default function ValidationPage() {
                       </div>
                     )}
                     {tracking.length > 0 && (
-                      <div className="mt-4 pt-4 border-t border-[#0d5c66]/10">
+                      <div className="mt-4 pt-4 border-t border-[#0C3D85]/10">
                         <button type="button" onClick={() => setShowTracking((value) => !value)} aria-expanded={showTracking} className="inline-flex items-center gap-1 text-sm font-semibold hover:underline" style={{ color: "var(--accent)" }}>
                           Suivi du circuit ({tracking.length})
                           <ChevronDown className={`w-4 h-4 transition-transform ${showTracking ? "rotate-180" : ""}`} aria-hidden="true" />
@@ -271,7 +271,7 @@ export default function ValidationPage() {
         ) : (
           <>
             <div className="flex flex-col sm:flex-row sm:items-center gap-2">
-              <Button onClick={() => setView("todo")} className="sm:mr-auto h-11 px-5 rounded-xl border-0 bg-[#0d5c66] hover:bg-[#0e4b53] text-white font-bold shadow-sm ring-1 ring-[#d4af6a]/50">
+              <Button onClick={() => setView("todo")} className="sm:mr-auto h-11 px-5 rounded-xl border-0 bg-[#0C3D85] hover:bg-[#0e4b53] text-white font-bold shadow-sm ring-1 ring-[#d4af6a]/50">
                 <ArrowLeft className="w-5 h-5 mr-2" style={{ color: RH_GOLD }} aria-hidden="true" />
                 Retour aux demandes à traiter
                 {totalTodo > 0 && (
@@ -356,7 +356,7 @@ export default function ValidationPage() {
                 </AlertDescription>
               </Alert>
               {reviewDialog && (
-                <p className="text-sm text-slate-700 rounded-xl bg-[#0d5c66]/[0.05] px-3 py-2.5">
+                <p className="text-sm text-slate-700 rounded-xl bg-[#0C3D85]/[0.05] px-3 py-2.5">
                   {decisionOutcome(reviewDialog.item, reviewDialog.kind, reviewDialog.approved)}
                 </p>
               )}
@@ -391,7 +391,7 @@ export default function ValidationPage() {
               <Button
                 onClick={handleReview}
                 disabled={submitting}
-                className={`rounded-xl text-white ${reviewDialog?.approved ? "bg-[#0d5c66] hover:bg-[#0e4b53]" : "bg-red-700 hover:bg-red-800"}`}
+                className={`rounded-xl text-white ${reviewDialog?.approved ? "bg-[#0C3D85] hover:bg-[#0e4b53]" : "bg-red-700 hover:bg-red-800"}`}
               >
                 {submitting ? "Traitement..." : reviewDialog?.approved ? "Confirmer l'acceptation" : "Confirmer le refus"}
               </Button>
