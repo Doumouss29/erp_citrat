@@ -79,13 +79,13 @@ export default function OfficeTerminalsManager({ currentUser, onCount }) {
     <div className="space-y-5">
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
         <div>
-          <p className="text-sm font-bold uppercase tracking-[0.12em] text-[#0d5c66]">Tablettes de pointage des bureaux</p>
+          <p className="text-sm font-bold uppercase tracking-[0.12em] text-[#0C3D85]">Tablettes de pointage des bureaux</p>
           <p className="text-xs text-slate-500 mt-1">
             Chaque bureau dispose d'une tablette connectée avec un compte dédié, sur laquelle les agents pointent. {active}/{terminals.length} active{active > 1 ? "s" : ""}.
           </p>
         </div>
         {isAdmin && (
-          <Button onClick={() => openForm()} className="w-full sm:w-auto bg-[#0f5c52] hover:bg-[#0c4c44] text-white rounded-xl h-11 px-5 shadow-md">
+          <Button onClick={() => openForm()} className="w-full sm:w-auto bg-[#0C3D85] hover:bg-[#0c4c44] text-white rounded-xl h-11 px-5 shadow-md">
             <Plus className="w-4 h-4 mr-2" />
             Nouvelle tablette
           </Button>
@@ -108,13 +108,13 @@ export default function OfficeTerminalsManager({ currentUser, onCount }) {
                 key={t.id}
                 type="button"
                 onClick={() => isAdmin && openForm(t)}
-                className={`group text-left rounded-2xl bg-white border overflow-hidden shadow-sm transition ${isAdmin ? "hover:-translate-y-0.5 hover:shadow-lg cursor-pointer" : "cursor-default"} ${on ? "border-[#0f5c52]/15" : "border-slate-200 opacity-70"}`}
+                className={`group text-left rounded-2xl bg-white border overflow-hidden shadow-sm transition ${isAdmin ? "hover:-translate-y-0.5 hover:shadow-lg cursor-pointer" : "cursor-default"} ${on ? "border-[#0C3D85]/15" : "border-slate-200 opacity-70"}`}
                 title={isAdmin ? "Modifier la tablette" : t.office_name}
               >
-                <div className={`h-1 ${on ? "bg-gradient-to-r from-[#0f5c52] to-[#14806f]" : "bg-slate-300"}`} />
+                <div className={`h-1 ${on ? "bg-gradient-to-r from-[#0C3D85] to-[#14806f]" : "bg-slate-300"}`} />
                 <div className="p-4 space-y-3">
                   <div className="flex items-start gap-3">
-                    <div className={`w-11 h-11 rounded-xl flex items-center justify-center flex-none ${on ? "bg-[#0f5c52]/10 text-[#0f5c52]" : "bg-slate-100 text-slate-400"}`}>
+                    <div className={`w-11 h-11 rounded-xl flex items-center justify-center flex-none ${on ? "bg-[#0C3D85]/10 text-[#0C3D85]" : "bg-slate-100 text-slate-400"}`}>
                       <Tablet className="w-5 h-5" />
                     </div>
                     <div className="min-w-0 flex-1">
@@ -173,7 +173,7 @@ export default function OfficeTerminalsManager({ currentUser, onCount }) {
           <DialogFooter className="gap-2">
             {editing && <Button variant="destructive" onClick={remove} disabled={busy} className="sm:mr-auto rounded-xl">Supprimer</Button>}
             <Button variant="outline" onClick={() => setOpen(false)} disabled={busy} className="rounded-xl">Annuler</Button>
-            <Button onClick={save} disabled={busy} className="bg-[#0f5c52] hover:bg-[#0c4c44] text-white rounded-xl">{busy ? "Enregistrement…" : editing ? "Enregistrer" : "Créer"}</Button>
+            <Button onClick={save} disabled={busy} className="bg-[#0C3D85] hover:bg-[#0c4c44] text-white rounded-xl">{busy ? "Enregistrement…" : editing ? "Enregistrer" : "Créer"}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
