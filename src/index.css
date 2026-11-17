@@ -302,3 +302,42 @@ html.assistance-theme.dark {
   .csst-scope .field > label { color: rgba(32, 30, 29, 0.7); }
   .csst-scope .input:hover { border-color: rgba(32, 30, 29, 0.45); }
 }
+
+/* ===== Identité CITRAT — bleu profond, cyan, turquoise, sable doux ===== */
+:root, html[data-app] {
+  --citrat-navy: #081F69;
+  --citrat-blue: #0C3D85;
+  --citrat-cyan: #0A95C7;
+  --citrat-teal: #1A8992;
+  --citrat-sand: #F4C77D;
+  --citrat-ice: #F3F8FC;
+  --brand: 223 85% 23%;
+  --brand-foreground: 0 0% 100%;
+  --brand-light: 202 67% 96%;
+  --primary: 223 85% 23%;
+  --primary-foreground: 0 0% 100%;
+  --ring: 196 89% 42%;
+  --sidebar-primary: 223 85% 23%;
+  --sidebar-ring: 196 89% 42%;
+  --app: 8 31 105;
+  --app-soft: 243 248 252;
+}
+html[data-app] {
+  --tw-blue-50: 239 247 253;
+  --tw-blue-100: 220 237 250;
+  --tw-blue-200: 180 216 245;
+  --tw-blue-300: 130 187 234;
+  --tw-blue-400: 70 149 215;
+  --tw-blue-500: 31 110 189;
+  --tw-blue-600: 12 61 133;
+  --tw-blue-700: 9 46 110;
+  --tw-blue-800: 8 31 105;
+  --tw-blue-900: 6 24 77;
+  --tw-blue-950: 3 14 48;
+  --tw-indigo-600: 12 61 133;
+  --tw-indigo-700: 9 46 110;
+  --tw-indigo-800: 8 31 105;
+}
+body { background-color: var(--citrat-ice); }
+button, a, input { transition: background-color .18s ease, border-color .18s ease, box-shadow .18s ease; }
+:focus-visible { outline-color: var(--citrat-cyan); outline-offset: 2px; }
