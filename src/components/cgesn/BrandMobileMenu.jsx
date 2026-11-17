@@ -7,7 +7,7 @@ const DEFAULT_ITEMS = [{ label: "Retour au portail", to: "/portail" }];
 
 function Switch({ on }) {
   return (
-    <span aria-hidden="true" className={`relative inline-flex h-6 w-11 flex-none rounded-full transition-colors ${on ? "bg-[#0f5c52]" : "bg-slate-300"}`}>
+    <span aria-hidden="true" className={`relative inline-flex h-6 w-11 flex-none rounded-full transition-colors ${on ? "bg-[#0C3D85]" : "bg-slate-300"}`}>
       <span className={`absolute top-0.5 h-5 w-5 rounded-full bg-white shadow transition-transform ${on ? "translate-x-[22px]" : "translate-x-0.5"}`} />
     </span>
   );
@@ -32,7 +32,7 @@ export default function BrandMobileMenu({ items = DEFAULT_ITEMS, user }) {
       <MenuDrawer open={open} onClose={close}>
         {user && (
           <div className="flex items-center gap-3 px-5 py-4 border-b border-slate-100 bg-slate-50">
-            <span className="w-11 h-11 rounded-full bg-[oklch(0.82_0.15_80)] text-[#0d3b3f] flex items-center justify-center text-sm font-bold flex-none">{initials}</span>
+            <span className="w-11 h-11 rounded-full bg-[oklch(0.82_0.15_80)] text-[#081F69] flex items-center justify-center text-sm font-bold flex-none">{initials}</span>
             <span className="min-w-0">
               <span className="block text-sm font-semibold text-slate-900 truncate">{user.name || "Utilisateur"}</span>
               {user.email && <span className="block text-xs text-slate-500 truncate">{user.email}</span>}
