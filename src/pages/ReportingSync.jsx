@@ -955,7 +955,7 @@ export default function ReportingSyncPage() {
                 ];
                 return (
                   <>
-                    <p className="text-xs font-semibold text-[#0d5c66]/70 mb-3">
+                    <p className="text-xs font-semibold text-[#0C3D85]/70 mb-3">
                       {E.hasPeriod
                         ? `Période : ${reportingStartDate ? format(new Date(reportingStartDate), "dd/MM/yyyy") : "début"} → ${reportingEndDate ? format(new Date(reportingEndDate), "dd/MM/yyyy") : "aujourd'hui"}`
                         : "Période : tout l'historique — saisissez des dates pour restreindre les exports"}
@@ -966,28 +966,28 @@ export default function ReportingSyncPage() {
                           className="rounded-2xl overflow-hidden bg-white shadow-sm ring-1 ring-[#D8E5E8]">
                           <div className="flex items-center gap-3 px-5 py-3.5 bg-[#F2F7F8] border-b border-[#D8E5E8]">
                             <span className="w-10 h-10 rounded-xl bg-[#E2F0EF] flex items-center justify-center flex-none">
-                              <Icon className="w-5 h-5 text-[#0D5C66]" />
+                              <Icon className="w-5 h-5 text-[#0C3D85]" />
                             </span>
                             <div className="min-w-0">
-                              <h3 className="font-semibold text-[#0D5C66] leading-tight">{title}</h3>
+                              <h3 className="font-semibold text-[#0C3D85] leading-tight">{title}</h3>
                               <p className="text-xs text-[#667A82] whitespace-normal leading-snug">{sub}</p>
                             </div>
                           </div>
-                          <div className="divide-y divide-[#0d5c66]/10">
+                          <div className="divide-y divide-[#0C3D85]/10">
                             {rows.map((r) => (
                               <div key={r.file} className="flex items-center gap-3 px-5 py-3.5">
                                 <div className="flex-1 min-w-0">
                                   <p className="text-sm font-semibold text-slate-700">{r.label}</p>
                                   {r.hint && <p className="text-xs text-slate-400">{r.hint}</p>}
                                 </div>
-                                <span className="text-xl font-bold tabular-nums text-[#0d5c66] min-w-[3.5rem] text-right">{r.value}</span>
+                                <span className="text-xl font-bold tabular-nums text-[#0C3D85] min-w-[3.5rem] text-right">{r.value}</span>
                                 <div className="flex gap-1.5 flex-none">
                                   <Button size="sm" variant="outline" onClick={() => exportToCSV(r.data, r.file)}
-                                    className="h-9 rounded-xl text-xs font-semibold border-[#0d5c66]/20 text-[#0d5c66] hover:bg-[#0d5c66]/5">
+                                    className="h-9 rounded-xl text-xs font-semibold border-[#0C3D85]/20 text-[#0C3D85] hover:bg-[#0C3D85]/5">
                                     <Download className="w-3.5 h-3.5 mr-1" /> CSV
                                   </Button>
                                   <Button size="sm" onClick={() => exportToPDF(r.data, r.file, r.pdf)}
-                                    className="h-9 rounded-xl text-xs font-semibold bg-[#0d5c66] hover:bg-[#0e4b53] text-white">
+                                    className="h-9 rounded-xl text-xs font-semibold bg-[#0C3D85] hover:bg-[#0e4b53] text-white">
                                     <Download className="w-3.5 h-3.5 mr-1" /> PDF
                                   </Button>
                                 </div>
