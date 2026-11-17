@@ -200,7 +200,18 @@ export default function Inscription() {
             <div style={{ fontSize: 12, fontWeight: 600, color: "#42536B" }}>DAGNOKO HAMED</div>
           </div>
 
-          {!otpSent ? (
+          {verified ? (
+            <div role="status" style={{ background:"#EEF7FB", borderRadius:12, padding:20, textAlign:"center", color:"#081F69" }}>
+              <h2 style={{fontWeight:800,marginBottom:8}}>Adresse e-mail vérifiée</h2>
+              <p>Votre demande a été transmise à l'administrateur CITRAT. Vous pourrez vous connecter après son approbation.</p>
+              <Link to="/connexion" style={{color:"#0C3D85",fontWeight:700}}>Retour à la connexion</Link>
+            </div>
+          ) : registrationEnabled === false ? (
+            <div role="alert" style={{background:"#FFF5E9",padding:20,borderRadius:12,color:"#7C4A18"}}>
+              Les inscriptions sont temporairement indisponibles : la messagerie du portail doit être configurée par l'administrateur.
+              <div style={{marginTop:12}}><Link to="/connexion">Retour à la connexion</Link></div>
+            </div>
+          ) : !otpSent ? (
             <div className="cgesn-reg-form" style={{ display: "flex", flexDirection: "column", gap: 14 }}>
               <div className="cgesn-reg-name-row" style={{ display: "flex", gap: 10 }}>
                 <div style={{ flex: 1 }}>
