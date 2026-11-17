@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { base44 } from "@/api/base44Client";
+import IndividualRestrictionsEditor from "@/components/administration/IndividualRestrictionsEditor";
 
 const input = {padding:"9px 12px",border:"1px solid #CDD9E9",borderRadius:9,minWidth:0,background:"#fff"};
 const btn = {background:"#0C3D85",color:"#fff",border:0,borderRadius:9,padding:"10px 16px",fontWeight:700,cursor:"pointer"};
@@ -14,6 +15,7 @@ export default function RegistrationsManager() {
   const [offices,setOffices]=useState([]);
   const [departments,setDepartments]=useState([]);
   const [forms,setForms]=useState({});
+  const [editingExceptions,setEditingExceptions]=useState(null);
   const [loading,setLoading]=useState(true);
   const [busy,setBusy]=useState(null);
   const [error,setError]=useState("");
@@ -97,7 +99,15 @@ export default function RegistrationsManager() {
         <div style={{minWidth:160}}><strong>{[u.last_name,u.first_name].filter(Boolean).join(" ")||u.name||u.email}</strong>
           <div style={{fontSize:12,color:"#64748B"}}>{u.email} · {u.role==="admin"?"Administrateur":"Utilisateur"} · {u.account_status==="suspended"?"Suspendu":"Actif"}</div>
         </div>
-        {u.role!=="admin"&&<button style={{...btn,background:u.account_status==="suspended"?"#0C3D85":"#EFF3F9",color:u.account_status==="suspended"?"#fff":"#7A2D37"}} disabled={busy===u.id} onClick={()=>setStatus(u)}>{u.account_status==="suspended"?"Réactiver":"Suspendre"}</button>}
+        {u.role!=="admin"&&<div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
+          <button type="button" style={{...btn,background:"#EAF0F9",color:"#0C3D85"}} onClick={()=>setEditingExceptions(editingExceptions===u.id?null:u.id)}>
+            {editingExceptions===u.id?"Fermer les restrictions":"Restreindre les droits"}
+          </button>
+          <button style={{...btn,background:u.account_status==="suspended"?"#0C3D85":"#EFF3F9",color:u.account_status==="suspended"?"#fff":"#7A2D37"}} disabled={busy===u.id} onClick={()=>setStatus(u)}>{u.account_status==="suspended"?"Réactiver":"Suspendre"}</button>
+        </div>}
+        {u.role!=="admin"&&editingExceptions===u.id&&(
+          <IndividualRestrictionsEditor account={u} profiles={profiles} onSaved={reload}/>
+        )}
       </div>)}
     </section>
     <section style={panel}>
