@@ -39,6 +39,8 @@ def verify_pw(password, stored):
 
 with db() as c:
     c.execute('CREATE TABLE IF NOT EXISTS users (id TEXT PRIMARY KEY, email TEXT UNIQUE NOT NULL, name TEXT NOT NULL, password_hash TEXT NOT NULL, role TEXT NOT NULL)')
+    if 'profile_json' not in {r['name'] for r in c.execute('PRAGMA table_info(users)')}:
+        c.execute("ALTER TABLE users ADD COLUMN profile_json TEXT NOT NULL DEFAULT '{}'")
     c.execute('CREATE TABLE IF NOT EXISTS sessions (token_hash TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id), expires INTEGER NOT NULL)')
     c.execute('CREATE TABLE IF NOT EXISTS records (entity TEXT NOT NULL, id TEXT NOT NULL, payload TEXT NOT NULL, created_date TEXT NOT NULL, updated_date TEXT NOT NULL, PRIMARY KEY(entity,id))')
     if not c.execute('SELECT 1 FROM users').fetchone():
@@ -61,9 +63,11 @@ def user(request: Request):
     if not token: raise HTTPException(401,'Authentication required')
     token_hash=hashlib.sha256(token.encode()).hexdigest()
     with db() as c:
-        row=c.execute('SELECT u.id,u.email,u.name,u.role FROM sessions s JOIN users u ON u.id=s.user_id WHERE s.token_hash=? AND s.expires>?',(token_hash,int(time.time()))).fetchone()
+        row=c.execute('SELECT u.id,u.email,u.name,u.role,u.profile_json FROM sessions s JOIN users u ON u.id=s.user_id WHERE s.token_hash=? AND s.expires>?',(token_hash,int(time.time()))).fetchone()
     if not row or row['role'] != 'admin': raise HTTPException(403,'Admin only (role policies not migrated)')
-    return dict(row)
+    account = dict(row)
+    profile = json.loads(account.pop('profile_json') or '{}')
+    return {**account, **profile}
 
 def require_entity(name):
     if name not in SCHEMA_NAMES: raise HTTPException(404,'Unknown entity')
@@ -124,10 +128,33 @@ def me(current=Depends(user)): return current
 
 @app.patch('/api/auth/me')
 def update_me(data:dict=Body(...),current=Depends(user)):
-    allowed={k:v for k,v in data.items() if k=='name' and isinstance(v,str) and len(v)<160}
-    if allowed:
-        with db() as c: c.execute('UPDATE users SET name=? WHERE id=?',(allowed['name'],current['id']))
-    return {**current,**allowed}
+    # Profil local associé au compte ; conservation des champs sur le volume SQLite.
+    allowed_fields = {'first_name', 'last_name', 'date_naissance', 'telephone',
+                      'consentement_version', 'consentement_date'}
+    profile = {}
+    for key in allowed_fields:
+        if key in data:
+            val = data[key]
+            if not isinstance(val, str) or len(val) > 160:
+                raise HTTPException(422, f'Invalid {key}')
+            profile[key] = val.strip()
+    if 'telephone' in profile and profile['telephone'] and not re.fullmatch(r'[+0-9() .-]{8,24}',profile['telephone']):
+        raise HTTPException(422, 'Invalid telephone')
+    if 'date_naissance' in profile and profile['date_naissance']:
+        try:
+            datetime.strptime(profile['date_naissance'], '%Y-%m-%d')
+        except ValueError:
+            raise HTTPException(422, 'Invalid date_naissance')
+    name = data.get('name')
+    if name is not None and (not isinstance(name,str) or not (1 <= len(name.strip()) <= 160)):
+        raise HTTPException(422, 'Invalid name')
+    with db() as c:
+        row=c.execute('SELECT profile_json,name FROM users WHERE id=?',(current['id'],)).fetchone()
+        if not row: raise HTTPException(404, 'Account not found')
+        merged = {**json.loads(row['profile_json'] or '{}'), **profile}
+        c.execute('UPDATE users SET name=?,profile_json=? WHERE id=?',
+                  (name.strip() if name is not None else row['name'],json.dumps(merged,ensure_ascii=False),current['id']))
+    return {**current,**merged,'name':name.strip() if name is not None else row['name']}
 
 @app.post('/api/auth/logout')
 def logout(request:Request,response:Response):
