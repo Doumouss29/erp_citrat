@@ -77,7 +77,7 @@ export default function Bienvenue() {
                 <span style={{ color: "#091F68" }}>CITRAT</span>
               </div>
               <div className="cgesn-install-sub" style={{ fontSize: 11, fontWeight: 500, color: "oklch(0.55 0.005 90)", letterSpacing: "0.02em", marginTop: 4 }}>
-                CABINET IVOIRIEN DES TRAVAUX TOPOGRAPHIQUES · GÉOMÈTRE EXPERT
+                DAGNOKO HAMED
               </div>
             </div>
           </div>
