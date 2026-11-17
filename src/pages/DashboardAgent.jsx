@@ -212,7 +212,7 @@ export default function DashboardAgentPage() {
       value: todayLog?.hours_worked ? formatHoursMinutes(todayLog.hours_worked) : '0h',
       subtitle: todayLog ? `${todayLog.entry_time} → ${todayLog.exit_time || '...'}` : 'Aucun pointage aujourd\'hui',
       icon: Clock,
-      bgColor: "from-[#137f8c] to-[#0d5c66]",
+      bgColor: "from-[#137f8c] to-[#0C3D85]",
       badge: "Aujourd'hui"
     },
     {
@@ -270,7 +270,7 @@ export default function DashboardAgentPage() {
               className="w-14 h-14 md:w-16 md:h-16 rounded-full object-cover ring-2 ring-[#d4af6a] shadow-lg flex-none"
             />
           ) : (
-            <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-[#0d5c66] ring-2 ring-[#d4af6a] flex items-center justify-center text-[#d4af6a] text-2xl font-bold flex-none">
+            <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-[#0C3D85] ring-2 ring-[#d4af6a] flex items-center justify-center text-[#d4af6a] text-2xl font-bold flex-none">
               {employee?.first_name?.[0]?.toUpperCase() || employee?.last_name?.[0]?.toUpperCase() || 'U'}
             </div>
           )} />
