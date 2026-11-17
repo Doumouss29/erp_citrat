@@ -2,7 +2,7 @@ import { FormSelect } from "@/components/ui/form-select";
 import React, { useState, useEffect } from "react";
 import { fetchWorkflowValidatorsConfig, saveWorkflowValidators } from "@/lib/workflowValidators";
 import { base44 } from "@/api/base44Client";
-import { DEPARTEMENTS } from "@/lib/rhReferentiels";
+
 import { OrgTiles, OrgTile } from "@/components/administration/OrgTiles";
 
 const inputStyle = {
@@ -74,7 +74,7 @@ const properName = (s) => String(s || "").toLowerCase().replace(/(^|[\s'-])(\p{L
 
 // Bureaux et départements : référentiels déjà définis dans le code (fiche employé)
 // Liste des localités construite depuis les bureaux créés pour ce client.
-const DEPARTEMENT_OPTIONS = DEPARTEMENTS;
+// Département piloté par la base CITRAT.
 
 // Comparaison insensible à la casse et aux accents (ex. « bouaflé » = « BOUAFLE »)
 function sameKey(a, b) {
@@ -174,6 +174,15 @@ function ReadField({ label, value, flex, upper, muted }) {
 }
 
 export default function WorkflowValidatorsManager() {
+  const [configuredDepartments, setConfiguredDepartments] = useState([]);
+  useEffect(() => {
+    let active = true;
+    base44.entities.Department.list("label", 200)
+      .then(rows => { if(active) setConfiguredDepartments((rows || []).map(row=>({value:row.value,label:row.label}))); })
+      .catch(() => { if(active) setConfiguredDepartments([]); });
+    return () => { active = false; };
+  }, []);
+  const DEPARTEMENT_OPTIONS = configuredDepartments;
   const [configuredOffices, setConfiguredOffices] = useState([]);
   useEffect(() => {
     let mounted = true;
