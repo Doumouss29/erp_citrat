@@ -71,6 +71,10 @@ def user(request: Request):
     # L'administrateur initial a ses droits garantis par la base SQLite, pas par le client.
     return {**account, **profile, 'super_admin': account['role'] == 'admin'}
 
+# Nouveau parcours d'authentification pour les comptes validés.
+from backend.account_workflow import install as install_account_workflow
+account_user = install_account_workflow(app, db, hash_pw, verify_pw, SECRET)
+
 def require_entity(name):
     if name not in SCHEMA_NAMES: raise HTTPException(404,'Unknown entity')
 
@@ -128,19 +132,19 @@ def login(response:Response, data:dict=Body(...)):
         # Compare with fixed dummy hash too to reduce timing differences.
         valid=verify_pw(password,row['password_hash'] if row else hash_pw('dummy password', b'0'*16))
         if not row or not valid: raise HTTPException(401,'Identifiants invalides')
+        if row['account_status'] != 'active': raise HTTPException(403,'Compte en attente ou suspendu')
         token=secrets.token_urlsafe(48)
         c.execute('INSERT INTO sessions VALUES (?,?,?)',(hashlib.sha256(token.encode()).hexdigest(),row['id'],int(time.time())+43200))
     response.set_cookie('pm_session',token,max_age=43200,httponly=True,secure=os.environ.get('COOKIE_SECURE','true')=='true',samesite='strict',path='/')
     return {'id':row['id'],'email':row['email'],'name':row['name'],'role':row['role'], 'super_admin': row['role'] == 'admin'}
 
 @app.get('/api/auth/me')
-def me(current=Depends(user)): return current
+def me(current=Depends(account_user)): return current
 
 @app.patch('/api/auth/me')
-def update_me(data:dict=Body(...),current=Depends(user)):
+def update_me(data:dict=Body(...),current=Depends(account_user)):
     # Profil local associé au compte ; conservation des champs sur le volume SQLite.
-    allowed_fields = {'first_name', 'last_name', 'date_naissance', 'telephone',
-                      'consentement_version', 'consentement_date'}
+    allowed_fields = {'first_name', 'last_name', 'date_naissance', 'telephone'}
     profile = {}
     for key in allowed_fields:
         if key in data:
@@ -167,7 +171,7 @@ def update_me(data:dict=Body(...),current=Depends(user)):
     return {**current,**merged,'name':name.strip() if name is not None else row['name']}
 
 @app.post('/api/auth/consent')
-def accept_consent(data:dict=Body(...), current=Depends(user)):
+def accept_consent(data:dict=Body(...), current=Depends(account_user)):
     # Version de la notice pilotée côté serveur, jamais modifiable par le client.
     version = '1'
     if data.get('version') != version:
@@ -204,12 +208,12 @@ def logout(request:Request,response:Response):
 def admin_users(current=Depends(user)):
     if current['role'] != 'admin': raise HTTPException(403, 'Accès administrateur requis')
     with db() as c:
-        rows=c.execute('SELECT id,email,name,role,profile_json FROM users ORDER BY email').fetchall()
+        rows=c.execute('SELECT id,email,name,role,profile_json,account_status FROM users ORDER BY email').fetchall()
     result=[]
     for row in rows:
         profile=json.loads(row['profile_json'] or '{}')
         result.append({'id':row['id'],'email':row['email'],'name':row['name'],
-                       'full_name':row['name'],'role':row['role'],
+                       'full_name':row['name'],'role':row['role'],'account_status':row['account_status'],
                        **profile,'super_admin':row['role']=='admin'})
     return result
 
