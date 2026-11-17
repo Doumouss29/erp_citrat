@@ -288,5 +288,30 @@ def delete_record(name:str,record_id:str,current=Depends(user)):
     return {'success':True}
 
 @app.post('/api/functions/{name}')
-def function_placeholder(name:str,current=Depends(user)):
+def function_placeholder(name:str, data:dict=Body(default={}), current=Depends(user)):
+    # Actions d'administration déjà migrées. Les autres fonctions ne sont pas simulées.
+    if name == 'updateUserAccess':
+        uid=data.get('user_id')
+        if not isinstance(uid,str) or not uid:
+            raise HTTPException(422,'Identifiant utilisateur manquant')
+        allowed={'grade','access','office','department','fonction','bureau_ids','bureau_id','bureau_code'}
+        changes={k:v for k,v in data.items() if k in allowed}
+        if not changes:
+            raise HTTPException(422,'Aucune modification')
+        if any(k not in allowed and k!='user_id' for k in data):
+            raise HTTPException(422,'Champ non autorisé')
+        for key,value in changes.items():
+            if key in ('access','bureau_ids'):
+                if not isinstance(value,list) or len(value)>100 or not all(isinstance(x,str) and len(x)<100 for x in value):
+                    raise HTTPException(422,'Liste invalide : '+key)
+            elif not isinstance(value,str) or len(value)>160:
+                raise HTTPException(422,'Valeur invalide : '+key)
+        with db() as c:
+            row=c.execute('SELECT profile_json FROM users WHERE id=?',(uid,)).fetchone()
+            if not row: raise HTTPException(404,'Utilisateur introuvable')
+            profile=json.loads(row['profile_json'] or '{}')
+            profile.update(changes)
+            c.execute('UPDATE users SET profile_json=? WHERE id=?',
+                      (json.dumps(profile,ensure_ascii=False),uid))
+        return {'data':{'updated':True,'user_id':uid,**changes}}
     raise HTTPException(501,f'Backend function {name} has not been migrated')
