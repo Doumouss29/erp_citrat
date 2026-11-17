@@ -131,7 +131,7 @@ export default function PerformanceIndicators({ timeEntries, workLogs, employees
   const upcomingEnds = upcomingEndCounts(employees);
   const go = (page) => onNavigate && onNavigate(page);
 
-  // Charte RH-CGESN : vert pétrole + doré (même identité que le terminal de pointage)
+  // Charte RH-CITRAT : vert pétrole + doré (même identité que le terminal de pointage)
   const GOLD = "#d4af6a";
   const rateColor = (r) => (r >= 90 ? "#34d399" : r >= 75 ? GOLD : "#f87171");
   const barColor = (r) => (r >= 90 ? "#137f8c" : r >= 75 ? "#c9a24f" : "#dc2626");
@@ -170,7 +170,7 @@ export default function PerformanceIndicators({ timeEntries, workLogs, employees
 
   return (
     <div className="space-y-4 lg:space-y-6">
-      {/* Bandeau RH-CGESN : présence du jour · à traiter · effectifs */}
+      {/* Bandeau RH-CITRAT : présence du jour · à traiter · effectifs */}
       <motion.section
         initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}
         className="relative overflow-hidden rounded-2xl text-[#0D5C66] shadow-sm border border-[#DFE8EA]"
