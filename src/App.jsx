@@ -11,10 +11,10 @@ import ScrollToTop from './components/ScrollToTop';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import { needsConsent, isConsentFreePath } from '@/lib/consentement';
 import { isOfficeAccount } from '@/components/utils/officeUtils';
-// RH-CGESN pages
+// RH-CITRAT pages
 import RequireAppAccess from '@/components/RequireAppAccess';
 import RhLayoutRoute from '@/components/RhLayoutRoute';
-// CGESN-BOARD pages
+// CITRAT-BOARD pages
 // E-CADASTRE pages
 // ASSISTANCE (Support SI) pages
 // E-GUIDE pages
@@ -171,7 +171,7 @@ const AuthenticatedApp = () => {
   }
 
   // Handle authentication errors
-  // Note: le portail CGESN est auto-contenu (sa propre auth localStorage + code admin),
+  // Note: le portail CITRAT est auto-contenu (sa propre auth localStorage + code admin),
   // il ne dépend pas de l'auth Base44 : on ne redirige donc pas vers le login Base44.
   if (authError && authError.type === 'user_not_registered') {
     return <UserNotRegisteredError />;
@@ -188,7 +188,7 @@ const AuthenticatedApp = () => {
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<ResetPassword />} />
 
-      {/* Portail Digital CGESN */}
+      {/* Portail Digital CITRAT */}
       <Route path="/" element={<Landing />} />
       <Route path="/bienvenue" element={<Bienvenue />} />
       <Route path="/connexion" element={<Connexion />} />
@@ -200,7 +200,7 @@ const AuthenticatedApp = () => {
       <Route path="/consentement" element={<Consentement />} />
       <Route path="/mes-donnees" element={<Consentement mode="gestion" />} />
 
-      {/* RH-CGESN */}
+      {/* RH-CITRAT */}
       <Route element={<RequireAppAccess appId="rhcgesn" />}>
         <Route path="/rh" element={<Navigate to="/rh/Dashboard" replace />} />
         <Route element={<RhLayoutRoute />}>
@@ -230,7 +230,7 @@ const AuthenticatedApp = () => {
         <Route key={p} path={`/${p}`} element={<LegacyRhRedirect />} />
       ))}
 
-      {/* CGESN-BOARD */}
+      {/* CITRAT-BOARD */}
       <Route element={<RequireAppAccess appId="cgesnboard" />}>
         <Route element={<BoardLayoutRoute />}>
           <Route path="/board" element={<BoardModulesHome />} />
