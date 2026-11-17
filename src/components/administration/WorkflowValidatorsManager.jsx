@@ -2,7 +2,7 @@ import { FormSelect } from "@/components/ui/form-select";
 import React, { useState, useEffect } from "react";
 import { fetchWorkflowValidatorsConfig, saveWorkflowValidators } from "@/lib/workflowValidators";
 import { base44 } from "@/api/base44Client";
-import { BUREAUX, DEPARTEMENTS } from "@/lib/rhReferentiels";
+import { DEPARTEMENTS } from "@/lib/rhReferentiels";
 import { OrgTiles, OrgTile } from "@/components/administration/OrgTiles";
 
 const inputStyle = {
@@ -43,7 +43,7 @@ const saveBtnStyle = {
   padding: "0 18px",
   border: "none",
   borderRadius: 10,
-  background: "#0f5c52",
+  background: "#0C3D85",
   color: "#fff",
   fontSize: 13,
   fontWeight: 700,
@@ -73,10 +73,7 @@ const ADMIN_DEPTS = ["direction_generale", "administratif_financier"];
 const properName = (s) => String(s || "").toLowerCase().replace(/(^|[\s'-])(\p{L})/gu, (m, a, b) => a + b.toUpperCase());
 
 // Bureaux et départements : référentiels déjà définis dans le code (fiche employé)
-const LOCALITE_OPTIONS = [
-  ...BUREAUX.map((b) => ({ value: b, label: b })),
-  { value: "__default__", label: "__default__ (repli)" }
-];
+// Liste des localités construite depuis les bureaux créés pour ce client.
 const DEPARTEMENT_OPTIONS = DEPARTEMENTS;
 
 // Comparaison insensible à la casse et aux accents (ex. « bouaflé » = « BOUAFLE »)
@@ -129,7 +126,7 @@ const iconBtnStyle = {
   border: "1px solid oklch(0.88 0.005 90)",
   borderRadius: 10,
   background: "#fff",
-  color: "#0f5c52",
+  color: "#0C3D85",
   cursor: "pointer"
 };
 
@@ -177,6 +174,20 @@ function ReadField({ label, value, flex, upper, muted }) {
 }
 
 export default function WorkflowValidatorsManager() {
+  const [configuredOffices, setConfiguredOffices] = useState([]);
+  useEffect(() => {
+    let mounted = true;
+    base44.entities.OfficeTerminal.list("office_name", 200)
+      .then(rows => { if (mounted) setConfiguredOffices((rows || []).map(row => String(row.office_name || "").trim().toUpperCase()).filter(Boolean)); })
+      .catch(() => { if (mounted) setConfiguredOffices([]); });
+    return () => { mounted = false; };
+  }, []);
+  const BUREAUX = configuredOffices;
+  const LOCALITE_OPTIONS = [
+    ...BUREAUX.map((name) => ({ value: name, label: name })),
+    { value: "__default__", label: "Repli général" }
+  ];
+
   const [level1, setLevel1] = useState([]);
   const [level2, setLevel2] = useState({ nom: "", email: "" });
   const [level3, setLevel3] = useState({ nom: "", email: "" });
@@ -253,7 +264,7 @@ export default function WorkflowValidatorsManager() {
     <button
       type="button"
       onClick={() => toggleEdit(key)}
-      style={{ ...iconBtnStyle, ...(isEditing(key) ? { background: "#0f5c52", color: "#fff", borderColor: "#0f5c52" } : {}) }}
+      style={{ ...iconBtnStyle, ...(isEditing(key) ? { background: "#0C3D85", color: "#fff", borderColor: "#0C3D85" } : {}) }}
       title={isEditing(key) ? "Terminer la modification" : "Modifier"}
       aria-label={isEditing(key) ? "Terminer la modification" : "Modifier"}
     >
