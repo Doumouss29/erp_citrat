@@ -28,7 +28,16 @@ const entity = name => ({
   bulkUpdate: () => { throw new Error('Bulk update backend not migrated yet'); }
 });
 export const base44 = {
-  entities: new Proxy({}, {get: (_, name) => entity(name)}),
+  entities: new Proxy({}, {get: (_, name) => name === 'User'
+    ? {
+        list: () => request('/admin/users'),
+        filter: async (query = {}) => (await request('/admin/users')).filter(u => Object.entries(query).every(([k,v]) => u[k] === v)),
+        get: async id => (await request('/admin/users')).find(u => u.id === id),
+        update: (id,data) => request('/admin/users/'+encodeURIComponent(id),{method:'PATCH',body:body(data)}),
+        delete: id => request('/admin/users/'+encodeURIComponent(id),{method:'DELETE'}),
+        create: () => { throw new Error('Création de compte non disponible tant que les rôles et invitations ne sont pas migrés.'); }
+      }
+    : entity(name)}),
   auth: {
     me: () => request('/auth/me'),
     loginViaEmailPassword: (email,password) => request('/auth/login',{method:'POST',body:body({email,password})}),
