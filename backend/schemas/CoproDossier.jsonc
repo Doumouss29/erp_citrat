@@ -1,0 +1,261 @@
+{
+  "name": "CoproDossier",
+  "properties": {
+    "certif": {
+      "description": "Certification du g\u00e9om\u00e8tre : { par, nom, le, empreinte }.",
+      "rls": {
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "data.copro_profil": "geometre"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            }
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "data": {
+      "description": "Contenu complet du dossier (identit\u00e9, b\u00e2timents, lots, coefficients, grilles, copropri\u00e9taires, r\u00e8glement)",
+      "type": "object"
+    },
+    "journal": {
+      "description": "Journal des modifications (modificatif)",
+      "items": {
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "local_id": {
+      "description": "Identifiant d'origine quand le dossier a \u00e9t\u00e9 migr\u00e9 depuis le navigateur ou depuis l'application COPROCIV s\u00e9par\u00e9e",
+      "type": "string"
+    },
+    "membres": {
+      "description": "E-mails des intervenants invit\u00e9s (notaire, syndic, autre g\u00e9om\u00e8tre, copropri\u00e9taires)",
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "nom": {
+      "description": "Nom de la copropri\u00e9t\u00e9 (module COPROCIV)",
+      "type": "string"
+    },
+    "ref": {
+      "description": "R\u00e9f\u00e9rence du dossier (ex. 2026-118)",
+      "type": "string"
+    },
+    "supprime": {
+      "description": "Dossier plac\u00e9 dans la corbeille (restaurable). R\u00e9serv\u00e9 \u00e0 l'administrateur.",
+      "rls": {
+        "write": {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      },
+      "type": "boolean"
+    },
+    "supprime_le": {
+      "description": "Date de mise \u00e0 la corbeille (horodatage). R\u00e9serv\u00e9 \u00e0 l'administrateur.",
+      "rls": {
+        "write": {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      },
+      "type": "number"
+    },
+    "syndic": {
+      "description": "Gestion du syndicat (Livre II, art. 380 \u00e0 407). Modifiable par le syndic uniquement.",
+      "rls": {
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "data.copro_profil": "syndic"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            }
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "valid": {
+      "description": "Validation du notaire : { par, nom, le, empreinte }.",
+      "rls": {
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "data.copro_profil": "notaire"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            }
+          ]
+        }
+      },
+      "type": "object"
+    }
+  },
+  "required": [
+    "nom"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "data.copro_profil": "geometre"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "user"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "viewer"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "superviseur"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "created_by_id": "{{user.id}}"
+            },
+            {
+              "data.membres": "{{user.email}}"
+            },
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "user"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "viewer"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "superviseur"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "created_by_id": "{{user.id}}"
+            },
+            {
+              "$and": [
+                {
+                  "data.membres": "{{user.email}}"
+                },
+                {
+                  "user_condition": {
+                    "data.copro_profil": "geometre"
+                  }
+                }
+              ]
+            },
+            {
+              "$and": [
+                {
+                  "data.membres": "{{user.email}}"
+                },
+                {
+                  "user_condition": {
+                    "data.copro_profil": "notaire"
+                  }
+                }
+              ]
+            },
+            {
+              "$and": [
+                {
+                  "data.membres": "{{user.email}}"
+                },
+                {
+                  "user_condition": {
+                    "data.copro_profil": "syndic"
+                  }
+                }
+              ]
+            },
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "type": "object"
+}

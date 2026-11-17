@@ -1,0 +1,107 @@
+{
+  "name": "OfficeTerminal",
+  "properties": {
+    "adresse": {
+      "description": "Adresse postale ou rep\u00e8re",
+      "type": "string"
+    },
+    "code": {
+      "description": "Code court du bureau (ABJ, YAKRO\u2026)",
+      "type": "string"
+    },
+    "email": {
+      "description": "Email du compte bureau (terminal de pointage)",
+      "format": "email",
+      "type": "string"
+    },
+    "email_contact": {
+      "description": "Email de contact du bureau",
+      "type": "string"
+    },
+    "gestionnaires": {
+      "description": "Gestionnaires / responsables du bureau",
+      "items": {
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "fonction": {
+            "type": "string"
+          },
+          "nom": {
+            "type": "string"
+          },
+          "principal": {
+            "type": "boolean"
+          },
+          "telephone": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "is_active": {
+      "default": true,
+      "description": "Actif ou non",
+      "type": "boolean"
+    },
+    "location": {
+      "description": "Localisation (quartier / commune)",
+      "type": "string"
+    },
+    "notes": {
+      "description": "Remarques",
+      "type": "string"
+    },
+    "office_name": {
+      "description": "Nom du bureau",
+      "type": "string"
+    },
+    "telephone": {
+      "description": "T\u00e9l\u00e9phone du bureau",
+      "type": "string"
+    },
+    "ville": {
+      "description": "Ville",
+      "type": "string"
+    }
+  },
+  "required": [
+    "office_name",
+    "email"
+  ],
+  "type": "object",
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "user"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

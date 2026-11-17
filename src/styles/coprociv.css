@@ -1,0 +1,74 @@
+/* COPROCIV — module de gestion de copropriétés intégré au portail.
+   Toutes les règles sont limitées au conteneur .cp-root pour ne pas toucher le reste du portail.
+   Les couleurs du thème (Bleu / Anthracite) sont posées sur .cp-root par applyTheme (engine.js). */
+.cp-root {
+  --sb0:#0F1D3D;--sb1:#18284D;--sb2:#20325C;--sb3:#26385F;--sb5:#46598A;--sbt:#F6F3EC;--sbm:#A9B3CC;--sbm2:#C3CADB;--sbl:transparent;
+  --b0:#0F1D3D;--bm:#0A1530;--b1:#18284D;--b2:#20325C;--b3:#26385F;--b4:#2E4170;--b5:#46598A;--b6:#3A4F86;
+  --t1:#A9B3CC;--t2:#C3CADB;--t3:#D7DCE8;--t4:#DCE0EA;--t5:#C9CFDE;--t6:#8893B2;
+  --h:265;--rgb:15,29,61;
+  --gold:#D9A54A;
+  --cream:#F6F3EC;
+  --ok:oklch(0.64 0.14 155);--warn:oklch(0.70 0.15 55);
+  font-family: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  min-height: 100vh;
+  background: #F6F3EC;
+}
+/* Page d'accueil : connexion géomètre-expert ou notaire */
+.cp-root .cp-accueil { display: grid; grid-template-columns: minmax(340px, 38%) minmax(0, 1fr); min-height: 100vh; color: var(--b0); }
+.cp-root .cp-accueil-brand { position: relative; overflow: hidden; background: var(--b0); color: var(--t2); padding: 44px clamp(32px, 4vw, 64px); display: flex; flex-direction: column; gap: 32px; }
+.cp-root .cp-accueil-brand > img { position: relative; width: 100%; max-width: 280px; height: auto; display: block; }
+.cp-root .cp-accueil-drawing { position: absolute; top: 15%; right: -12%; width: 92%; color: white; opacity: .13; pointer-events: none; }
+.cp-root .cp-accueil-pitch { position: relative; margin-top: auto; display: flex; flex-direction: column; gap: 14px; }
+.cp-root .cp-accueil-pitch p { margin: 0; max-width: 42ch; font-size: 15px; line-height: 1.6; }
+.cp-root .cp-accueil-pitch .cp-accueil-lead { max-width: 20ch; font-family: Cinzel, Georgia, serif; font-size: clamp(26px, 2.4vw, 36px); font-weight: 600; line-height: 1.2; color: white; }
+.cp-root .cp-accueil-phases { position: relative; list-style: none; margin: 0; padding: 20px 0 0; border-top: 1px solid rgba(255,255,255,.16); display: flex; flex-wrap: wrap; gap: 10px 20px; font-size: 13px; font-weight: 600; }
+.cp-root .cp-accueil-phases li { display: flex; align-items: center; gap: 7px; }
+.cp-root .cp-accueil-phases span { color: var(--gold); font-family: "JetBrains Mono", monospace; font-weight: 600; }
+.cp-root .cp-accueil-main { display: flex; flex-direction: column; min-width: 0; padding: 28px clamp(24px, 4vw, 64px) 48px; }
+.cp-root .cp-accueil-top { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.cp-root .cp-accueil-back { display: inline-flex; align-items: center; gap: 8px; color: var(--b0); font-size: 14px; font-weight: 700; text-decoration: none; }
+.cp-root .cp-accueil-back:hover { text-decoration: underline; text-underline-offset: 3px; }
+.cp-root .cp-accueil-user { display: inline-flex; align-items: center; gap: 10px; min-width: 0; font-size: 14px; font-weight: 700; }
+.cp-root .cp-accueil-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cp-root .cp-accueil-avatar { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; flex-shrink: 0; background: var(--gold); color: var(--b0); font-size: 13px; font-weight: 800; }
+.cp-root .cp-accueil-content { width: 100%; max-width: 760px; margin: auto; padding-top: 32px; display: flex; flex-direction: column; }
+.cp-root .cp-accueil-eyebrow { margin: 0 0 8px; font-size: 14px; font-weight: 700; color: oklch(0.47 0.10 70); }
+.cp-root .cp-accueil-content h1 { margin: 0 0 28px; font-family: Cinzel, Georgia, serif; font-size: clamp(28px, 3vw, 40px); font-weight: 700; line-height: 1.15; }
+.cp-root .cp-accueil-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 16px; }
+.cp-root .cp-accueil-card { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; width: 100%; padding: 24px; text-align: left; background: #FFFDF8; color: var(--b0); border: 1.5px solid oklch(0.88 0.012 85); border-radius: 14px; box-shadow: 0 1px 2px rgba(15,29,61,.05); cursor: pointer; font: inherit; transition: border-color .15s, box-shadow .15s, transform .15s; }
+.cp-root .cp-accueil-card:hover:not(:disabled) { border-color: var(--gold); box-shadow: 0 10px 24px rgba(15,29,61,.10); transform: translateY(-2px); }
+.cp-root .cp-accueil-card:disabled { cursor: not-allowed; background: transparent; border-style: dashed; box-shadow: none; }
+.cp-root .cp-accueil-card:disabled .cp-accueil-icon { background: oklch(0.90 0.012 85); color: oklch(0.45 0.020 var(--h)); }
+.cp-root .cp-accueil-icon { width: 52px; height: 52px; margin-bottom: 12px; border-radius: 12px; background: var(--b0); color: var(--gold); display: grid; place-items: center; flex-shrink: 0; }
+.cp-root .cp-accueil-card strong { font-size: 18px; font-weight: 800; line-height: 1.25; }
+.cp-root .cp-accueil-sub { font-size: 14px; color: oklch(0.45 0.020 var(--h)); }
+.cp-root .cp-accueil-pages { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0 18px; }
+.cp-root .cp-accueil-pages span { padding: 4px 9px; border-radius: 999px; background: oklch(0.95 0.012 85); font-size: 12px; font-weight: 600; color: oklch(0.38 0.020 var(--h)); }
+.cp-root .cp-accueil-cta { display: inline-flex; align-items: center; gap: 8px; margin-top: auto; font-size: 14.5px; font-weight: 800; }
+.cp-root .cp-accueil-cta-off { font-size: 13px; font-weight: 600; color: oklch(0.45 0.020 var(--h)); }
+.cp-root .cp-accueil-notice { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; margin-top: 16px; padding: 14px 16px; border-radius: 12px; background: oklch(0.95 0.05 70); color: oklch(0.38 0.11 60); font-size: 13.5px; font-weight: 600; }
+.cp-root .cp-accueil-notice p { margin: 0; line-height: 1.5; }
+.cp-root .cp-accueil-notice button { padding: 0; border: 0; background: transparent; color: inherit; font: inherit; font-weight: 800; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.cp-root .cp-accueil-card:focus-visible, .cp-root .cp-accueil-notice button:focus-visible, .cp-root .cp-accueil-back:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { .cp-root .cp-accueil-card { transition: none; } .cp-root .cp-accueil-card:hover:not(:disabled) { transform: none; } }
+@media (max-width: 900px) {
+  .cp-root .cp-accueil { grid-template-columns: minmax(0, 1fr); }
+  .cp-root .cp-accueil-brand { padding: 20px 16px; gap: 0; }
+  .cp-root .cp-accueil-brand > img { max-width: 200px; }
+  .cp-root .cp-accueil-drawing, .cp-root .cp-accueil-pitch, .cp-root .cp-accueil-phases { display: none; }
+  .cp-root .cp-accueil-main { padding: 16px 16px 40px; }
+  .cp-root .cp-accueil-content { margin: 0; padding-top: 28px; }
+}
+/* Colonnes qui s'empilent sur petit écran */
+@media (max-width: 900px) {
+  .cp-root .cp-2col { grid-template-columns: minmax(0, 1fr) !important; }
+}
+/* Tableaux insérés dans l'aperçu du règlement */
+.cp-root .cp-doc table { border-collapse: collapse; width: 100%; font-family: Manrope, system-ui, sans-serif; }
+.cp-root .cp-doc th, .cp-root .cp-doc td { border: 1px solid oklch(0.88 0.012 85); padding: 4px 6px; text-align: left; }
+.cp-root .cp-doc th { background: oklch(0.97 0.014 85); }
+.cp-root .cp-doc td.n, .cp-root .cp-doc th.n { text-align: right; }
+.cp-root .cp-doc h3 { font-size: 13px; margin: 12px 0 4px; }
+/* Pages liste + détail : le panneau de détail reste visible pendant le défilement de la liste */
+.cp-root .cp-master > :last-child { position: sticky; top: 140px; }
+@media (max-width: 900px) { .cp-root .cp-master > :last-child { position: static; } }

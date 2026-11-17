@@ -1,0 +1,136 @@
+{
+  "name": "Troncon",
+  "properties": {
+    "contact_voisin": {
+      "description": "T\u00e9l\u00e9phone ou pi\u00e8ce d'identit\u00e9 du voisin",
+      "type": "string"
+    },
+    "gisement_deg": {
+      "description": "Gisement du tron\u00e7on en degr\u00e9s (0 = Nord, sens horaire)",
+      "type": "number"
+    },
+    "longueur_m": {
+      "description": "Longueur du tron\u00e7on en m\u00e8tres",
+      "type": "number"
+    },
+    "nom_voisin": {
+      "description": "Nom du voisin",
+      "type": "string"
+    },
+    "numero_demande": {
+      "description": "Num\u00e9ro de demande de certificat foncier \u2014 lien avec la parcelle et ses bornes",
+      "type": "string"
+    },
+    "observation": {
+      "description": "Observations sur le tron\u00e7on",
+      "type": "string"
+    },
+    "orientation": {
+      "description": "Orientation du tron\u00e7on vue depuis la parcelle (N, NE, E, SE, S, SO, O, NO)",
+      "type": "string"
+    },
+    "parcel_id": {
+      "description": "Identifiant de la parcelle",
+      "type": "string"
+    },
+    "point_debut_id": {
+      "description": "Identifiant de la borne de d\u00e9but",
+      "type": "string"
+    },
+    "point_debut_nom": {
+      "description": "Nom de la borne de d\u00e9but",
+      "type": "string"
+    },
+    "point_fin_id": {
+      "description": "Identifiant de la borne de fin",
+      "type": "string"
+    },
+    "point_fin_nom": {
+      "description": "Nom de la borne de fin",
+      "type": "string"
+    },
+    "statut_limite": {
+      "description": "Reconnaissance de la limite par le voisin",
+      "enum": [
+        "reconnue",
+        "contestee",
+        "litige"
+      ],
+      "type": "string"
+    },
+    "type_limite": {
+      "description": "Nature de la limite",
+      "enum": [
+        "bornes",
+        "haie_vive",
+        "cloture",
+        "piste_route",
+        "cours_eau",
+        "bas_fond",
+        "culture_plantation",
+        "layon",
+        "autre"
+      ],
+      "type": "string"
+    },
+    "type_voisin": {
+      "description": "Nature du voisin",
+      "enum": [
+        "particulier",
+        "famille",
+        "village",
+        "etat_domaine_public",
+        "route_piste",
+        "cours_eau",
+        "foret",
+        "autre"
+      ],
+      "type": "string"
+    },
+    "village": {
+      "description": "Village du voisin",
+      "type": "string"
+    },
+    "voisin_parcel_id": {
+      "description": "Parcelle voisine si elle existe dans l'application",
+      "type": "string"
+    }
+  },
+  "required": [
+    "parcel_id",
+    "point_debut_id",
+    "point_fin_id"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "user"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "type": "object"
+}

@@ -1,0 +1,233 @@
+{
+  "name": "RapportMensuel",
+  "properties": {
+    "annee": {
+      "description": "Ann\u00e9e du rapport",
+      "type": "number"
+    },
+    "bureau_code": {
+      "description": "Code du bureau",
+      "type": "string"
+    },
+    "bureau_id": {
+      "description": "ID du bureau",
+      "type": "string"
+    },
+    "chiffre_realise": {
+      "description": "Somme cout_reel ou cout_estime des dossiers finaux",
+      "type": "number"
+    },
+    "delai_moyen_jours": {
+      "description": "D\u00e9lai moyen cr\u00e9ation \u2192 livraison en jours",
+      "type": "number"
+    },
+    "difficultes_rencontrees": {
+      "description": "Difficult\u00e9s rencontr\u00e9es",
+      "type": "string"
+    },
+    "dossiers_en_cours": {
+      "description": "Nombre de dossiers en cours",
+      "type": "number"
+    },
+    "dossiers_realises": {
+      "description": "Nombre de dossiers r\u00e9alis\u00e9s",
+      "type": "number"
+    },
+    "genere_par_email": {
+      "description": "Email de l'utilisateur ayant g\u00e9n\u00e9r\u00e9 le rapport",
+      "type": "string"
+    },
+    "mois": {
+      "description": "Mois du rapport (1-12)",
+      "type": "number"
+    },
+    "perspectives_actions": {
+      "description": "Perspectives / actions \u00e0 venir",
+      "type": "string"
+    },
+    "portefeuille": {
+      "description": "Somme cout_estime des dossiers non finaux",
+      "type": "number"
+    },
+    "problemes_dossiers": {
+      "description": "Probl\u00e8mes / dossiers difficiles ou probl\u00e9matiques",
+      "type": "string"
+    },
+    "taux_realisation": {
+      "description": "Pourcentage de r\u00e9alisation",
+      "type": "number"
+    },
+    "total_dossiers": {
+      "description": "Nombre total de dossiers",
+      "type": "number"
+    },
+    "valide": {
+      "default": false,
+      "description": "Rapport valid\u00e9 ou brouillon",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "bureau_id",
+    "mois",
+    "annee"
+  ],
+  "rls": {
+    "create": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "user"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "viewer"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "superviseur"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "created_by_id": "{{user.id}}"
+            },
+            {
+              "data.bureau_id": "{{user.data.bureau_id}}"
+            },
+            {
+              "user_condition": {
+                "data.fonction": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "user"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "viewer"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "superviseur"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "created_by_id": "{{user.id}}"
+            },
+            {
+              "data.genere_par_email": "{{user.email}}"
+            },
+            {
+              "data.bureau_id": "{{user.data.bureau_id}}"
+            },
+            {
+              "user_condition": {
+                "data.fonction": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "user"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "viewer"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "superviseur"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "created_by_id": "{{user.id}}"
+            },
+            {
+              "data.genere_par_email": "{{user.email}}"
+            },
+            {
+              "data.bureau_id": "{{user.data.bureau_id}}"
+            },
+            {
+              "user_condition": {
+                "data.fonction": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "type": "object"
+}

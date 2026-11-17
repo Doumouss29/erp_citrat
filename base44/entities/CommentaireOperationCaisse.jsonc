@@ -1,0 +1,79 @@
+{
+  "name": "CommentaireOperationCaisse",
+  "type": "object",
+  "properties": {
+    "operation_id": {
+      "type": "string",
+      "description": "ID de l'op\u00e9ration concern\u00e9e"
+    },
+    "auteur_email": {
+      "type": "string",
+      "description": "Email de l'auteur du commentaire"
+    },
+    "auteur_role": {
+      "type": "string",
+      "enum": [
+        "admin",
+        "comptable",
+        "user"
+      ],
+      "description": "R\u00f4le de l'auteur"
+    },
+    "message": {
+      "type": "string",
+      "description": "Commentaire ou r\u00e9ponse"
+    },
+    "bureau_id": {
+      "type": "string",
+      "description": "ID du bureau concern\u00e9"
+    }
+  },
+  "required": [
+    "operation_id",
+    "auteur_email",
+    "message"
+  ],
+  "rls": {
+    "create": {
+      "data.auteur_email": "{{user.email}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "user"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.auteur_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "data.auteur_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

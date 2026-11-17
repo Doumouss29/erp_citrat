@@ -1,0 +1,66 @@
+{
+  "name": "ResponsableHSE",
+  "properties": {
+    "actif": {
+      "default": true,
+      "description": "Le responsable re\u00e7oit les alertes",
+      "type": "boolean"
+    },
+    "email": {
+      "description": "Email du responsable",
+      "type": "string"
+    },
+    "nom": {
+      "description": "Nom du responsable",
+      "type": "string"
+    },
+    "profil": {
+      "description": "Profil/R\u00f4le du responsable (R\u00e9f\u00e9rent HSE : acc\u00e8s au rapport complet)",
+      "enum": [
+        "Assistant HSE",
+        "R\u00e9f\u00e9rent HSE",
+        "Coordinateur HSE",
+        "Chef de projet HSE",
+        "R\u00e9f\u00e9rent HSE CAG",
+        "Chef de Projet CAG",
+        "R\u00e9f\u00e9rent AFOR"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "nom",
+    "email",
+    "profil"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "data.email": "{{user.email}}"
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "type": "object"
+}

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="color-scheme" content="light only" />
+  <title>Vérification de votre compte Portail Digital CGESN</title>
+  <style>
+    /* Reset & responsive */
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; width: 100% !important; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+    body { background-color: #f4f5f7; font-family: 'Poppins', Arial, Helvetica, sans-serif; }
+    table { border-collapse: collapse; width: 100% !important; }
+    img { border: 0; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; display: block; max-width: 100%; height: auto; }
+    a { text-decoration: none; }
+
+    /* Conteneur fluide */
+    .email-wrapper { width: 100% !important; padding: 16px 8px; }
+    .email-card { max-width: 480px !important; width: 100% !important; margin: 0 auto; }
+
+    /* Code responsive */
+    .code-box {
+      background-color: #f7f7f8;
+      border-radius: 10px;
+      padding: 20px 12px;
+      text-align: center;
+      margin: 20px 0;
+    }
+    .code-text {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: 6px;
+      color: #000000;
+      line-height: 1.2;
+      word-break: break-all;
+    }
+
+    /* Mobile */
+    @media only screen and (max-width: 480px) {
+      .email-card { width: 100% !important; max-width: 100% !important; }
+      .header-pad { padding: 18px 16px !important; }
+      .body-pad { padding: 24px 18px !important; }
+      .code-box { padding: 16px 8px; }
+      .code-text { font-size: 24px !important; letter-spacing: 4px !important; }
+      .brand-name { font-size: 17px !important; }
+      .brand-tag { font-size: 9px !important; }
+      .body-text { font-size: 14px !important; }
+      .muted-text { font-size: 12px !important; }
+      .logo-img { width: 42px !important; height: 42px !important; }
+    }
+
+    /* Très petit */
+    @media only screen and (max-width: 320px) {
+      .code-text { font-size: 20px !important; letter-spacing: 3px !important; }
+      .body-pad { padding: 20px 14px !important; }
+    }
+  </style>
+</head>
+<body style="margin:0; padding:0; background-color:#f4f5f7;">
+
+  <!-- Preview text (hidden) -->
+  <div style="display:none; max-height:0; overflow:hidden; opacity:0; mso-hide:all; font-size:1px; line-height:1px; color:#f4f5f7;">
+    Votre code de vérification Portail Digital CGESN
+  </div>
+
+  <div class="email-wrapper" style="width:100%; padding:16px 8px;">
+
+    <table role="presentation" class="email-card" cellspacing="0" cellpadding="0" border="0" style="max-width:480px; width:100%; margin:0 auto; background-color:#ffffff; border:1px solid #e5e7eb; border-radius:10px; overflow:hidden;">
+
+      <!-- Header band -->
+      <tr>
+        <td class="header-pad" style="background-color:#0f5c52; padding:20px 24px; text-align:left;">
+          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+            <tr>
+              <td style="vertical-align:middle; width:52px;">
+                <img src="https://base44.app/api/apps/6aa96886350e13fe6882c8af/files/mp/public/6aa96886350e13fe6882c8af/ca2891085_Page1.png"
+                     alt="Portail Digital CGESN"
+                     class="logo-img"
+                     width="52" height="52"
+                     style="display:block; width:52px; height:52px; border-radius:8px; border:0;" />
+              </td>
+              <td style="vertical-align:middle; padding-left:14px;">
+                <div class="brand-name" style="font-family:'Caprasimo', Arial, sans-serif; font-size:19px; font-weight:400; color:#ffffff; line-height:1.2;">Portail Digital CGESN</div>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+
+      <!-- Body -->
+      <tr>
+        <td class="body-pad" style="padding:28px 24px; background-color:#ffffff;">
+
+          <p class="body-text" style="margin:0 0 14px; font-family:'Poppins', Arial, sans-serif; font-size:15px; line-height:1.55; color:#000000;">
+            Bonjour {{first_name}},
+          </p>
+
+          <p class="body-text" style="margin:0 0 6px; font-family:'Poppins', Arial, sans-serif; font-size:15px; line-height:1.55; color:#000000;">
+            Voici votre code de vérification pour finaliser la création de votre compte sur {{app_name}} :
+          </p>
+
+          <!-- Code box -->
+          <div class="code-box" style="background-color:#f7f7f8; border-radius:10px; padding:20px 12px; text-align:center; margin:20px 0;">
+            <span class="code-text" style="font-family:'Courier New', Courier, monospace; font-size:30px; font-weight:700; letter-spacing:6px; color:#000000; line-height:1.2; word-break:break-all;">
+              {{otp_code}}
+            </span>
+          </div>
+
+          <p class="body-text" style="margin:0 0 18px; font-family:'Poppins', Arial, sans-serif; font-size:15px; line-height:1.55; color:#000000;">
+            Ce code expirera dans <strong style="font-weight:700;">10 minutes</strong>.
+          </p>
+
+          <p class="muted-text" style="margin:0 0 6px; font-family:'Poppins', Arial, sans-serif; font-size:13px; line-height:1.5; color:#6b7280;">
+            Si vous n'avez pas demandé ce code, vous pouvez ignorer cet e-mail en toute sécurité.
+          </p>
+
+          <p class="body-text" style="margin:18px 0 0; font-family:'Poppins', Arial, sans-serif; font-size:14px; line-height:1.5; color:#000000;">
+            Bienvenue,<br />
+            <span style="color:#0f5c52; font-weight:600;">L'équipe Portail Digital CGESN</span>
+          </p>
+
+        </td>
+      </tr>
+
+    </table>
+
+  </div>
+
+</body>
+</html>

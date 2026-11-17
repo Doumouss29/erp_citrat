@@ -1,0 +1,41 @@
+{
+  "name": "Mise en attente des nouveaux comptes",
+  "description": "S\u00e9curit\u00e9 : toutes les heures, les comptes inscrits mais non valid\u00e9s (r\u00f4le \u00ab user \u00bb sans grade ni application) passent en r\u00f4le \u00ab en_attente \u00bb, sans acc\u00e8s aux donn\u00e9es, jusqu'\u00e0 leur validation par un administrateur.",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "0 * * * *",
+      "one_time_date": null,
+      "timezone": "UTC",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  },
+  "definition": {
+    "do": [
+      {
+        "run_function": {
+          "call": "invoke_backend_function",
+          "then": "end",
+          "with": {
+            "args": {},
+            "function_name": "holdNewAccount"
+          }
+        }
+      }
+    ],
+    "document": {
+      "dsl": "1.0.0",
+      "name": "mise_en_attente_nouveaux_comptes",
+      "namespace": "base44",
+      "version": "1.0"
+    }
+  }
+}

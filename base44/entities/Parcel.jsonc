@@ -1,0 +1,73 @@
+{
+  "name": "Parcel",
+  "properties": {
+    "chantier_id": {
+      "description": "Identifiant du chantier auquel appartient la parcelle",
+      "type": "string"
+    },
+    "color": {
+      "default": "#3b82f6",
+      "description": "Couleur pour le polygone",
+      "type": "string"
+    },
+    "description": {
+      "description": "Description de la parcelle",
+      "type": "string"
+    },
+    "name": {
+      "description": "Nom de la parcelle",
+      "type": "string"
+    },
+    "numero_demande": {
+      "description": "Num\u00e9ro de la demande de certificat foncier \u2014 cl\u00e9 commune parcelle / bornes / tron\u00e7ons",
+      "type": "string"
+    },
+    "prefix": {
+      "description": "Pr\u00e9fixe des points associ\u00e9s automatiquement (ex: P, A, PT)",
+      "type": "string"
+    },
+    "proprietaire": {
+      "description": "Nom du propri\u00e9taire de la parcelle",
+      "type": "string"
+    },
+    "village": {
+      "description": "Village de situation de la parcelle",
+      "type": "string"
+    }
+  },
+  "required": [
+    "name"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "user"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "type": "object"
+}

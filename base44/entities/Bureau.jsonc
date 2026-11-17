@@ -1,0 +1,70 @@
+{
+  "name": "Bureau",
+  "properties": {
+    "actif": {
+      "default": true,
+      "type": "boolean"
+    },
+    "code": {
+      "description": "Code court unique (ABJ, YAKRO, DLA, SIN, ISS, BFE)",
+      "type": "string"
+    },
+    "nom": {
+      "description": "Nom complet du bureau",
+      "type": "string"
+    },
+    "responsable_contact": {
+      "description": "Num\u00e9ro de t\u00e9l\u00e9phone du responsable",
+      "type": "string"
+    },
+    "responsable_email": {
+      "description": "Email du responsable du bureau",
+      "type": "string"
+    },
+    "responsable_nom": {
+      "description": "Nom complet du responsable du bureau",
+      "type": "string"
+    }
+  },
+  "required": [
+    "nom",
+    "code"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "user"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "superviseur"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "type": "object"
+}

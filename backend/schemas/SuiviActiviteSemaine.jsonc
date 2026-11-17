@@ -1,0 +1,194 @@
+{
+  "name": "SuiviActiviteSemaine",
+  "properties": {
+    "activites_planifiees": {
+      "description": "Liste des activit\u00e9s planifi\u00e9es",
+      "items": {
+        "properties": {
+          "archive": {
+            "default": false,
+            "description": "Activit\u00e9 radi\u00e9e : masqu\u00e9e des listes d'activit\u00e9s report\u00e9es et des rapports, r\u00e9activable \u00e0 tout moment",
+            "type": "boolean"
+          },
+          "archive_date": {
+            "description": "Date \u00e0 laquelle l'activit\u00e9 a \u00e9t\u00e9 radi\u00e9e",
+            "format": "date-time",
+            "type": "string"
+          },
+          "archive_par_email": {
+            "description": "Email de l'utilisateur ayant radi\u00e9 l'activit\u00e9",
+            "type": "string"
+          },
+          "commentaire_realisation": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "numero": {
+            "type": "number"
+          },
+          "statut": {
+            "default": "planifie",
+            "enum": [
+              "planifie",
+              "realise",
+              "en_cours",
+              "en_attente",
+              "reporte"
+            ],
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "annee": {
+      "description": "Ann\u00e9e",
+      "type": "number"
+    },
+    "avis_dg": {
+      "description": "Avis ou commentaire du DG sur la fiche",
+      "type": "string"
+    },
+    "avis_dg_date": {
+      "description": "Date d'\u00e9mission de l'avis DG",
+      "type": "string"
+    },
+    "avis_dg_email": {
+      "description": "Email du DG ayant \u00e9mis l'avis",
+      "type": "string"
+    },
+    "bureau_code": {
+      "description": "Code du bureau",
+      "type": "string"
+    },
+    "bureau_id": {
+      "description": "ID du bureau",
+      "type": "string"
+    },
+    "commentaires_visa": {
+      "description": "Commentaires et visa du responsable",
+      "type": "string"
+    },
+    "numero_semaine": {
+      "description": "Num\u00e9ro de semaine dans l'ann\u00e9e",
+      "type": "number"
+    },
+    "semaine_debut": {
+      "description": "Date de d\u00e9but de la semaine (lundi)",
+      "format": "date",
+      "type": "string"
+    },
+    "semaine_fin": {
+      "description": "Date de fin de la semaine (vendredi)",
+      "format": "date",
+      "type": "string"
+    },
+    "type_fiche": {
+      "default": "hebdomadaire",
+      "description": "Type de fiche : hebdomadaire ou diligence (long terme)",
+      "enum": [
+        "hebdomadaire",
+        "diligence"
+      ],
+      "type": "string"
+    },
+    "valide": {
+      "default": false,
+      "description": "Fiche valid\u00e9e",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "bureau_id",
+    "semaine_debut",
+    "type_fiche"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "data.bureau_id": "{{user.data.bureau_id}}"
+        },
+        {
+          "user_condition": {
+            "data.fonction": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "data.bureau_id": "{{user.data.bureau_id}}"
+        },
+        {
+          "user_condition": {
+            "data.fonction": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "user"
+          }
+        },
+        {
+          "data.bureau_id": "{{user.data.bureau_id}}"
+        },
+        {
+          "user_condition": {
+            "data.fonction": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "data.bureau_id": "{{user.data.bureau_id}}"
+        },
+        {
+          "user_condition": {
+            "data.fonction": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  },
+  "type": "object"
+}

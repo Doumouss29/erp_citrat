@@ -1,0 +1,53 @@
+{
+  "name": "PortalApp",
+  "properties": {
+    "app_id": {
+      "description": "Identifiant stable de l'application (correspond aux ids d'APP_DEFS, ex: 'csst', 'hse')",
+      "type": "string"
+    },
+    "href": {
+      "description": "URL de l'application",
+      "type": "string"
+    },
+    "name": {
+      "description": "Nom affich\u00e9 de l'application",
+      "type": "string"
+    },
+    "icon": {
+      "description": "URL du logo de l'application (image import\u00e9e ou lien externe). Vide = initiales affich\u00e9es par d\u00e9faut.",
+      "type": "string"
+    },
+    "status": {
+      "default": "off",
+      "description": "Disponible (ok) ou d\u00e9sactiv\u00e9e (off)",
+      "enum": [
+        "ok",
+        "off"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "app_id",
+    "name"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": null,
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "type": "object"
+}

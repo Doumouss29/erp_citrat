@@ -1,0 +1,145 @@
+{
+  "name": "Photo",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Titre de la photo"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description de l'incident/accident"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "URL de l'image"
+    },
+    "incident_type": {
+      "type": "string",
+      "enum": [
+        "Accident",
+        "Incident",
+        "Presqu'accident"
+      ],
+      "description": "Type d'incident"
+    },
+    "severity": {
+      "type": "string",
+      "enum": [
+        "G\u2080",
+        "M\u2081",
+        "m\u2081"
+      ],
+      "description": "Niveau de gravit\u00e9"
+    },
+    "zone": {
+      "type": "string",
+      "enum": [
+        "Worodougou",
+        "Cavally"
+      ],
+      "description": "Zone concern\u00e9e"
+    },
+    "date_photo": {
+      "type": "string",
+      "format": "date",
+      "description": "Date de la photo"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "Blessures",
+        "V\u00e9hicule/Moto",
+        "\u00c9quipement",
+        "Environnement"
+      ],
+      "description": "Cat\u00e9gorie de la photo"
+    },
+    "hse_private_uri": {
+      "type": "string",
+      "rls": {
+        "write": false,
+        "create": false,
+        "update": false
+      }
+    }
+  },
+  "required": [
+    "title",
+    "image_url",
+    "incident_type"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "user"
+              }
+            }
+          ]
+        },
+        {
+          "user_condition": {
+            "data.consentement_version": "1"
+          }
+        },
+        {
+          "$nor": [
+            {
+              "user_condition": {
+                "role": "en_attente"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "suspendu"
+              }
+            },
+            {
+              "user_condition": {
+                "data.statut": "suspendu"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

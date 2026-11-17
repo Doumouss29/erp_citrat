@@ -1,0 +1,82 @@
+{
+  "name": "Organisation",
+  "properties": {
+    "communes": {
+      "default": [],
+      "description": "Liste des communes de l'organisation",
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "description": {
+      "description": "Description de l'organisation",
+      "type": "string"
+    },
+    "nom": {
+      "description": "Nom de l'organisation",
+      "type": "string"
+    },
+    "objectif_par_defaut": {
+      "default": 2500,
+      "description": "Objectif de parcelles recens\u00e9es par commune (valeur par d\u00e9faut)",
+      "type": "number"
+    },
+    "objectifs_communes": {
+      "additionalProperties": {
+        "type": "number"
+      },
+      "default": {},
+      "description": "Objectif de parcelles recens\u00e9es propre \u00e0 chaque commune (cl\u00e9 = nom de la commune en majuscules)",
+      "type": "object"
+    },
+    "statut": {
+      "default": "active",
+      "enum": [
+        "active",
+        "inactive"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "nom"
+  ],
+  "type": "object",
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "superviseur"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "user"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

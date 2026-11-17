@@ -1,0 +1,126 @@
+{
+  "name": "TimeEntry",
+  "properties": {
+    "date": {
+      "description": "Date du pointage",
+      "format": "date",
+      "type": "string"
+    },
+    "employee_code": {
+      "description": "Code de l'employ\u00e9",
+      "type": "string"
+    },
+    "employee_email": {
+      "description": "Email du salari\u00e9",
+      "format": "email",
+      "type": "string"
+    },
+    "employee_id": {
+      "description": "R\u00e9f\u00e9rence vers l'employ\u00e9",
+      "type": "string"
+    },
+    "employee_name": {
+      "description": "Nom complet de l'employ\u00e9",
+      "type": "string"
+    },
+    "entry_type": {
+      "description": "Type de pointage : arriv\u00e9e, d\u00e9but de pause, retour de pause, d\u00e9part",
+      "enum": [
+        "entry",
+        "break_start",
+        "break_end",
+        "exit"
+      ],
+      "type": "string"
+    },
+    "location": {
+      "description": "Bureau / Localisation",
+      "type": "string"
+    },
+    "source_id": {
+      "description": "ID d'origine dans l'ancien RH-CGESN (migration)",
+      "type": "string"
+    },
+    "time": {
+      "description": "Heure du pointage (HH:mm)",
+      "type": "string"
+    },
+    "timestamp": {
+      "description": "Horodatage ISO",
+      "format": "date-time",
+      "type": "string"
+    }
+  },
+  "required": [
+    "employee_id",
+    "employee_code",
+    "entry_type",
+    "timestamp",
+    "date"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.grade": "assistante_rh"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.grade": "assistante_rh"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "data.employee_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.grade": "assistante_rh"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.grade": "assistante_rh"
+          }
+        }
+      ]
+    }
+  },
+  "type": "object"
+}

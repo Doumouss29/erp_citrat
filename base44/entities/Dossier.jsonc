@@ -1,0 +1,311 @@
+{
+  "name": "Dossier",
+  "properties": {
+    "activite_code": {
+      "description": "Code de l'activit\u00e9 pour la r\u00e9f\u00e9rence",
+      "type": "string"
+    },
+    "activite_id": {
+      "description": "ID de l'activit\u00e9",
+      "type": "string"
+    },
+    "annee": {
+      "description": "Ann\u00e9e de cr\u00e9ation pour indexation",
+      "type": "number"
+    },
+    "bureau_code": {
+      "description": "Code du bureau pour affichage",
+      "type": "string"
+    },
+    "bureau_id": {
+      "description": "ID du bureau",
+      "type": "string"
+    },
+    "client_nom": {
+      "description": "Nom du client",
+      "type": "string"
+    },
+    "client_prenom": {
+      "description": "Pr\u00e9nom du client",
+      "type": "string"
+    },
+    "commentaires_internes": {
+      "description": "Notes internes",
+      "type": "string"
+    },
+    "cout_estime": {
+      "description": "Co\u00fbt estim\u00e9 en XOF (obligatoire)",
+      "type": "number"
+    },
+    "date_ouverture": {
+      "description": "Date d'ouverture (cr\u00e9ation) du dossier, saisie par le bureau",
+      "format": "date",
+      "type": "string"
+    },
+    "date_livraison": {
+      "description": "Date de livraison (obligatoire si statut final)",
+      "format": "date",
+      "type": "string"
+    },
+    "description": {
+      "description": "Description du dossier",
+      "type": "string"
+    },
+    "devise": {
+      "default": "XOF",
+      "type": "string"
+    },
+    "mois": {
+      "description": "Mois de cr\u00e9ation pour indexation",
+      "type": "number"
+    },
+    "montant_paye": {
+      "default": 0,
+      "description": "Montant pay\u00e9 par le client",
+      "type": "number"
+    },
+    "motif_suspension": {
+      "description": "Motif si statut requiert motif",
+      "type": "string"
+    },
+    "priorite": {
+      "default": "normale",
+      "enum": [
+        "normale",
+        "haute",
+        "express"
+      ],
+      "type": "string"
+    },
+    "reference_auto": {
+      "description": "R\u00e9f\u00e9rence unique g\u00e9n\u00e9r\u00e9e automatiquement",
+      "type": "string"
+    },
+    "responsable_email": {
+      "description": "Email du responsable du dossier",
+      "type": "string"
+    },
+    "statut_id": {
+      "description": "ID du statut actuel",
+      "type": "string"
+    },
+    "statut_libelle": {
+      "description": "Libell\u00e9 du statut pour affichage",
+      "type": "string"
+    }
+  },
+  "required": [
+    "bureau_id",
+    "activite_id",
+    "statut_id",
+    "client_nom",
+    "cout_estime"
+  ],
+  "rls": {
+    "create": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "user"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "viewer"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "superviseur"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "created_by_id": "{{user.id}}"
+            },
+            {
+              "data.responsable_email": "{{user.email}}"
+            },
+            {
+              "data.bureau_id": "{{user.data.bureau_id}}"
+            },
+            {
+              "user_condition": {
+                "data.fonction": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "delete": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "user"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "viewer"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "superviseur"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "created_by_id": "{{user.id}}"
+            },
+            {
+              "data.responsable_email": "{{user.email}}"
+            },
+            {
+              "data.bureau_id": "{{user.data.bureau_id}}"
+            },
+            {
+              "user_condition": {
+                "data.fonction": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "read": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "user"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "viewer"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "superviseur"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "created_by_id": "{{user.id}}"
+            },
+            {
+              "data.responsable_email": "{{user.email}}"
+            },
+            {
+              "data.bureau_id": "{{user.data.bureau_id}}"
+            },
+            {
+              "user_condition": {
+                "data.fonction": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "user"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "viewer"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "superviseur"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "created_by_id": "{{user.id}}"
+            },
+            {
+              "data.responsable_email": "{{user.email}}"
+            },
+            {
+              "data.bureau_id": "{{user.data.bureau_id}}"
+            },
+            {
+              "user_condition": {
+                "data.fonction": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "type": "object"
+}

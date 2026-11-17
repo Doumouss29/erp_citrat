@@ -1,0 +1,145 @@
+{
+  "name": "Document",
+  "properties": {
+    "description": {
+      "description": "Description du document",
+      "type": "string"
+    },
+    "id_attributaire": {
+      "description": "R\u00e9f\u00e9rence \u00e0 l'attributaire (optionnel)",
+      "type": "string"
+    },
+    "id_lot": {
+      "description": "R\u00e9f\u00e9rence au lot (optionnel)",
+      "type": "string"
+    },
+    "id_lotissement": {
+      "description": "R\u00e9f\u00e9rence au lotissement (optionnel)",
+      "type": "string"
+    },
+    "nom_fichier": {
+      "description": "Nom original du fichier",
+      "type": "string"
+    },
+    "taille": {
+      "description": "Taille en octets",
+      "type": "number"
+    },
+    "type_document": {
+      "description": "Type de document",
+      "enum": [
+        "piece_identite",
+        "decret",
+        "plan",
+        "attestation",
+        "contrat",
+        "autre"
+      ],
+      "type": "string"
+    },
+    "type_mime": {
+      "description": "Type MIME du fichier",
+      "type": "string"
+    },
+    "url_fichier": {
+      "description": "URL du fichier upload\u00e9",
+      "type": "string"
+    }
+  },
+  "required": [
+    "type_document",
+    "url_fichier"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.grade": "administration"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.grade": "administration"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "user"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "viewer"
+              }
+            }
+          ]
+        },
+        {
+          "user_condition": {
+            "data.consentement_version": "1"
+          }
+        },
+        {
+          "$nor": [
+            {
+              "user_condition": {
+                "role": "en_attente"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "suspendu"
+              }
+            },
+            {
+              "user_condition": {
+                "data.statut": "suspendu"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.grade": "administration"
+          }
+        }
+      ]
+    }
+  },
+  "type": "object"
+}

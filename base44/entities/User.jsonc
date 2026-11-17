@@ -1,0 +1,255 @@
+{
+  "name": "User",
+  "properties": {
+    "access": {
+      "default": [],
+      "description": "Applications accord\u00e9es individuellement, en plus de celles du grade",
+      "items": {
+        "type": "string"
+      },
+      "rls": {
+        "update": {
+          "user_condition": {
+            "collaborator_role": "editor"
+          }
+        }
+      },
+      "title": "Acc\u00e8s suppl\u00e9mentaires",
+      "type": "array"
+    },
+    "armoirie_url": {
+      "description": "URL de l'armoirie pour les guides PDF (module E-GUIDE)",
+      "type": "string"
+    },
+    "bureau_code": {
+      "description": "Code du bureau principal (d\u00e9termin\u00e9 par assignation admin)",
+      "rls": {
+        "update": {
+          "user_condition": {
+            "collaborator_role": "editor"
+          }
+        }
+      },
+      "title": "Code bureau",
+      "type": "string"
+    },
+    "bureau_id": {
+      "description": "ID du bureau principal (d\u00e9termin\u00e9 par assignation admin ou secr\u00e9tariat)",
+      "rls": {
+        "update": {
+          "user_condition": {
+            "collaborator_role": "editor"
+          }
+        }
+      },
+      "title": "Bureau principal",
+      "type": "string"
+    },
+    "bureau_ids": {
+      "description": "IDs des bureaux accessibles (d\u00e9termin\u00e9s par assignation admin ou secr\u00e9tariat)",
+      "items": {
+        "type": "string"
+      },
+      "rls": {
+        "update": {
+          "user_condition": {
+            "collaborator_role": "editor"
+          }
+        }
+      },
+      "title": "Bureaux accessibles",
+      "type": "array"
+    },
+    "consentement_date": {
+      "format": "date-time",
+      "title": "Date de l'accord",
+      "type": "string"
+    },
+    "consentement_version": {
+      "description": "Vide = accord non donn\u00e9 ou retir\u00e9 : l'acc\u00e8s au portail est bloqu\u00e9 tant qu'elle ne correspond pas \u00e0 la version en vigueur",
+      "title": "Version de la notice accept\u00e9e",
+      "type": "string"
+    },
+    "copro_profil": {
+      "description": "Profil m\u00e9tier dans le module COPROCIV (g\u00e9om\u00e8tre-expert, notaire, syndic, copropri\u00e9taire) \u2014 attribu\u00e9 par l'administrateur uniquement",
+      "enum": [
+        "geometre",
+        "notaire",
+        "syndic",
+        "coproprietaire"
+      ],
+      "rls": {
+        "write": {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        "update": {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      },
+      "title": "Profil COPROCIV",
+      "type": "string"
+    },
+    "date_naissance": {
+      "description": "Sert \u00e0 calculer l'\u00e2ge (confirm\u00e9e \u00e0 l'\u00e9cran de consentement)",
+      "format": "date",
+      "title": "Date de naissance",
+      "type": "string"
+    },
+    "department": {
+      "description": "D\u00e9partement de rattachement (m\u00eames valeurs que la fiche employ\u00e9) \u2014 g\u00e9r\u00e9 depuis l'administration du portail",
+      "rls": {
+        "update": {
+          "user_condition": {
+            "collaborator_role": "editor"
+          }
+        }
+      },
+      "title": "D\u00e9partement",
+      "type": "string"
+    },
+    "first_name": {
+      "title": "Pr\u00e9nom",
+      "type": "string"
+    },
+    "fonction": {
+      "description": "Fonction dans le module CGESN-Board (attribu\u00e9e automatiquement ou par l'administrateur)",
+      "enum": [
+        "admin",
+        "responsable",
+        "adjoint",
+        "secretaire"
+      ],
+      "rls": {
+        "update": {
+          "user_condition": {
+            "collaborator_role": "editor"
+          }
+        }
+      },
+      "title": "Fonction",
+      "type": "string"
+    },
+    "grade": {
+      "description": "profile_id d'un AccessProfile : d\u00e9termine les applications accord\u00e9es automatiquement",
+      "rls": {
+        "update": {
+          "user_condition": {
+            "collaborator_role": "editor"
+          }
+        }
+      },
+      "title": "Grade / profil d'acc\u00e8s",
+      "type": "string"
+    },
+    "last_name": {
+      "title": "Nom",
+      "type": "string"
+    },
+    "office": {
+      "description": "Bureau / Localisation de rattachement (ABIDJAN, YAMOUSSOUKRO\u2026) \u2014 g\u00e9r\u00e9 depuis l'administration du portail",
+      "rls": {
+        "update": {
+          "user_condition": {
+            "collaborator_role": "editor"
+          }
+        }
+      },
+      "title": "Bureau",
+      "type": "string"
+    },
+    "organisation_id": {
+      "description": "ID de l'organisation (d\u00e9termin\u00e9 par assignation admin)",
+      "rls": {
+        "update": {
+          "user_condition": {
+            "collaborator_role": "editor"
+          }
+        }
+      },
+      "title": "Organisation",
+      "type": "string"
+    },
+    "role": {
+      "description": "The role of the user in the app",
+      "enum": [
+        "admin",
+        "user",
+        "viewer"
+      ],
+      "type": "string"
+    },
+    "statut": {
+      "default": "actif",
+      "description": "Statut du compte utilisateur",
+      "enum": [
+        "actif",
+        "suspendu"
+      ],
+      "type": "string",
+      "rls": {
+        "update": {
+          "user_condition": {
+            "collaborator_role": "editor"
+          }
+        }
+      }
+    },
+    "super_admin": {
+      "default": false,
+      "description": "Super administrateur du portail : compte hors organisation (sans bureau, d\u00e9partement ni fiche employ\u00e9)",
+      "rls": {
+        "update": {
+          "user_condition": {
+            "collaborator_role": "editor"
+          }
+        }
+      },
+      "title": "Super administrateur",
+      "type": "boolean"
+    },
+    "telephone": {
+      "description": "Num\u00e9ro de t\u00e9l\u00e9phone (confirm\u00e9 \u00e0 l'\u00e9cran de consentement)",
+      "title": "T\u00e9l\u00e9phone",
+      "type": "string"
+    },
+    "demande_acces_date": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Date de demande d\u2019acc\u00e8s au portail",
+      "description": "Demande g\u00e9n\u00e9rale li\u00e9e au compte existant, enregistr\u00e9e par requestPortalAccess",
+      "rls": {
+        "update": {
+          "user_condition": {
+            "collaborator_role": "editor"
+          }
+        }
+      }
+    },
+    "communes_supervisees": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "rls": {
+        "write": {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        "update": {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "role"
+  ],
+  "type": "object"
+}

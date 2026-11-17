@@ -1,0 +1,112 @@
+{
+  "name": "LotissementSuivi",
+  "type": "object",
+  "properties": {
+    "lotissement_id": {
+      "type": "string",
+      "description": "ID du lotissement"
+    },
+    "element_id": {
+      "type": "string",
+      "description": "ID de l'\u00e9l\u00e9ment (e1..e42)"
+    },
+    "disponibilite": {
+      "type": "string",
+      "enum": [
+        "Manquante",
+        "Disponible",
+        "Non applicable"
+      ],
+      "default": "Manquante",
+      "description": "Disponibilit\u00e9 de la pi\u00e8ce"
+    },
+    "document": {
+      "type": "string",
+      "description": "Nom ou r\u00e9f\u00e9rence du document"
+    },
+    "attachment_url": {
+      "type": "string",
+      "description": "URI du fichier pi\u00e8ce jointe (stockage priv\u00e9)"
+    },
+    "attachment_name": {
+      "type": "string",
+      "description": "Nom du fichier pi\u00e8ce jointe"
+    },
+    "observations": {
+      "type": "string",
+      "description": "Observations"
+    },
+    "updated_by": {
+      "type": "string",
+      "description": "Email de l'utilisateur ayant modifi\u00e9"
+    }
+  },
+  "required": [
+    "lotissement_id",
+    "element_id"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "user"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "viewer"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "user"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "viewer"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "user"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "viewer"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

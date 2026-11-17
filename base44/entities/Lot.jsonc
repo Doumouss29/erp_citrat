@@ -1,0 +1,147 @@
+{
+  "name": "Lot",
+  "type": "object",
+  "properties": {
+    "id_lotissement": {
+      "type": "string",
+      "description": "R\u00e9f\u00e9rence au lotissement"
+    },
+    "id_ilot": {
+      "type": "string",
+      "description": "R\u00e9f\u00e9rence \u00e0 l'\u00eelot"
+    },
+    "numero_lot": {
+      "type": "string",
+      "description": "Num\u00e9ro du lot"
+    },
+    "parcelle": {
+      "type": "string",
+      "description": "Num\u00e9ro de parcelle alphanum\u00e9rique"
+    },
+    "TF": {
+      "type": "string",
+      "description": "R\u00e9f\u00e9rence TF alphanum\u00e9rique"
+    },
+    "surface": {
+      "type": "number",
+      "description": "Surface en m\u00b2"
+    },
+    "affectation": {
+      "type": "string",
+      "enum": [
+        "Habitat",
+        "Commerce",
+        "\u00c9quipement",
+        "Espace vert",
+        "Voirie",
+        "Autre"
+      ],
+      "description": "Type d'affectation du lot"
+    },
+    "statut": {
+      "type": "string",
+      "enum": [
+        "Lot en vente",
+        "Lot vendu",
+        "Lot r\u00e9serv\u00e9",
+        "Lot non \u00e0 vendre"
+      ],
+      "default": "Lot en vente",
+      "description": "Statut du lot"
+    },
+    "geometrie": {
+      "type": "object",
+      "description": "G\u00e9om\u00e9trie GeoJSON du polygone"
+    },
+    "prix": {
+      "type": "number",
+      "description": "Prix du lot"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Notes et observations"
+    }
+  },
+  "required": [
+    "id_lotissement",
+    "numero_lot"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "user"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "viewer"
+              }
+            }
+          ]
+        },
+        {
+          "user_condition": {
+            "data.consentement_version": "1"
+          }
+        },
+        {
+          "$nor": [
+            {
+              "user_condition": {
+                "role": "en_attente"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "suspendu"
+              }
+            },
+            {
+              "user_condition": {
+                "data.statut": "suspendu"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

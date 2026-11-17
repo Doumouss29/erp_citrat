@@ -1,0 +1,78 @@
+{
+  "name": "SiComment",
+  "properties": {
+    "author_email": {
+      "description": "Email de l'auteur",
+      "type": "string"
+    },
+    "author_name": {
+      "description": "Nom de l'auteur du commentaire",
+      "type": "string"
+    },
+    "content": {
+      "description": "Contenu du commentaire",
+      "type": "string"
+    },
+    "is_technical": {
+      "default": false,
+      "description": "Indique si c'est un commentaire technique",
+      "type": "boolean"
+    },
+    "status_change": {
+      "description": "Changement de statut associ\u00e9 au commentaire",
+      "type": "string"
+    },
+    "ticket_id": {
+      "description": "ID du ticket associ\u00e9",
+      "type": "string"
+    }
+  },
+  "required": [
+    "ticket_id",
+    "content"
+  ],
+  "rls": {
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "delete": {
+      "$or": [
+        {
+          "data.author_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "user"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.author_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  },
+  "type": "object"
+}

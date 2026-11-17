@@ -1,0 +1,75 @@
+{
+  "name": "ClientErrorLog",
+  "properties": {
+    "attempt": {
+      "description": "Num\u00e9ro de tentative (1 = premier essai, 2 = relance)",
+      "type": "number"
+    },
+    "details": {
+      "description": "Corps de r\u00e9ponse / d\u00e9tails techniques",
+      "type": "string"
+    },
+    "duration_ms": {
+      "description": "Dur\u00e9e de la requ\u00eate avant \u00e9chec",
+      "type": "number"
+    },
+    "message": {
+      "description": "Message d'erreur",
+      "type": "string"
+    },
+    "online": {
+      "description": "Navigateur en ligne au moment de l'erreur",
+      "type": "boolean"
+    },
+    "page": {
+      "description": "Page o\u00f9 l'erreur s'est produite",
+      "type": "string"
+    },
+    "request": {
+      "description": "Requ\u00eate en \u00e9chec (ex: Employee.list)",
+      "type": "string"
+    },
+    "status": {
+      "description": "Code HTTP renvoy\u00e9 (0 si pas de r\u00e9ponse : r\u00e9seau/timeout)",
+      "type": "number"
+    },
+    "user_agent": {
+      "description": "Navigateur / appareil",
+      "type": "string"
+    }
+  },
+  "required": [
+    "page",
+    "request"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "type": "object"
+}

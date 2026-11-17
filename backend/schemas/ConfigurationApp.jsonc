@@ -1,0 +1,78 @@
+{
+  "name": "ConfigurationApp",
+  "type": "object",
+  "properties": {
+    "cle": {
+      "type": "string",
+      "description": "Cl\u00e9 unique de configuration (ex: statuts_lots, couleurs_statuts)"
+    },
+    "valeur": {
+      "type": "object",
+      "description": "Valeur de la configuration (objet JSON)"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description de la configuration"
+    }
+  },
+  "required": [
+    "cle"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "$and": [
+            {
+              "data.cle": {
+                "$nin": [
+                  "_eguide_archive_prive",
+                  "_eguide_import_maps"
+                ]
+              }
+            },
+            {
+              "$or": [
+                {
+                  "user_condition": {
+                    "role": "admin"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "user"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "viewer"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

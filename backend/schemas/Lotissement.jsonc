@@ -1,0 +1,182 @@
+{
+  "name": "Lotissement",
+  "properties": {
+    "annee": {
+      "description": "Ann\u00e9e du projet",
+      "type": "number"
+    },
+    "avancement": {
+      "description": "\u00c9tat d'avancement du dossier",
+      "type": "string"
+    },
+    "bureau": {
+      "description": "Bureau rattach\u00e9 (Abidjan, Daloa, Yamoussoukro, Bouafle, Sinfra, Issia)",
+      "type": "string"
+    },
+    "chef_projet": {
+      "description": "Chef de projet",
+      "type": "string"
+    },
+    "commune": {
+      "description": "Commune du lotissement (E-GUIDE)",
+      "type": "string"
+    },
+    "coordonnees_centre": {
+      "description": "Coordonn\u00e9es du centre (GeoJSON Point) (E-GUIDE)",
+      "type": "object"
+    },
+    "date_debut": {
+      "description": "Date de d\u00e9but",
+      "format": "date",
+      "type": "string"
+    },
+    "date_fin_prevue": {
+      "description": "Date de fin pr\u00e9vue",
+      "format": "date",
+      "type": "string"
+    },
+    "date_fin_reelle": {
+      "description": "Date de fin r\u00e9elle",
+      "format": "date",
+      "type": "string"
+    },
+    "decret": {
+      "description": "D\u00e9cret d'approbation (E-GUIDE)",
+      "type": "string"
+    },
+    "localite": {
+      "description": "Commune / localit\u00e9",
+      "type": "string"
+    },
+    "nom": {
+      "description": "Nom du projet de lotissement",
+      "type": "string"
+    },
+    "nombre_ilots": {
+      "description": "Nombre total d'\u00eelots (E-GUIDE)",
+      "type": "number"
+    },
+    "nombre_lots": {
+      "description": "Nombre total de lots (E-GUIDE)",
+      "type": "number"
+    },
+    "notes": {
+      "description": "Notes / observations",
+      "type": "string"
+    },
+    "partenaire": {
+      "description": "Nom du partenaire (ex : M. KONE SOULEYMANE)",
+      "type": "string"
+    },
+    "phase_comments": {
+      "description": "Commentaires de synth\u00e8se par phase",
+      "items": {
+        "properties": {
+          "comment": {
+            "type": "string"
+          },
+          "numero": {
+            "type": "number"
+          }
+        },
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "region": {
+      "description": "R\u00e9gion du lotissement (E-GUIDE)",
+      "type": "string"
+    },
+    "solutions": {
+      "description": "Solutions / actions \u00e0 suivre",
+      "type": "string"
+    },
+    "statut": {
+      "default": "En cours",
+      "description": "Statut global",
+      "enum": [
+        "En cours",
+        "Termin\u00e9",
+        "Suspendu"
+      ],
+      "type": "string"
+    },
+    "superficie_ha": {
+      "description": "Superficie en hectares",
+      "type": "number"
+    },
+    "superficie_text": {
+      "description": "Superficie en format textuel (ex : 113 Ha 70 A 71 Ca)",
+      "type": "string"
+    },
+    "superficie_totale": {
+      "description": "Superficie totale en m\u00b2 (E-GUIDE)",
+      "type": "number"
+    },
+    "village": {
+      "description": "Village du lotissement (E-GUIDE)",
+      "type": "string"
+    },
+    "zoom_defaut": {
+      "description": "Niveau de zoom par d\u00e9faut (E-GUIDE)",
+      "type": "number"
+    }
+  },
+  "required": [
+    "nom",
+    "statut"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "user"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "user"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "viewer"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        }
+      ]
+    }
+  },
+  "type": "object"
+}

@@ -1,0 +1,82 @@
+{
+  "name": "TiersImpacteBM",
+  "type": "object",
+  "properties": {
+    "periode": {
+      "type": "string",
+      "description": "Periode couverte (ex: T2 2025)"
+    },
+    "reference_fiche": {
+      "type": "string",
+      "description": "Reference de la fiche HSE rattachee"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description du membre de la communaute ou usager de la route concerne"
+    },
+    "type_bien": {
+      "type": "string",
+      "enum": [
+        "Moto",
+        "V\u00e9hicule",
+        "Cultures",
+        "Autre"
+      ],
+      "description": "Type de bien impacte"
+    },
+    "details_bien": {
+      "type": "string",
+      "description": "Details des biens impactes"
+    }
+  },
+  "required": [
+    "periode",
+    "description",
+    "type_bien"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "user"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

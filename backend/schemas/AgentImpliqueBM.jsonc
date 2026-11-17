@@ -1,0 +1,100 @@
+{
+  "name": "AgentImpliqueBM",
+  "type": "object",
+  "properties": {
+    "periode": {
+      "type": "string",
+      "description": "Periode couverte (ex: T2 2025)"
+    },
+    "nom": {
+      "type": "string",
+      "description": "Nom et prenoms de l'agent"
+    },
+    "categorie_agent": {
+      "type": "string",
+      "description": "Categorie d'agent (ex: Commissaire enqueteur, Conducteur, Agent GNSS, Chef d'equipe, ISF)"
+    },
+    "moyen_roulant_affecte": {
+      "type": "string",
+      "description": "Moyen roulant affecte (ex: Moto, Vehicule 4x4, Aucun)"
+    },
+    "reference_fiche": {
+      "type": "string",
+      "description": "Reference de la fiche HSE rattachee"
+    },
+    "cessation_travail": {
+      "type": "boolean",
+      "default": false,
+      "description": "Cessation de travail suite a l'accident"
+    },
+    "invalidite_temporaire": {
+      "type": "boolean",
+      "default": false,
+      "description": "Invalidite temporaire"
+    },
+    "jours_arret": {
+      "type": "number",
+      "default": 0,
+      "description": "Nombre de jours d'arret de travail"
+    },
+    "categorie_absence": {
+      "type": "string",
+      "enum": [
+        "Bless\u00e9 l\u00e9ger",
+        "Cas grave",
+        "Maladie",
+        "Aucune"
+      ],
+      "default": "Aucune",
+      "description": "Categorie d'absence pour la prise en charge sanitaire"
+    },
+    "genre": {
+      "type": "string",
+      "enum": [
+        "Homme",
+        "Femme"
+      ],
+      "description": "Genre de l'agent"
+    }
+  },
+  "required": [
+    "periode",
+    "nom",
+    "categorie_agent",
+    "genre"
+  ],
+  "rls": {
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

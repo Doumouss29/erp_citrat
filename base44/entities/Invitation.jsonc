@@ -1,0 +1,59 @@
+{
+  "name": "Invitation",
+  "properties": {
+    "commune": {
+      "description": "Commune affect\u00e9e \u00e0 l'utilisateur invit\u00e9",
+      "type": "string"
+    },
+    "email": {
+      "description": "Email de l'utilisateur invit\u00e9",
+      "type": "string"
+    },
+    "organisation_id": {
+      "description": "ID de l'organisation",
+      "type": "string"
+    },
+    "statut": {
+      "default": "en_attente",
+      "enum": [
+        "en_attente",
+        "acceptee"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "email",
+    "organisation_id"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "data.email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "type": "object"
+}

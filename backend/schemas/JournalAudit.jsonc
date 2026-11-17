@@ -1,0 +1,68 @@
+{
+  "name": "JournalAudit",
+  "properties": {
+    "ancienne_valeur": {
+      "description": "Valeur avant modification",
+      "type": "string"
+    },
+    "bureau_id": {
+      "description": "ID du bureau pour filtrage",
+      "type": "string"
+    },
+    "champ_modifie": {
+      "description": "Nom du champ modifi\u00e9",
+      "type": "string"
+    },
+    "dossier_id": {
+      "description": "ID du dossier concern\u00e9",
+      "type": "string"
+    },
+    "dossier_reference": {
+      "description": "R\u00e9f\u00e9rence du dossier pour affichage",
+      "type": "string"
+    },
+    "nouvelle_valeur": {
+      "description": "Valeur apr\u00e8s modification",
+      "type": "string"
+    },
+    "type_action": {
+      "description": "Type d'action effectu\u00e9e",
+      "enum": [
+        "creation",
+        "modification",
+        "changement_statut",
+        "suppression"
+      ],
+      "type": "string"
+    },
+    "user_email": {
+      "description": "Email de l'utilisateur ayant fait l'action",
+      "type": "string"
+    }
+  },
+  "required": [
+    "type_action",
+    "user_email"
+  ],
+  "rls": {
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "type": "object"
+}

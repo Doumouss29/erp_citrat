@@ -1,0 +1,73 @@
+{
+  "name": "CgesnUser",
+  "type": "object",
+  "properties": {
+    "full_name": {
+      "type": "string",
+      "title": "Nom complet"
+    },
+    "identifier": {
+      "type": "string",
+      "title": "Identifiant"
+    },
+    "email": {
+      "type": "string",
+      "title": "E-mail"
+    },
+    "password_hash": {
+      "type": "string",
+      "title": "Hash mot de passe"
+    },
+    "password_salt": {
+      "type": "string",
+      "title": "Sel mot de passe"
+    },
+    "role": {
+      "type": "string",
+      "enum": [
+        "admin",
+        "user"
+      ],
+      "default": "user",
+      "title": "R\u00f4le"
+    },
+    "access": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "title": "Applications accessibles"
+    }
+  },
+  "required": [
+    "full_name",
+    "identifier",
+    "email",
+    "password_hash",
+    "password_salt",
+    "role"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "__cgesn_nobody__"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "__cgesn_nobody__"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "__cgesn_nobody__"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "__cgesn_nobody__"
+      }
+    }
+  }
+}

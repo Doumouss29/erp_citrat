@@ -1,0 +1,81 @@
+{
+  "name": "TarifReference",
+  "type": "object",
+  "properties": {
+    "activite_id": {
+      "type": "string",
+      "description": "ID de l'activit\u00e9"
+    },
+    "activite_libelle": {
+      "type": "string",
+      "description": "Libell\u00e9 de l'activit\u00e9"
+    },
+    "bureau_id": {
+      "type": "string",
+      "description": "ID du bureau (optionnel pour tarifs globaux)"
+    },
+    "bureau_code": {
+      "type": "string",
+      "description": "Code du bureau pour affichage"
+    },
+    "type_tarif": {
+      "type": "string",
+      "enum": [
+        "standard",
+        "hectare",
+        "lot",
+        "trajet",
+        "localisation"
+      ],
+      "description": "Type de tarification"
+    },
+    "prix": {
+      "type": "number",
+      "description": "Prix en XOF"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description optionnelle du tarif"
+    },
+    "actif": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "activite_id",
+    "type_tarif",
+    "prix"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "user"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

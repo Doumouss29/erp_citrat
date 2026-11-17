@@ -1,0 +1,72 @@
+{
+  "name": "Statut",
+  "properties": {
+    "actif": {
+      "default": true,
+      "type": "boolean"
+    },
+    "couleur": {
+      "description": "Couleur hexad\u00e9cimale pour l'affichage",
+      "type": "string"
+    },
+    "est_final": {
+      "default": false,
+      "description": "Si true, requiert date_livraison",
+      "type": "boolean"
+    },
+    "libelle": {
+      "description": "Nom du statut",
+      "type": "string"
+    },
+    "ordre": {
+      "description": "Ordre d'affichage (1 = d\u00e9faut pour nouveaux dossiers)",
+      "type": "number"
+    },
+    "requiert_motif": {
+      "default": false,
+      "description": "Si true, requiert motif_suspension",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "libelle",
+    "ordre"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "user"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "superviseur"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "type": "object"
+}

@@ -1,0 +1,135 @@
+{
+  "name": "HistoriqueAttribution",
+  "properties": {
+    "action": {
+      "description": "Type d'action",
+      "enum": [
+        "creation",
+        "modification",
+        "suppression",
+        "transfert"
+      ],
+      "type": "string"
+    },
+    "ancien_statut": {
+      "description": "Ancien statut du lot",
+      "type": "string"
+    },
+    "date_action": {
+      "description": "Date et heure de l'action",
+      "format": "date-time",
+      "type": "string"
+    },
+    "details_modification": {
+      "description": "D\u00e9tails des modifications effectu\u00e9es",
+      "type": "string"
+    },
+    "id_attributaire": {
+      "description": "R\u00e9f\u00e9rence \u00e0 l'attributaire",
+      "type": "string"
+    },
+    "id_lot": {
+      "description": "R\u00e9f\u00e9rence au lot",
+      "type": "string"
+    },
+    "nom_attributaire": {
+      "description": "Nom de l'attributaire au moment de l'action",
+      "type": "string"
+    },
+    "nouveau_statut": {
+      "description": "Nouveau statut du lot",
+      "type": "string"
+    },
+    "prenom_attributaire": {
+      "description": "Pr\u00e9nom de l'attributaire",
+      "type": "string"
+    },
+    "type_attributaire": {
+      "description": "Type d'attributaire",
+      "type": "string"
+    },
+    "utilisateur_action": {
+      "description": "Email de l'utilisateur ayant effectu\u00e9 l'action",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id_lot",
+    "action"
+  ],
+  "rls": {
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.grade": "administration"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "user"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "viewer"
+              }
+            }
+          ]
+        },
+        {
+          "user_condition": {
+            "data.consentement_version": "1"
+          }
+        },
+        {
+          "$nor": [
+            {
+              "user_condition": {
+                "role": "en_attente"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "suspendu"
+              }
+            },
+            {
+              "user_condition": {
+                "data.statut": "suspendu"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "type": "object"
+}

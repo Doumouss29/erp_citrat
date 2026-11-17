@@ -1,0 +1,133 @@
+{
+  "name": "ObservationBM",
+  "type": "object",
+  "properties": {
+    "periode": {
+      "type": "string",
+      "description": "Periode couverte (ex: T2 2025)"
+    },
+    "nb_motos_impliques": {
+      "type": "number",
+      "default": 0,
+      "description": "Nombre de motos impliquees"
+    },
+    "nb_motos_endommages": {
+      "type": "number",
+      "default": 0,
+      "description": "Nombre de motos endommagees"
+    },
+    "nb_motos_detruits": {
+      "type": "number",
+      "default": 0,
+      "description": "Nombre de motos totalement detruites"
+    },
+    "nb_vehicules_impliques": {
+      "type": "number",
+      "default": 0,
+      "description": "Nombre de vehicules (4x4, voitures, camions) impliques"
+    },
+    "nb_vehicules_endommages": {
+      "type": "number",
+      "default": 0,
+      "description": "Nombre de vehicules endommages"
+    },
+    "nb_vehicules_detruits": {
+      "type": "number",
+      "default": 0,
+      "description": "Nombre de vehicules totalement detruits"
+    },
+    "nb_tablettes_impliques": {
+      "type": "number",
+      "default": 0,
+      "description": "Nombre de tablettes impliquees"
+    },
+    "nb_tablettes_endommages": {
+      "type": "number",
+      "default": 0,
+      "description": "Nombre de tablettes endommagees"
+    },
+    "nb_tablettes_detruits": {
+      "type": "number",
+      "default": 0,
+      "description": "Nombre de tablettes totalement detruites"
+    },
+    "nb_gnss_impliques": {
+      "type": "number",
+      "default": 0,
+      "description": "Nombre de recepteurs GNSS impliques"
+    },
+    "nb_gnss_endommages": {
+      "type": "number",
+      "default": 0,
+      "description": "Nombre de recepteurs GNSS endommages"
+    },
+    "nb_gnss_detruits": {
+      "type": "number",
+      "default": 0,
+      "description": "Nombre de recepteurs GNSS totalement detruits"
+    },
+    "nb_autres_impliques": {
+      "type": "number",
+      "default": 0,
+      "description": "Nombre d'autres equipements impliques"
+    },
+    "nb_autres_endommages": {
+      "type": "number",
+      "default": 0,
+      "description": "Nombre d'autres equipements endommages"
+    },
+    "nb_autres_detruits": {
+      "type": "number",
+      "default": 0,
+      "description": "Nombre d'autres equipements totalement detruits"
+    }
+  },
+  "required": [
+    "periode"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "user"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

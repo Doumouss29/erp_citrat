@@ -1,0 +1,74 @@
+{
+  "name": "Activite",
+  "properties": {
+    "actif": {
+      "default": true,
+      "type": "boolean"
+    },
+    "code": {
+      "description": "Code unique 2-5 caract\u00e8res (DT, CL, DEL, etc.)",
+      "type": "string"
+    },
+    "libelle": {
+      "description": "Nom de l'activit\u00e9",
+      "type": "string"
+    },
+    "tarif_reference": {
+      "description": "Tarif de r\u00e9f\u00e9rence en XOF (optionnel)",
+      "type": "number"
+    }
+  },
+  "required": [
+    "libelle",
+    "code"
+  ],
+  "rls": {
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "user"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "superviseur"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  },
+  "type": "object"
+}

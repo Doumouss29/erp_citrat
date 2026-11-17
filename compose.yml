@@ -1,0 +1,27 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - sqlite_data:/data
+    expose: ["8000"]
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:${HTTP_PORT:-8088}:80"
+volumes:
+  sqlite_data:

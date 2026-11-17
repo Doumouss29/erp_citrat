@@ -1,0 +1,79 @@
+{
+  "name": "SiNotification",
+  "properties": {
+    "is_read": {
+      "default": false,
+      "description": "Notification lue ou non",
+      "type": "boolean"
+    },
+    "message": {
+      "description": "Message de la notification",
+      "type": "string"
+    },
+    "ticket_id": {
+      "description": "ID du ticket associ\u00e9",
+      "type": "string"
+    },
+    "ticket_number": {
+      "description": "Num\u00e9ro du ticket",
+      "type": "string"
+    },
+    "type": {
+      "description": "Type de notification",
+      "enum": [
+        "nouveau_ticket",
+        "ticket_assigne",
+        "changement_statut",
+        "nouveau_commentaire",
+        "ticket_resolu"
+      ],
+      "type": "string"
+    },
+    "user_email": {
+      "description": "Email du destinataire",
+      "type": "string"
+    }
+  },
+  "required": [
+    "user_email",
+    "type",
+    "message"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "data.user_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.user_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  },
+  "type": "object"
+}

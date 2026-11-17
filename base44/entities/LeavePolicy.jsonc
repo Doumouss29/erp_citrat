@@ -1,0 +1,79 @@
+{
+  "name": "LeavePolicy",
+  "properties": {
+    "accrual_rate": {
+      "default": 2.17,
+      "description": "Taux d'accumulation mensuel",
+      "type": "number"
+    },
+    "annual_leave_days": {
+      "default": 26,
+      "description": "Jours de cong\u00e9 annuel",
+      "type": "number"
+    },
+    "carry_forward_enabled": {
+      "default": true,
+      "description": "Report activ\u00e9",
+      "type": "boolean"
+    },
+    "max_carry_forward_days": {
+      "default": 5,
+      "description": "Maximum de jours reportables",
+      "type": "number"
+    },
+    "max_consecutive_days": {
+      "default": 30,
+      "description": "Maximum de jours cons\u00e9cutifs",
+      "type": "number"
+    },
+    "min_notice_days": {
+      "default": 7,
+      "description": "Pr\u00e9avis minimum (jours)",
+      "type": "number"
+    },
+    "sick_leave_requires_justification": {
+      "default": true,
+      "description": "Maladie requiert justificatif",
+      "type": "boolean"
+    },
+    "source_id": {
+      "description": "ID d'origine dans l'ancien RH-CGESN (migration)",
+      "type": "string"
+    }
+  },
+  "required": [
+    "annual_leave_days"
+  ],
+  "type": "object",
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "user"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

@@ -1,0 +1,321 @@
+{
+  "name": "SiTicket",
+  "type": "object",
+  "properties": {
+    "ticket_number": {
+      "type": "string",
+      "description": "Num\u00e9ro automatique du ticket"
+    },
+    "title": {
+      "type": "string",
+      "description": "Titre du probl\u00e8me"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description d\u00e9taill\u00e9e du probl\u00e8me"
+    },
+    "application": {
+      "type": "string",
+      "enum": [
+        "cgesn.com",
+        "rh-cgesn",
+        "cgesn-board",
+        "e-cadastre",
+        "e-guide",
+        "csst",
+        "assistance",
+        "hse",
+        "messagerie"
+      ],
+      "description": "Application concern\u00e9e"
+    },
+    "request_type": {
+      "type": "string",
+      "enum": [
+        "bug",
+        "amelioration",
+        "assistance",
+        "acces_utilisateur",
+        "incident",
+        "autre"
+      ],
+      "description": "Type de demande"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "faible",
+        "moyenne",
+        "elevee",
+        "urgente"
+      ],
+      "default": "moyenne",
+      "description": "Priorit\u00e9 du ticket"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "nouveau",
+        "en_attente",
+        "en_cours",
+        "resolu",
+        "ferme"
+      ],
+      "default": "nouveau",
+      "description": "Statut du ticket"
+    },
+    "requester_name": {
+      "type": "string",
+      "description": "Nom du demandeur"
+    },
+    "requester_email": {
+      "type": "string",
+      "description": "Email du demandeur"
+    },
+    "requester_service": {
+      "type": "string",
+      "description": "Service ou bureau du demandeur"
+    },
+    "assigned_to": {
+      "type": "string",
+      "description": "Email du technicien assign\u00e9"
+    },
+    "assigned_to_name": {
+      "type": "string",
+      "description": "Nom du technicien assign\u00e9"
+    },
+    "attachment_url": {
+      "type": "string",
+      "description": "URL de la pi\u00e8ce jointe ou capture d'\u00e9cran"
+    },
+    "confirmation_en_cours_le": {
+      "type": "string",
+      "format": "date-time",
+      "rls": {
+        "write": false,
+        "update": false
+      }
+    }
+  },
+  "required": [
+    "title",
+    "description",
+    "application",
+    "request_type",
+    "priority"
+  ],
+  "rls": {
+    "create": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "user"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "viewer"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "superviseur"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            }
+          ]
+        },
+        {
+          "$nor": [
+            {
+              "user_condition": {
+                "data.statut": "suspendu"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "$and": [
+                {
+                  "created_by_id": "{{user.id}}"
+                },
+                {
+                  "data.requester_email": "{{user.email}}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "read": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "user"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "viewer"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "superviseur"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            }
+          ]
+        },
+        {
+          "$nor": [
+            {
+              "user_condition": {
+                "data.statut": "suspendu"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "data.requester_email": "{{user.email}}"
+            },
+            {
+              "data.assigned_to": "{{user.email}}"
+            },
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "user"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "viewer"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "superviseur"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            }
+          ]
+        },
+        {
+          "$nor": [
+            {
+              "user_condition": {
+                "data.statut": "suspendu"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "data.requester_email": "{{user.email}}"
+            },
+            {
+              "data.assigned_to": "{{user.email}}"
+            },
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "delete": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "user"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "viewer"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "superviseur"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            }
+          ]
+        },
+        {
+          "$nor": [
+            {
+              "user_condition": {
+                "data.statut": "suspendu"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "data.requester_email": "{{user.email}}"
+            },
+            {
+              "data.assigned_to": "{{user.email}}"
+            },
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

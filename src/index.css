@@ -1,0 +1,304 @@
+@import url('https://fonts.googleapis.com/css2?family=Caprasimo:wght@400&family=Figtree:wght@400;600;700&display=swap');
+@import './styles/app-themes.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+    --font-heading: ui-sans-serif, system-ui, sans-serif;
+    --font-body: ui-sans-serif, system-ui, sans-serif;
+    --font-display: ui-sans-serif, system-ui, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Couleur de marque : vert du portail par défaut, redéfinie par application (app-themes.css) */
+    --brand: 172 72% 21%;
+    --brand-foreground: 0 0% 100%;
+    --brand-light: 165 18% 95%;
+    --statut-cours: 150 32% 36%;
+    --statut-cours-bg: 150 30% 90%;
+    --statut-termine: 172 7% 45%;
+    --statut-termine-bg: 172 8% 90%;
+    --statut-bloque: 7 54% 40%;
+    --statut-bloque-bg: 8 45% 90%;
+  }
+
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body;
+  }
+}
+
+/* ===== CSST (Sensibilisation SST) — design system scopé ===== */
+.csst-scope {
+  --color-bg: #f5ead8;
+  --color-surface: #ebddc5;
+  --color-text: #201e1d;
+  --color-accent: #c67139;
+  --color-accent-2: #7a8a5e;
+  --color-divider: color-mix(in srgb, #201e1d 16%, transparent);
+  --color-neutral-100: #f9f4ed;
+  --color-neutral-200: #eee7db;
+  --color-neutral-300: #dcd3c4;
+  --color-neutral-400: #c0b6a5;
+  --color-neutral-500: #a19786;
+  --color-neutral-600: #82796a;
+  --color-neutral-700: #645c50;
+  --color-neutral-800: #474238;
+  --color-neutral-900: #2e2b25;
+  --color-accent-100: #fff2eb;
+  --color-accent-200: #ffe1d0;
+  --color-accent-300: #ffc6a5;
+  --color-accent-400: #f6a06b;
+  --color-accent-500: #d67f48;
+  --color-accent-600: #b2622d;
+  --color-accent-700: #8c491a;
+  --color-accent-800: #643312;
+  --color-accent-900: #402310;
+  --color-accent-2-100: #f0fae1;
+  --color-accent-2-200: #e1eecc;
+  --color-accent-2-300: #ccdbb2;
+  --color-accent-2-400: #aebf92;
+  --color-accent-2-500: #8fa073;
+  --color-accent-2-600: #728157;
+  --color-accent-2-700: #56633f;
+  --color-accent-2-800: #3d472b;
+  --color-accent-2-900: #272e1b;
+  --font-heading: "Caprasimo", system-ui, sans-serif;
+  --font-heading-weight: 400;
+  --font-body: "Figtree", system-ui, sans-serif;
+  --shadow-sm: 0 1px 2px color-mix(in srgb, #2e2b25 14%, transparent);
+  --shadow-md: 0 3px 10px color-mix(in srgb, #2e2b25 16%, transparent);
+  --shadow-lg: 0 12px 32px color-mix(in srgb, #2e2b25 22%, transparent);
+  --radius-lg: 0.5rem;
+}
+
+/* — CSST buttons — */
+.csst-scope .btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  cursor: pointer; text-decoration: none;
+  font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  font-size: 14px; line-height: 1.2; color: var(--color-text);
+  background: transparent; border: 1px solid transparent;
+  padding: 8.8px 15.84px; border-radius: 999px;
+}
+.csst-scope .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.csst-scope .btn-primary { background: var(--color-accent); color: var(--color-bg); }
+.csst-scope .btn-primary:hover { background: var(--color-accent-600); }
+.csst-scope .btn-primary:active { background: var(--color-accent-700); }
+.csst-scope .btn-secondary { border-color: var(--color-divider); }
+.csst-scope .btn-secondary:hover { background: color-mix(in srgb, var(--color-text) 7%, transparent); }
+.csst-scope .btn-secondary:active { background: color-mix(in srgb, var(--color-text) 14%, transparent); }
+.csst-scope .btn-ghost { color: var(--color-accent); padding-inline: 4.4px; }
+.csst-scope .btn-ghost:hover { background: color-mix(in srgb, var(--color-accent) 10%, transparent); }
+.csst-scope .btn-ghost:active { background: color-mix(in srgb, var(--color-accent) 18%, transparent); }
+
+/* — CSST forms — */
+.csst-scope .field > label {
+  display: block; font-size: 12px; margin-bottom: 5px;
+  color: color-mix(in srgb, var(--color-text) 70%, transparent);
+}
+.csst-scope .input {
+  width: 100%; min-height: 36px; padding: 6px 14px; font: inherit;
+  font-size: 14px; color: var(--color-text); caret-color: var(--color-accent);
+  background: var(--color-surface);
+  border: 1px solid var(--color-divider); border-radius: 999px;
+}
+.csst-scope .input:hover { border-color: color-mix(in srgb, var(--color-text) 45%, transparent); }
+.csst-scope .input:focus-visible { border-color: var(--color-accent); outline-offset: 0; }
+
+/* — CSST cards — */
+.csst-scope .card-kicker { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-accent); }
+.csst-scope .card-title {
+  font-family: var(--font-heading); font-weight: var(--font-heading-weight);
+  font-size: 17px; line-height: 1.2;
+}
+.csst-scope .card-body { margin: 0; font-size: 13px; opacity: 0.8; flex: 1; }
+
+/* — CSST buttons — */
+.csst-scope .csst-btn { min-height: 44px; cursor: pointer; border: none; font-family: var(--font-body); }
+.csst-scope .csst-btn:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+.csst-scope .csst-opt:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+.csst-scope .tag { white-space: nowrap; }
+
+@media print {
+  .csst-scope .no-print { display: none !important; }
+}
+@page { size: A4 landscape; margin: 0; }
+/* ===== Thème ASSISTANCE SI =====
+   Activé uniquement quand on est dans l'appli ASSISTANCE (classe posée sur <html> par son layout),
+   pour que les menus déroulants et fenêtres (rendus hors de l'appli) suivent aussi le thème.
+   Palette tirée du logo : bleu nuit, bleu vif, cyan. */
+html.assistance-theme {
+  --background: 216 33% 97%;
+  --foreground: 222 47% 11%;
+  --card: 0 0% 100%;
+  --card-foreground: 222 47% 11%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222 47% 11%;
+  --primary: 221 72% 44%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 214 60% 95%;
+  --secondary-foreground: 222 55% 22%;
+  --muted: 214 32% 94%;
+  --muted-foreground: 218 15% 45%;
+  --accent: 199 90% 94%;
+  --accent-foreground: 222 55% 22%;
+  --border: 216 28% 89%;
+  --input: 216 28% 87%;
+  --ring: 221 72% 44%;
+  --chart-1: 221 72% 50%;
+  --chart-2: 190 85% 42%;
+  --chart-3: 262 60% 58%;
+  --chart-4: 38 92% 55%;
+  --chart-5: 152 55% 40%;
+  --sidebar-background: 224 58% 15%;
+  --sidebar-foreground: 214 35% 88%;
+  --sidebar-primary: 221 72% 52%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 224 45% 22%;
+  --sidebar-accent-foreground: 0 0% 100%;
+  --sidebar-border: 224 40% 24%;
+  --sidebar-ring: 190 85% 50%;
+  --font-heading: 'Poppins', ui-sans-serif, system-ui, sans-serif;
+}
+
+
+/* ===== Préparation mobile ===== */
+/* Pas de sélection de texte (ni de loupe) sur les commandes tactiles */
+button, a, [role="button"], [role="tab"], svg {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Pas d'effet élastique du navigateur ; les blocs internes gardent leur propre défilement */
+html, body {
+  overscroll-behavior-y: none;
+}
+
+/* ===== Mode sombre des pages aux couleurs fixes =====
+   Les nuances slate passent par des variables (tailwind.config.js) : elles s'inversent en sombre,
+   sauf sur les aplats foncés (boutons, bandeaux), qui gardent leur contraste d'origine. */
+:root { --tw-slate-50: 248 250 252; --tw-slate-100: 241 245 249; --tw-slate-200: 226 232 240; --tw-slate-300: 203 213 225; --tw-slate-400: 148 163 184; --tw-slate-500: 100 116 139; --tw-slate-600: 71 85 105; --tw-slate-700: 51 65 85; --tw-slate-800: 30 41 59; --tw-slate-900: 15 23 42; --tw-slate-950: 2 6 23; }
+.dark { color-scheme: dark; --tw-slate-50: 2 6 23; --tw-slate-100: 15 23 42; --tw-slate-200: 30 41 59; --tw-slate-300: 51 65 85; --tw-slate-400: 148 163 184; --tw-slate-500: 148 163 184; --tw-slate-600: 203 213 225; --tw-slate-700: 203 213 225; --tw-slate-800: 226 232 240; --tw-slate-900: 241 245 249; --tw-slate-950: 248 250 252; }
+.dark :is(.bg-slate-700, .bg-slate-800, .bg-slate-900, .bg-slate-950, .from-slate-700, .from-slate-800, .from-slate-900) { --tw-slate-50: 248 250 252; --tw-slate-100: 241 245 249; --tw-slate-200: 226 232 240; --tw-slate-300: 203 213 225; --tw-slate-400: 148 163 184; --tw-slate-500: 100 116 139; --tw-slate-600: 71 85 105; --tw-slate-700: 51 65 85; --tw-slate-800: 30 41 59; --tw-slate-900: 15 23 42; --tw-slate-950: 2 6 23; }
+.dark .bg-white { background-color: hsl(var(--card)); }
+.dark .hover\:bg-white:hover { background-color: hsl(var(--accent)); }
+.dark .text-black { color: hsl(var(--foreground)); }
+.dark [class*="bg-[#f"], .dark [class*="bg-[#F"] { background-color: hsl(var(--background)); }
+
+/* Assistance SI en sombre */
+html.assistance-theme.dark {
+  --background: 222 40% 8%;
+  --foreground: 214 35% 92%;
+  --card: 222 35% 11%;
+  --card-foreground: 214 35% 92%;
+  --popover: 222 35% 11%;
+  --popover-foreground: 214 35% 92%;
+  --primary: 217 85% 62%;
+  --primary-foreground: 222 47% 11%;
+  --secondary: 222 28% 18%;
+  --secondary-foreground: 214 35% 92%;
+  --muted: 222 28% 18%;
+  --muted-foreground: 216 18% 68%;
+  --accent: 222 28% 20%;
+  --accent-foreground: 214 35% 92%;
+  --border: 222 22% 22%;
+  --input: 222 22% 24%;
+  --ring: 217 85% 62%;
+}
+
+/* ===== Repli pour les navigateurs plus anciens ===== */
+@supports not (height: 100dvh) {
+  .min-h-\[100dvh\] { min-height: 100vh; }
+  .h-\[calc\(100dvh-4rem\)\] { height: calc(100vh - 4rem); }
+}
+@supports not (color: color-mix(in srgb, red, blue)) {
+  .csst-scope {
+    --color-divider: rgba(32, 30, 29, 0.16);
+    --shadow-sm: 0 1px 2px rgba(46, 43, 37, 0.14);
+    --shadow-md: 0 3px 10px rgba(46, 43, 37, 0.16);
+    --shadow-lg: 0 12px 32px rgba(46, 43, 37, 0.22);
+  }
+  .csst-scope .btn-secondary:hover { background: rgba(32, 30, 29, 0.07); }
+  .csst-scope .btn-secondary:active { background: rgba(32, 30, 29, 0.14); }
+  .csst-scope .btn-ghost:hover { background: rgba(198, 113, 57, 0.1); }
+  .csst-scope .btn-ghost:active { background: rgba(198, 113, 57, 0.18); }
+  .csst-scope .field > label { color: rgba(32, 30, 29, 0.7); }
+  .csst-scope .input:hover { border-color: rgba(32, 30, 29, 0.45); }
+}

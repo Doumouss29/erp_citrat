@@ -1,0 +1,274 @@
+{
+  "name": "LeaveRequest",
+  "properties": {
+    "approved_date": {
+      "description": "Date d'approbation",
+      "format": "date-time",
+      "type": "string"
+    },
+    "approver_email": {
+      "description": "Email du validateur final",
+      "type": "string"
+    },
+    "approver_name": {
+      "description": "Nom du validateur final",
+      "type": "string"
+    },
+    "employee_code": {
+      "description": "Code de l'employ\u00e9",
+      "type": "string"
+    },
+    "employee_email": {
+      "description": "Email de l'employ\u00e9 (fix\u00e9 par le serveur)",
+      "type": "string"
+    },
+    "employee_id": {
+      "description": "R\u00e9f\u00e9rence vers l'employ\u00e9",
+      "type": "string"
+    },
+    "employee_location": {
+      "description": "Localisation de l'employ\u00e9",
+      "type": "string"
+    },
+    "employee_name": {
+      "description": "Nom complet de l'employ\u00e9",
+      "type": "string"
+    },
+    "end_date": {
+      "description": "Date de fin",
+      "format": "date",
+      "type": "string"
+    },
+    "is_urgent": {
+      "default": false,
+      "description": "Demande urgente (<48h)",
+      "type": "boolean"
+    },
+    "leave_period": {
+      "default": "individuel",
+      "description": "P\u00e9riode de cong\u00e9",
+      "enum": [
+        "individuel",
+        "collectif",
+        "maternite"
+      ],
+      "type": "string"
+    },
+    "leave_type": {
+      "default": "annuel",
+      "description": "Type de cong\u00e9",
+      "enum": [
+        "annuel",
+        "maladie",
+        "maternite",
+        "special",
+        "sans_solde"
+      ],
+      "type": "string"
+    },
+    "level1_approver": {
+      "description": "Nom du validateur Niveau 1",
+      "type": "string"
+    },
+    "level1_approver_email": {
+      "description": "Email du validateur Niveau 1",
+      "type": "string"
+    },
+    "level1_comment": {
+      "description": "Commentaire Niveau 1",
+      "type": "string"
+    },
+    "level1_date": {
+      "description": "Date de d\u00e9cision Niveau 1",
+      "type": "string"
+    },
+    "level1_decided_by": {
+      "description": "Auteur r\u00e9el de la d\u00e9cision Niveau 1",
+      "type": "string"
+    },
+    "level1_decided_by_email": {
+      "description": "E-mail de l'auteur r\u00e9el de la d\u00e9cision Niveau 1",
+      "type": "string"
+    },
+    "level1_status": {
+      "description": "D\u00e9cision Niveau 1",
+      "type": "string"
+    },
+    "level2_approver_email": {
+      "description": "Email du validateur Niveau 2 (RH)",
+      "type": "string"
+    },
+    "level2_comment": {
+      "description": "Commentaire Niveau 2",
+      "type": "string"
+    },
+    "level2_date": {
+      "description": "Date de d\u00e9cision Niveau 2",
+      "type": "string"
+    },
+    "level2_decided_by": {
+      "description": "Auteur r\u00e9el de la d\u00e9cision Niveau 2",
+      "type": "string"
+    },
+    "level2_decided_by_email": {
+      "description": "E-mail de l'auteur r\u00e9el de la d\u00e9cision Niveau 2",
+      "type": "string"
+    },
+    "level2_status": {
+      "description": "D\u00e9cision Niveau 2",
+      "type": "string"
+    },
+    "level3_approver_email": {
+      "description": "Email du validateur Niveau 3 (DG)",
+      "type": "string"
+    },
+    "level3_comment": {
+      "description": "Commentaire Niveau 3",
+      "type": "string"
+    },
+    "level3_date": {
+      "description": "Date de d\u00e9cision Niveau 3",
+      "type": "string"
+    },
+    "level3_decided_by": {
+      "description": "Auteur r\u00e9el de la d\u00e9cision Niveau 3",
+      "type": "string"
+    },
+    "level3_decided_by_email": {
+      "description": "E-mail de l'auteur r\u00e9el de la d\u00e9cision Niveau 3",
+      "type": "string"
+    },
+    "level3_status": {
+      "description": "D\u00e9cision Niveau 3",
+      "type": "string"
+    },
+    "office": {
+      "description": "Bureau de l'employ\u00e9",
+      "type": "string"
+    },
+    "reason": {
+      "description": "Motif du cong\u00e9",
+      "type": "string"
+    },
+    "rejection_reason": {
+      "description": "Motif du refus",
+      "type": "string"
+    },
+    "requested_date": {
+      "description": "Date de la demande",
+      "format": "date-time",
+      "type": "string"
+    },
+    "review_comment": {
+      "description": "Commentaire de d\u00e9cision (saisie RH)",
+      "type": "string"
+    },
+    "review_date": {
+      "description": "Date de la derni\u00e8re d\u00e9cision",
+      "type": "string"
+    },
+    "reviewed_by": {
+      "description": "Auteur de la derni\u00e8re d\u00e9cision",
+      "type": "string"
+    },
+    "source_id": {
+      "description": "ID d'origine dans l'ancien RH-CGESN (migration)",
+      "type": "string"
+    },
+    "start_date": {
+      "description": "Date de d\u00e9but",
+      "format": "date",
+      "type": "string"
+    },
+    "status": {
+      "default": "pending_level1",
+      "description": "Statut de la demande",
+      "enum": [
+        "pending",
+        "pending_level1",
+        "pending_level2",
+        "pending_level3",
+        "approved",
+        "rejected",
+        "cancelled"
+      ],
+      "type": "string"
+    },
+    "total_days": {
+      "default": 0,
+      "description": "Nombre total de jours",
+      "type": "number"
+    }
+  },
+  "required": [
+    "employee_id",
+    "employee_name",
+    "leave_type",
+    "start_date",
+    "end_date",
+    "status"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "$and": [
+            {
+              "user_condition": {
+                "data.grade": "assistante_rh"
+              }
+            },
+            {
+              "data.status": "pending_level1"
+            }
+          ]
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "data.employee_email": "{{user.email}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "data.level1_approver_email": "{{user.email}}"
+        },
+        {
+          "data.level2_approver_email": "{{user.email}}"
+        },
+        {
+          "data.level3_approver_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.grade": "assistante_rh"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "type": "object"
+}

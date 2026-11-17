@@ -1,0 +1,238 @@
+{
+  "name": "OperationCaisse",
+  "properties": {
+    "annule_par_email": {
+      "description": "Personne ayant annul\u00e9 le bon (serveur)",
+      "type": "string"
+    },
+    "beneficiaire": {
+      "description": "Client ou b\u00e9n\u00e9ficiaire li\u00e9 \u00e0 l'op\u00e9ration",
+      "type": "string"
+    },
+    "bureau_code": {
+      "description": "Code du bureau pour affichage",
+      "type": "string"
+    },
+    "bureau_id": {
+      "description": "ID du bureau li\u00e9 \u00e0 l'op\u00e9ration",
+      "type": "string"
+    },
+    "cree_par_email": {
+      "description": "Email de la personne ayant saisi l'op\u00e9ration (renseign\u00e9 c\u00f4t\u00e9 serveur)",
+      "type": "string"
+    },
+    "date_annulation": {
+      "description": "Date/heure de l'annulation (serveur)",
+      "type": "string"
+    },
+    "date_modification": {
+      "description": "Date/heure de la derni\u00e8re modification (serveur)",
+      "type": "string"
+    },
+    "date_operation": {
+      "description": "Date de l'op\u00e9ration",
+      "format": "date",
+      "type": "string"
+    },
+    "date_validation": {
+      "description": "Date de validation ou de rejet",
+      "format": "date",
+      "type": "string",
+      "rls": {
+        "write": {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      }
+    },
+    "description": {
+      "description": "Libell\u00e9 de l'op\u00e9ration",
+      "type": "string"
+    },
+    "justificatif_nom": {
+      "description": "Nom du justificatif",
+      "type": "string"
+    },
+    "justificatif_url": {
+      "description": "URL du justificatif",
+      "type": "string"
+    },
+    "mode_reglement": {
+      "default": "espece",
+      "enum": [
+        "espece",
+        "cheque",
+        "virement",
+        "mobile_pay"
+      ],
+      "type": "string"
+    },
+    "modifie_par_email": {
+      "description": "Derni\u00e8re personne ayant modifi\u00e9 l'op\u00e9ration (serveur)",
+      "type": "string"
+    },
+    "montant": {
+      "description": "Montant total d\u00fb en XOF",
+      "type": "number"
+    },
+    "montant_lettres": {
+      "description": "Montant en lettres",
+      "type": "string"
+    },
+    "montant_recu": {
+      "description": "Montant effectivement re\u00e7u / pay\u00e9 en XOF",
+      "type": "number"
+    },
+    "montant_reste": {
+      "default": 0,
+      "description": "Reste \u00e0 payer (montant - montant_recu)",
+      "type": "number"
+    },
+    "motif_annulation": {
+      "description": "Motif de l'annulation",
+      "type": "string"
+    },
+    "motif_decision": {
+      "description": "Motif ou remarque li\u00e9 \u00e0 la d\u00e9cision",
+      "type": "string",
+      "rls": {
+        "write": {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      }
+    },
+    "numero_bon": {
+      "description": "Num\u00e9ro de bon unique g\u00e9n\u00e9r\u00e9 (ex: BE-SGL-202605-0001)",
+      "type": "string"
+    },
+    "observation": {
+      "description": "Observation compl\u00e9mentaire",
+      "type": "string"
+    },
+    "statut": {
+      "default": "en_attente",
+      "description": "Statut de validation et de traitement (modifiable par l'administration uniquement)",
+      "enum": [
+        "en_attente",
+        "en_attente_justification",
+        "en_cours_validation",
+        "valide",
+        "rejete",
+        "annule"
+      ],
+      "type": "string",
+      "rls": {
+        "write": {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      }
+    },
+    "type_operation": {
+      "description": "Type d'op\u00e9ration de caisse",
+      "enum": [
+        "entree",
+        "sortie",
+        "solde_depart"
+      ],
+      "type": "string"
+    },
+    "valide_par_email": {
+      "description": "Email de l'administrateur ayant trait\u00e9 l'op\u00e9ration",
+      "type": "string",
+      "rls": {
+        "write": {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "date_operation",
+    "bureau_id",
+    "type_operation",
+    "montant",
+    "description"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "journal_verrouille"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "user"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "viewer"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "superviseur"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "data.cree_par_email": "{{user.email}}"
+            },
+            {
+              "data.bureau_id": "{{user.data.bureau_id}}"
+            },
+            {
+              "user_condition": {
+                "data.fonction": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "type": "object"
+}

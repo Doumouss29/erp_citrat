@@ -1,0 +1,94 @@
+{
+  "name": "ParcelleOverride",
+  "properties": {
+    "commune": {
+      "description": "Commune de la parcelle",
+      "type": "string"
+    },
+    "ilot": {
+      "type": "string"
+    },
+    "ilot_original": {
+      "description": "\u00celot original (pour identifier la parcelle)",
+      "type": "string"
+    },
+    "lot": {
+      "type": "string"
+    },
+    "lot_original": {
+      "description": "Lot original (pour identifier la parcelle)",
+      "type": "string"
+    },
+    "organisation_id": {
+      "description": "ID de l'organisation",
+      "type": "string"
+    },
+    "parcelle": {
+      "type": "string"
+    },
+    "parcelle_original": {
+      "description": "Num\u00e9ro de parcelle original (pour identifier la parcelle)",
+      "type": "string"
+    },
+    "quartier": {
+      "type": "string"
+    },
+    "section": {
+      "type": "string"
+    },
+    "section_original": {
+      "description": "Section originale (pour identifier la parcelle)",
+      "type": "string"
+    },
+    "surface": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "organisation_id",
+    "commune",
+    "parcelle_original"
+  ],
+  "rls": {
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "superviseur"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "user"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  },
+  "type": "object"
+}

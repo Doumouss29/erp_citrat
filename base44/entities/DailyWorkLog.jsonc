@@ -1,0 +1,148 @@
+{
+  "name": "DailyWorkLog",
+  "properties": {
+    "balance": {
+      "default": 0,
+      "description": "Solde du jour (heures - 8)",
+      "type": "number"
+    },
+    "break_end_time": {
+      "description": "Heure de fin de pause (HH:MM)",
+      "type": "string"
+    },
+    "break_start_time": {
+      "description": "Heure de d\u00e9but de pause (HH:MM)",
+      "type": "string"
+    },
+    "cumulative_balance": {
+      "default": 0,
+      "description": "Solde cumul\u00e9",
+      "type": "number"
+    },
+    "date": {
+      "description": "Date du jour",
+      "format": "date",
+      "type": "string"
+    },
+    "employee_code": {
+      "description": "Code de l'employ\u00e9",
+      "type": "string"
+    },
+    "employee_email": {
+      "description": "Email du salari\u00e9",
+      "format": "email",
+      "type": "string"
+    },
+    "employee_id": {
+      "description": "R\u00e9f\u00e9rence vers l'employ\u00e9",
+      "type": "string"
+    },
+    "employee_name": {
+      "description": "Nom complet de l'employ\u00e9",
+      "type": "string"
+    },
+    "entry_time": {
+      "description": "Heure d'arriv\u00e9e",
+      "type": "string"
+    },
+    "exit_time": {
+      "description": "Heure de d\u00e9part",
+      "type": "string"
+    },
+    "hours_worked": {
+      "default": 0,
+      "description": "Heures travaill\u00e9es",
+      "type": "number"
+    },
+    "office": {
+      "description": "Bureau",
+      "type": "string"
+    },
+    "overtime_hours": {
+      "default": 0,
+      "description": "Heures suppl\u00e9mentaires (apr\u00e8s 17:00)",
+      "type": "number"
+    },
+    "overtime_reason": {
+      "description": "Motif des heures suppl\u00e9mentaires",
+      "type": "string"
+    },
+    "source_id": {
+      "description": "ID d'origine dans l'ancien RH-CGESN (migration)",
+      "type": "string"
+    }
+  },
+  "required": [
+    "employee_id",
+    "employee_code",
+    "date"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.grade": "assistante_rh"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.grade": "assistante_rh"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "data.employee_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.grade": "assistante_rh"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.grade": "assistante_rh"
+          }
+        }
+      ]
+    }
+  },
+  "type": "object"
+}

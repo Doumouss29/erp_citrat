@@ -1,0 +1,97 @@
+{
+  "name": "OperationCaisse",
+  "type": "object",
+  "properties": {
+    "date_operation": {
+      "type": "string",
+      "format": "date",
+      "description": "Date de l'opération"
+    },
+    "bureau_id": {
+      "type": "string",
+      "description": "ID du bureau lié à l'opération"
+    },
+    "bureau_code": {
+      "type": "string",
+      "description": "Code du bureau pour affichage"
+    },
+    "type_operation": {
+      "type": "string",
+      "enum": [
+        "entree",
+        "sortie",
+        "solde_depart"
+      ],
+      "description": "Type d'opération de caisse"
+    },
+    "montant": {
+      "type": "number",
+      "description": "Montant en XOF"
+    },
+    "description": {
+      "type": "string",
+      "description": "Libellé de l'opération"
+    },
+    "numero_bon": {
+      "type": "string",
+      "description": "Numéro de bon unique généré (ex: BE-2026-0001 ou BS-2026-0001)"
+    },
+    "beneficiaire": {
+      "type": "string",
+      "description": "Client ou bénéficiaire lié à l'opération"
+    },
+    "mode_reglement": {
+      "type": "string",
+      "enum": ["espece", "cheque", "virement", "mobile"],
+      "default": "espece"
+    },
+    "observation": {
+      "type": "string",
+      "description": "Observation complémentaire"
+    },
+    "statut": {
+      "type": "string",
+      "enum": [
+        "en_attente",
+        "en_attente_justification",
+        "en_cours_validation",
+        "valide",
+        "rejete"
+      ],
+      "default": "en_attente",
+      "description": "Statut de validation et de traitement"
+    },
+    "justificatif_url": {
+      "type": "string",
+      "description": "URL du justificatif"
+    },
+    "justificatif_nom": {
+      "type": "string",
+      "description": "Nom du justificatif"
+    },
+    "cree_par_email": {
+      "type": "string",
+      "description": "Email du comptable ayant saisi l'opération"
+    },
+    "valide_par_email": {
+      "type": "string",
+      "description": "Email de l'administrateur ayant traité l'opération"
+    },
+    "date_validation": {
+      "type": "string",
+      "format": "date",
+      "description": "Date de validation ou de rejet"
+    },
+    "motif_decision": {
+      "type": "string",
+      "description": "Motif ou remarque lié à la décision"
+    }
+  },
+  "required": [
+    "date_operation",
+    "bureau_id",
+    "type_operation",
+    "montant",
+    "description"
+  ]
+}

@@ -1,0 +1,261 @@
+{
+  "name": "Attributaire",
+  "properties": {
+    "actif": {
+      "default": true,
+      "description": "Indique si l'attribution est active",
+      "type": "boolean"
+    },
+    "adresse": {
+      "description": "Adresse postale",
+      "type": "string"
+    },
+    "date_attribution": {
+      "description": "Date d'attribution",
+      "format": "date",
+      "type": "string"
+    },
+    "date_expiration_piece": {
+      "description": "Date li\u00e9e \u00e0 l'\u00e9tablissement ou \u00e0 l'expiration de la pi\u00e8ce",
+      "format": "date",
+      "rls": {
+        "read": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "data.grade": "administration"
+              }
+            }
+          ]
+        }
+      },
+      "type": "string"
+    },
+    "domicile": {
+      "description": "Domicile de l'attributaire",
+      "type": "string"
+    },
+    "email": {
+      "description": "Adresse email",
+      "type": "string"
+    },
+    "est_principal": {
+      "default": true,
+      "description": "Indique si c'est l'attributaire principal",
+      "type": "boolean"
+    },
+    "etablie_a": {
+      "description": "Lieu d'\u00e9tablissement de la pi\u00e8ce d'identit\u00e9",
+      "rls": {
+        "read": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "data.grade": "administration"
+              }
+            }
+          ]
+        }
+      },
+      "type": "string"
+    },
+    "id_lot": {
+      "description": "R\u00e9f\u00e9rence au lot",
+      "type": "string"
+    },
+    "nature_piece_identite": {
+      "description": "Type de pi\u00e8ce d'identit\u00e9",
+      "enum": [
+        "CNI",
+        "Passeport",
+        "Carte de s\u00e9jour",
+        "Registre de commerce",
+        "Autre"
+      ],
+      "type": "string"
+    },
+    "nom": {
+      "description": "Nom de famille ou raison sociale",
+      "type": "string"
+    },
+    "numero_piece_identite": {
+      "description": "Num\u00e9ro de la pi\u00e8ce d'identit\u00e9",
+      "rls": {
+        "read": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "data.grade": "administration"
+              }
+            }
+          ]
+        }
+      },
+      "type": "string"
+    },
+    "piece_identite_url": {
+      "description": "URL du document d'identit\u00e9 upload\u00e9",
+      "rls": {
+        "read": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "data.grade": "administration"
+              }
+            }
+          ]
+        }
+      },
+      "type": "string"
+    },
+    "prenom": {
+      "description": "Pr\u00e9nom (personne physique)",
+      "type": "string"
+    },
+    "profession": {
+      "description": "Profession de l'attributaire",
+      "type": "string"
+    },
+    "raison_sociale": {
+      "description": "Raison sociale (personne morale)",
+      "type": "string"
+    },
+    "representant_nom": {
+      "description": "Nom du repr\u00e9sentant (personne morale)",
+      "type": "string"
+    },
+    "representant_prenom": {
+      "description": "Pr\u00e9nom du repr\u00e9sentant (personne morale)",
+      "type": "string"
+    },
+    "telephone": {
+      "description": "Num\u00e9ro de t\u00e9l\u00e9phone",
+      "type": "string"
+    },
+    "type_attributaire": {
+      "description": "Type d'attributaire",
+      "enum": [
+        "physique",
+        "morale"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "id_lot",
+    "type_attributaire",
+    "nom"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.grade": "administration"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.grade": "administration"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "user"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "viewer"
+              }
+            }
+          ]
+        },
+        {
+          "user_condition": {
+            "data.consentement_version": "1"
+          }
+        },
+        {
+          "$nor": [
+            {
+              "user_condition": {
+                "role": "en_attente"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "suspendu"
+              }
+            },
+            {
+              "user_condition": {
+                "data.statut": "suspendu"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.grade": "administration"
+          }
+        }
+      ]
+    }
+  },
+  "type": "object"
+}

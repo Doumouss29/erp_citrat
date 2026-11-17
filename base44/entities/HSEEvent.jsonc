@@ -1,0 +1,234 @@
+{
+  "name": "HSEEvent",
+  "properties": {
+    "action_followup": {
+      "description": "\u00c9tat du suivi des actions (un \u00e9l\u00e9ment par ligne)",
+      "type": "string"
+    },
+    "arrival_point": {
+      "description": "Point d'arriv\u00e9e du trajet",
+      "type": "string"
+    },
+    "circumstances": {
+      "description": "Description de l'\u00e9v\u00e9nement (un \u00e9l\u00e9ment par ligne)",
+      "type": "string"
+    },
+    "closure_date": {
+      "description": "Date de cl\u00f4ture",
+      "format": "date",
+      "type": "string"
+    },
+    "corrective_actions": {
+      "description": "Actions correctives engag\u00e9es (un \u00e9l\u00e9ment par ligne)",
+      "type": "string"
+    },
+    "date_event": {
+      "description": "Date de survenue de l'\u00e9v\u00e9nement",
+      "format": "date",
+      "type": "string"
+    },
+    "declaration_date": {
+      "description": "Date de d\u00e9claration",
+      "format": "date",
+      "type": "string"
+    },
+    "departure_point": {
+      "description": "Point de d\u00e9part du trajet",
+      "type": "string"
+    },
+    "equipment": {
+      "description": "Mat\u00e9riel impliqu\u00e9",
+      "type": "string"
+    },
+    "event_type": {
+      "description": "Type d'\u00e9v\u00e9nement (Accident ou Incident)",
+      "enum": [
+        "Accident",
+        "Incident",
+        "Presqu'accident"
+      ],
+      "type": "string"
+    },
+    "event_type_code": {
+      "description": "Code type",
+      "enum": [
+        "A",
+        "I",
+        "PA"
+      ],
+      "type": "string"
+    },
+    "fiche_number": {
+      "description": "Num\u00e9ro de la fiche",
+      "type": "number"
+    },
+    "immediate_measures": {
+      "description": "Mesures imm\u00e9diates prises (un \u00e9l\u00e9ment par ligne)",
+      "type": "string"
+    },
+    "injuries_damages": {
+      "description": "Cons\u00e9quences de l'\u00e9v\u00e9nement survenu (un \u00e9l\u00e9ment par ligne)",
+      "type": "string"
+    },
+    "location": {
+      "description": "Lieu de l'\u00e9v\u00e9nement (D\u00e9partement, r\u00e9gion)",
+      "type": "string"
+    },
+    "observations": {
+      "description": "Observations",
+      "type": "string"
+    },
+    "person_role": {
+      "description": "Fonction de la personne",
+      "type": "string"
+    },
+    "persons_involved": {
+      "description": "Nom et pr\u00e9noms de la ou des victime(s)",
+      "type": "string"
+    },
+    "photos": {
+      "description": "URLs des photos de l'\u00e9v\u00e9nement",
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "reference": {
+      "description": "R\u00e9f\u00e9rence de l'incident (ex: ID-V01-1)",
+      "type": "string"
+    },
+    "severity": {
+      "description": "Niveau de gravit\u00e9",
+      "enum": [
+        "G\u2080",
+        "M\u2081",
+        "m\u2081"
+      ],
+      "type": "string"
+    },
+    "status": {
+      "description": "Statut de la fiche",
+      "enum": [
+        "Ouvert",
+        "Clos"
+      ],
+      "type": "string"
+    },
+    "supervisor": {
+      "description": "Responsable du suivi",
+      "type": "string"
+    },
+    "time_event": {
+      "description": "Heure de l'\u00e9v\u00e9nement",
+      "type": "string"
+    },
+    "zone": {
+      "description": "Zone concern\u00e9e",
+      "enum": [
+        "Worodougou",
+        "Cavally"
+      ],
+      "type": "string"
+    },
+    "alerte_en_cours_le": {
+      "type": "string",
+      "format": "date-time",
+      "rls": {
+        "write": false,
+        "update": false
+      }
+    },
+    "alert_request_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "rls": {
+        "write": false,
+        "create": false,
+        "update": false
+      }
+    }
+  },
+  "required": [
+    "reference",
+    "date_event",
+    "departure_point",
+    "arrival_point",
+    "event_type",
+    "severity",
+    "status"
+  ],
+  "rls": {
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "user"
+              }
+            }
+          ]
+        },
+        {
+          "user_condition": {
+            "data.consentement_version": "1"
+          }
+        },
+        {
+          "$nor": [
+            {
+              "user_condition": {
+                "role": "en_attente"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "suspendu"
+              }
+            },
+            {
+              "user_condition": {
+                "data.statut": "suspendu"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  },
+  "type": "object"
+}

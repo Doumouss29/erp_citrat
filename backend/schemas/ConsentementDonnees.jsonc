@@ -1,0 +1,87 @@
+{
+  "description": "Journal des d\u00e9cisions des utilisateurs sur l'utilisation de leurs donn\u00e9es personnelles (preuve du consentement). Un enregistrement par d\u00e9cision, jamais modifi\u00e9 par l'utilisateur.",
+  "name": "ConsentementDonnees",
+  "properties": {
+    "date_naissance": {
+      "format": "date",
+      "type": "string"
+    },
+    "decision": {
+      "description": "accepte = accord donn\u00e9, refuse = refus \u00e0 l'\u00e9cran de consentement, retire = retrait de l'accord, mise_a_jour = modification des informations",
+      "enum": [
+        "accepte",
+        "refuse",
+        "retire",
+        "mise_a_jour"
+      ],
+      "type": "string"
+    },
+    "nom": {
+      "type": "string"
+    },
+    "prenom": {
+      "type": "string"
+    },
+    "telephone": {
+      "type": "string"
+    },
+    "user_agent": {
+      "description": "Navigateur utilis\u00e9 (preuve technique)",
+      "type": "string"
+    },
+    "user_email": {
+      "description": "E-mail du compte concern\u00e9",
+      "type": "string"
+    },
+    "user_name": {
+      "description": "Nom complet au moment de la d\u00e9cision",
+      "type": "string"
+    },
+    "version": {
+      "description": "Version de la notice d'information pr\u00e9sent\u00e9e",
+      "type": "string"
+    }
+  },
+  "required": [
+    "user_email",
+    "decision",
+    "version"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "data.user_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "data.user_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "type": "object"
+}

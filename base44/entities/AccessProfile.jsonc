@@ -1,0 +1,76 @@
+{
+  "name": "AccessProfile",
+  "properties": {
+    "apps": {
+      "default": [],
+      "description": "Identifiants des applications accord\u00e9es \u00e0 ce profil (app_id)",
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "description": {
+      "description": "Courte description du profil",
+      "type": "string"
+    },
+    "name": {
+      "description": "Nom affich\u00e9 du profil / grade",
+      "type": "string"
+    },
+    "order": {
+      "default": 0,
+      "description": "Ordre d'affichage",
+      "type": "number"
+    },
+    "profile_id": {
+      "description": "Identifiant stable du profil (ex: 'agent'), stock\u00e9 dans User.grade",
+      "type": "string"
+    }
+  },
+  "required": [
+    "profile_id",
+    "name"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "user"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "viewer"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "superviseur"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "type": "object"
+}

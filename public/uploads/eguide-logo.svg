@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 96" width="480" height="192">
+  <rect x="0" y="0" width="240" height="96" rx="20" ry="20" fill="#A10BB5"/>
+  <text x="120" y="50" text-anchor="middle" dominant-baseline="central"
+        font-family="Helvetica Neue, Helvetica, Arial, sans-serif"
+        font-size="48" font-weight="700" fill="#FFFFFF" letter-spacing="0.5">eGuide</text>
+</svg>

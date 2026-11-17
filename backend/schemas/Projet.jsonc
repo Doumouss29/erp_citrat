@@ -1,0 +1,340 @@
+{
+  "name": "Projet",
+  "properties": {
+    "avancement": {
+      "default": 0,
+      "description": "Pourcentage d'avancement calcul\u00e9 \u00e0 partir des \u00e9tapes coch\u00e9es",
+      "type": "number"
+    },
+    "bloque": {
+      "default": false,
+      "description": "Projet bloqu\u00e9",
+      "type": "boolean"
+    },
+    "bureau_code": {
+      "description": "Code du bureau",
+      "type": "string"
+    },
+    "bureau_id": {
+      "description": "ID du bureau rattach\u00e9 (un seul bureau)",
+      "type": "string"
+    },
+    "cause_blocage": {
+      "description": "Cause du blocage",
+      "enum": [
+        "technique",
+        "administratif",
+        "financier",
+        "autre"
+      ],
+      "type": "string"
+    },
+    "date_debut": {
+      "description": "Date de d\u00e9but du projet",
+      "format": "date",
+      "type": "string"
+    },
+    "date_fin_prevue": {
+      "description": "Date de fin pr\u00e9vue",
+      "format": "date",
+      "type": "string"
+    },
+    "description": {
+      "description": "Description du projet",
+      "type": "string"
+    },
+    "description_blocage": {
+      "description": "Description du blocage",
+      "type": "string"
+    },
+    "etapes": {
+      "description": "Liste libre d'\u00e9tapes (cr\u00e9\u00e9es par l'utilisateur)",
+      "items": {
+        "properties": {
+          "fait": {
+            "default": false,
+            "type": "boolean"
+          },
+          "ordre": {
+            "type": "number"
+          },
+          "titre": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "interlocuteurs": {
+      "description": "Interlocuteurs / repr\u00e9sentants li\u00e9s au projet",
+      "items": {
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "fonction": {
+            "type": "string"
+          },
+          "nom": {
+            "type": "string"
+          },
+          "telephone": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "localite": {
+      "description": "Lieu / localit\u00e9 (ville, quartier, zone)",
+      "type": "string"
+    },
+    "priorite": {
+      "default": "normale",
+      "enum": [
+        "normale",
+        "haute",
+        "urgente"
+      ],
+      "type": "string"
+    },
+    "statut": {
+      "default": "en_cours",
+      "description": "Statut du projet",
+      "enum": [
+        "en_cours",
+        "termine",
+        "en_arret"
+      ],
+      "type": "string"
+    },
+    "titre": {
+      "description": "Titre du projet",
+      "type": "string"
+    },
+    "travaux_realises": {
+      "description": "Historique des travaux r\u00e9alis\u00e9s (entr\u00e9es dat\u00e9es)",
+      "items": {
+        "properties": {
+          "date": {
+            "description": "Date de l'entr\u00e9e",
+            "type": "string"
+          },
+          "texte": {
+            "description": "Description des travaux",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "type_activite": {
+      "description": "Type d'activit\u00e9 (extensible : Lotissement, Construction, \u00c9tude, Viabilisation, Administratif, Autre...)",
+      "type": "string"
+    }
+  },
+  "required": [
+    "titre",
+    "bureau_id",
+    "type_activite",
+    "statut"
+  ],
+  "rls": {
+    "create": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "user"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "viewer"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "superviseur"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "created_by_id": "{{user.id}}"
+            },
+            {
+              "data.bureau_id": "{{user.data.bureau_id}}"
+            },
+            {
+              "user_condition": {
+                "data.fonction": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "delete": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "user"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "viewer"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "superviseur"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "created_by_id": "{{user.id}}"
+            },
+            {
+              "data.bureau_id": "{{user.data.bureau_id}}"
+            },
+            {
+              "user_condition": {
+                "data.fonction": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "read": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "user"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "viewer"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "superviseur"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "created_by_id": "{{user.id}}"
+            },
+            {
+              "data.bureau_id": "{{user.data.bureau_id}}"
+            },
+            {
+              "user_condition": {
+                "data.fonction": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "user"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "viewer"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "superviseur"
+              }
+            }
+          ]
+        },
+        {
+          "$or": [
+            {
+              "created_by_id": "{{user.id}}"
+            },
+            {
+              "data.bureau_id": "{{user.data.bureau_id}}"
+            },
+            {
+              "user_condition": {
+                "data.fonction": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "type": "object"
+}

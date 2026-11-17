@@ -1,0 +1,62 @@
+{
+  "name": "SiRequester",
+  "properties": {
+    "email": {
+      "description": "Adresse email du demandeur (identifiant unique)",
+      "type": "string"
+    },
+    "last_request_date": {
+      "description": "Date de la derni\u00e8re demande soumise",
+      "format": "date-time",
+      "type": "string"
+    },
+    "name": {
+      "description": "Nom complet du demandeur",
+      "type": "string"
+    },
+    "requests_count": {
+      "default": 1,
+      "description": "Nombre de demandes soumises par ce demandeur",
+      "type": "number"
+    }
+  },
+  "required": [
+    "name",
+    "email"
+  ],
+  "rls": {
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "data.email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  },
+  "type": "object"
+}

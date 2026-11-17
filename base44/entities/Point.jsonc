@@ -1,0 +1,143 @@
+{
+  "name": "Point",
+  "properties": {
+    "classe_precision": {
+      "description": "Classe de pr\u00e9cision de la borne (Classe I \u00e0 Classe X)",
+      "enum": [
+        "I",
+        "II",
+        "III",
+        "IV",
+        "V",
+        "VI",
+        "VII",
+        "VIII",
+        "IX",
+        "X"
+      ],
+      "type": "string"
+    },
+    "description": {
+      "description": "Description du point",
+      "type": "string"
+    },
+    "est_nouveau": {
+      "default": false,
+      "description": "Indique si le point a \u00e9t\u00e9 r\u00e9cemment ajout\u00e9",
+      "type": "boolean"
+    },
+    "methode": {
+      "description": "M\u00e9thode de relev\u00e9 : moyenne GPS, clic sur la carte ou accroche \u00e0 un point existant",
+      "enum": [
+        "gps_moyenne",
+        "carte",
+        "accroche"
+      ],
+      "type": "string"
+    },
+    "name": {
+      "description": "Nom ou num\u00e9ro du point",
+      "type": "string"
+    },
+    "nb_mesures": {
+      "description": "Nombre de mesures GPS moyenn\u00e9es pour ce point",
+      "type": "number"
+    },
+    "numero_demande": {
+      "description": "Num\u00e9ro de demande de certificat foncier de la parcelle",
+      "type": "string"
+    },
+    "observation": {
+      "description": "Observations sur la borne",
+      "type": "string"
+    },
+    "parcel_id": {
+      "description": "Identifiant de la parcelle associ\u00e9e",
+      "type": "string"
+    },
+    "precision_m": {
+      "description": "Pr\u00e9cision horizontale estim\u00e9e du relev\u00e9 GPS, en m\u00e8tres",
+      "type": "number"
+    },
+    "present_bornage": {
+      "description": "Propri\u00e9taire pr\u00e9sent lors du bornage",
+      "type": "boolean"
+    },
+    "proprietaire_contact": {
+      "description": "T\u00e9l\u00e9phone ou pi\u00e8ce d'identit\u00e9 du propri\u00e9taire",
+      "type": "string"
+    },
+    "proprietaire_nom": {
+      "description": "Propri\u00e9taire ou repr\u00e9sentant pr\u00e9sent \u00e0 la borne",
+      "type": "string"
+    },
+    "temoin": {
+      "description": "T\u00e9moin(s) pr\u00e9sent(s) \u00e0 la borne",
+      "type": "string"
+    },
+    "type_borne": {
+      "description": "Nature de la borne",
+      "enum": [
+        "borne_beton",
+        "piquet",
+        "arbre",
+        "repere_naturel",
+        "autre"
+      ],
+      "type": "string"
+    },
+    "village": {
+      "description": "Village de la borne",
+      "type": "string"
+    },
+    "x": {
+      "description": "Longitude (X) en WGS84",
+      "type": "number"
+    },
+    "y": {
+      "description": "Latitude (Y) en WGS84",
+      "type": "number"
+    },
+    "z": {
+      "description": "Altitude (Z) en m\u00e8tres",
+      "type": "number"
+    }
+  },
+  "required": [
+    "name",
+    "x",
+    "y"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "user"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "type": "object"
+}

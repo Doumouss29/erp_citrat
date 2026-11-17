@@ -1,0 +1,964 @@
+{
+  "name": "Employee",
+  "properties": {
+    "absence_days_used": {
+      "default": 0,
+      "description": "Jours d'absence utilis\u00e9s dans l'ann\u00e9e",
+      "type": "number",
+      "rls": {
+        "write": {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      }
+    },
+    "attendance_status": {
+      "default": "Actif - Pointage requis",
+      "description": "Statut RH pour le pointage",
+      "enum": [
+        "Actif - Pointage requis",
+        "Actif - Pointage non requis"
+      ],
+      "type": "string"
+    },
+    "birth_date": {
+      "description": "Date de naissance",
+      "format": "date",
+      "type": "string"
+    },
+    "carried_forward_days": {
+      "default": 0,
+      "description": "Jours de cong\u00e9s d\u00e9cembre report\u00e9s de l'ann\u00e9e pr\u00e9c\u00e9dente",
+      "type": "number",
+      "rls": {
+        "write": {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      }
+    },
+    "contract_end_date": {
+      "description": "Date de fin de contrat (CDD / CDDTI)",
+      "format": "date",
+      "type": "string",
+      "rls": {
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "data.grade": "assistante_rh"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "contract_history": {
+      "description": "Historique du contrat : embauche, renouvellements, changements de contrat, d\u00e9part, r\u00e9int\u00e9gration",
+      "items": {
+        "properties": {
+          "action": {
+            "type": "string"
+          },
+          "by": {
+            "type": "string"
+          },
+          "contract_type": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string"
+          },
+          "end_date": {
+            "type": "string"
+          },
+          "internship_type": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "start_date": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "rls": {
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "data.grade": "assistante_rh"
+              }
+            }
+          ]
+        }
+      },
+      "type": "array"
+    },
+    "contract_type": {
+      "description": "Type de contrat",
+      "enum": [
+        "CDI",
+        "CDD",
+        "CDDTI",
+        "Stage",
+        "Prestation",
+        "Autre"
+      ],
+      "type": "string",
+      "rls": {
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "data.grade": "assistante_rh"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "december_on_call_days": {
+      "default": 0,
+      "description": "Jours d'astreinte effectu\u00e9s en d\u00e9cembre",
+      "type": "number",
+      "rls": {
+        "write": {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      }
+    },
+    "department": {
+      "description": "D\u00e9partement",
+      "enum": [
+        "direction_generale",
+        "administratif_financier",
+        "grand_projet_developpement",
+        "grand_projet_secretariat",
+        "bureau_abidjan",
+        "bureau_yamoussoukro",
+        "bureau_daloa",
+        "bureau_bouafle",
+        "bureau_sinfra",
+        "bureau_issia"
+      ],
+      "type": "string",
+      "rls": {
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "data.grade": "assistante_rh"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "departure_date": {
+      "description": "Date effective du d\u00e9part (dernier jour au cabinet)",
+      "format": "date",
+      "rls": {
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "data.grade": "assistante_rh"
+              }
+            }
+          ]
+        }
+      },
+      "type": "string"
+    },
+    "departure_notes": {
+      "description": "Commentaire sur le d\u00e9part",
+      "rls": {
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "data.grade": "assistante_rh"
+              }
+            }
+          ]
+        }
+      },
+      "type": "string"
+    },
+    "departure_reason": {
+      "description": "Motif du d\u00e9part",
+      "enum": [
+        "fin_contrat",
+        "fin_stage",
+        "licenciement",
+        "rupture_conventionnelle",
+        "demission",
+        "deces",
+        "autre"
+      ],
+      "rls": {
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "data.grade": "assistante_rh"
+              }
+            }
+          ]
+        }
+      },
+      "type": "string"
+    },
+    "departure_recorded_at": {
+      "description": "Date d'enregistrement du d\u00e9part",
+      "format": "date-time",
+      "rls": {
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "data.grade": "assistante_rh"
+              }
+            }
+          ]
+        }
+      },
+      "type": "string"
+    },
+    "departure_recorded_by": {
+      "description": "E-mail de la personne qui a enregistr\u00e9 le d\u00e9part",
+      "rls": {
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "data.grade": "assistante_rh"
+              }
+            }
+          ]
+        }
+      },
+      "type": "string"
+    },
+    "documents": {
+      "description": "Documents li\u00e9s \u00e0 l'employ\u00e9",
+      "items": {
+        "properties": {
+          "file_name": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "uploaded_date": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "email": {
+      "description": "E-mail de connexion de l'agent (adresse actuelle ; remplac\u00e9e par l'adresse pro quand elle est active)",
+      "format": "email",
+      "type": "string",
+      "rls": {
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "data.grade": "assistante_rh"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "email_pro": {
+      "description": "Adresse professionnelle pr\u00e9vue @cgesn.com (pas encore active)",
+      "type": "string",
+      "rls": {
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "data.grade": "assistante_rh"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "emergency_contacts": {
+      "description": "Contacts d'urgence",
+      "items": {
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "relationship": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "employee_code": {
+      "description": "Code unique du salari\u00e9",
+      "type": "string",
+      "rls": {
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "data.grade": "assistante_rh"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "evaluations": {
+      "description": "\u00c9valuations de performance",
+      "items": {
+        "properties": {
+          "created_date": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string"
+          },
+          "evaluator": {
+            "type": "string"
+          },
+          "goals": {
+            "type": "string"
+          },
+          "improvements": {
+            "type": "string"
+          },
+          "period": {
+            "type": "string"
+          },
+          "rating": {
+            "type": "number"
+          },
+          "strengths": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "type": "array",
+      "rls": {
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "data.grade": "assistante_rh"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "first_name": {
+      "description": "Pr\u00e9nom",
+      "type": "string",
+      "rls": {
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "data.grade": "assistante_rh"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "formations": {
+      "description": "Formations suivies par l'employ\u00e9",
+      "items": {
+        "properties": {
+          "certificate_url": {
+            "type": "string"
+          },
+          "created_date": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "duration_hours": {
+            "type": "number"
+          },
+          "end_date": {
+            "type": "string"
+          },
+          "organism": {
+            "type": "string"
+          },
+          "start_date": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "gender": {
+      "default": "Non renseign\u00e9",
+      "description": "Sexe",
+      "enum": [
+        "Homme",
+        "Femme",
+        "Non renseign\u00e9"
+      ],
+      "type": "string"
+    },
+    "hire_date": {
+      "description": "Date d'embauche",
+      "format": "date",
+      "type": "string",
+      "rls": {
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "data.grade": "assistante_rh"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "internship_end_date": {
+      "description": "Date de fin du stage",
+      "format": "date",
+      "type": "string",
+      "rls": {
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "data.grade": "assistante_rh"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "internship_office": {
+      "description": "Bureau o\u00f9 le stage est ex\u00e9cut\u00e9",
+      "type": "string",
+      "rls": {
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "data.grade": "assistante_rh"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "internship_start_date": {
+      "description": "Date de d\u00e9but du stage",
+      "format": "date",
+      "type": "string",
+      "rls": {
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "data.grade": "assistante_rh"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "internship_type": {
+      "description": "Type de stage",
+      "enum": [
+        "PERFECTIONNEMENT",
+        "PRESFOR",
+        "STAGE ECOLE"
+      ],
+      "type": "string",
+      "rls": {
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "data.grade": "assistante_rh"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "is_active": {
+      "default": true,
+      "description": "Actif ou non",
+      "type": "boolean",
+      "rls": {
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "data.grade": "assistante_rh"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "is_favorite": {
+      "default": false,
+      "description": "Profil en favori (pour les stagiaires \u00e0 renouveler)",
+      "type": "boolean",
+      "rls": {
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "data.grade": "assistante_rh"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "is_on_call": {
+      "default": false,
+      "description": "Agent en astreinte",
+      "type": "boolean",
+      "rls": {
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "data.grade": "assistante_rh"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "last_name": {
+      "description": "Nom de famille",
+      "type": "string",
+      "rls": {
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "data.grade": "assistante_rh"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "marital_status": {
+      "default": "Non renseign\u00e9",
+      "description": "Situation matrimoniale",
+      "enum": [
+        "C\u00e9libataire",
+        "Mari\u00e9(e)",
+        "Divorc\u00e9(e)",
+        "Veuf(ve)",
+        "Non renseign\u00e9"
+      ],
+      "type": "string"
+    },
+    "office": {
+      "description": "Bureau / Localisation",
+      "type": "string",
+      "rls": {
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "data.grade": "assistante_rh"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "personal_email": {
+      "description": "E-mail personnel (repris de l'ancien RH-CGESN)",
+      "type": "string",
+      "rls": {
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "data.grade": "assistante_rh"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "phone": {
+      "description": "Num\u00e9ro de t\u00e9l\u00e9phone",
+      "type": "string"
+    },
+    "photo_url": {
+      "description": "URL de la photo de profil",
+      "type": "string"
+    },
+    "portal_access": {
+      "default": [],
+      "description": "Applications accord\u00e9es individuellement en plus du grade, appliqu\u00e9es au compte \u00e0 l'invitation. Propre \u00e0 l'ERP, jamais \u00e9cras\u00e9 par la synchro.",
+      "items": {
+        "type": "string"
+      },
+      "type": "array",
+      "rls": {
+        "write": {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      }
+    },
+    "portal_grade": {
+      "description": "Grade du portail propos\u00e9 (profile_id d'AccessProfile), appliqu\u00e9 au compte \u00e0 l'invitation. Propre \u00e0 l'ERP, jamais \u00e9cras\u00e9 par la synchro.",
+      "type": "string",
+      "rls": {
+        "write": {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      }
+    },
+    "position": {
+      "description": "Poste occup\u00e9",
+      "type": "string",
+      "rls": {
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "data.grade": "assistante_rh"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "remaining_december_days": {
+      "default": 15,
+      "description": "Jours calendaires restants d\u00e9cembre",
+      "type": "number",
+      "rls": {
+        "write": {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      }
+    },
+    "remaining_year_days": {
+      "default": 15,
+      "description": "Jours calendaires restants janvier-novembre",
+      "type": "number",
+      "rls": {
+        "write": {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      }
+    },
+    "rh_id": {
+      "description": "Identifiant de la fiche source dans RH-CGESN (cl\u00e9 de synchronisation)",
+      "type": "string",
+      "rls": {
+        "write": {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      }
+    },
+    "rh_synced_at": {
+      "description": "Derni\u00e8re synchronisation depuis RH-CGESN",
+      "format": "date-time",
+      "type": "string",
+      "rls": {
+        "write": {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      }
+    },
+    "socio_professional_category": {
+      "default": "Non renseign\u00e9",
+      "description": "Cat\u00e9gorie socio-professionnelle",
+      "enum": [
+        "Cadre Sup\u00e9rieur",
+        "Cadre",
+        "Agent de Ma\u00eetrise",
+        "Employ\u00e9 Qualifi\u00e9",
+        "Employ\u00e9 Non Qualifi\u00e9",
+        "Ouvrier Qualifi\u00e9",
+        "Ouvrier Non Qualifi\u00e9",
+        "Stagiaire",
+        "Non renseign\u00e9"
+      ],
+      "type": "string",
+      "rls": {
+        "write": {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "data.grade": "assistante_rh"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "work_mode": {
+      "default": "bureau",
+      "description": "Mode de travail",
+      "enum": [
+        "bureau",
+        "mission",
+        "projet_specifique",
+        "mixte"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "employee_code",
+    "last_name",
+    "first_name",
+    "position",
+    "department"
+  ],
+  "type": "object",
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.grade": "assistante_rh"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "data.email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.grade": "assistante_rh"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.grade": "assistante_rh"
+          }
+        }
+      ]
+    }
+  }
+}

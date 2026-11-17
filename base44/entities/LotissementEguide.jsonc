@@ -1,0 +1,194 @@
+{
+  "name": "LotissementEguide",
+  "type": "object",
+  "properties": {
+    "nom": {
+      "type": "string",
+      "description": "Nom du projet de lotissement"
+    },
+    "localite": {
+      "type": "string",
+      "description": "Commune / localit\u00e9"
+    },
+    "commune": {
+      "type": "string",
+      "description": "Commune du lotissement (E-GUIDE)"
+    },
+    "region": {
+      "type": "string",
+      "description": "R\u00e9gion du lotissement (E-GUIDE)"
+    },
+    "village": {
+      "type": "string",
+      "description": "Village du lotissement (E-GUIDE)"
+    },
+    "decret": {
+      "type": "string",
+      "description": "D\u00e9cret d'approbation (E-GUIDE)"
+    },
+    "zoom_defaut": {
+      "type": "number",
+      "description": "Niveau de zoom par d\u00e9faut (E-GUIDE)"
+    },
+    "coordonnees_centre": {
+      "type": "object",
+      "description": "Coordonn\u00e9es du centre (GeoJSON Point) (E-GUIDE)"
+    },
+    "nombre_lots": {
+      "type": "number",
+      "description": "Nombre total de lots (E-GUIDE)"
+    },
+    "nombre_ilots": {
+      "type": "number",
+      "description": "Nombre total d'\u00eelots (E-GUIDE)"
+    },
+    "superficie_totale": {
+      "type": "number",
+      "description": "Superficie totale en m\u00b2 (E-GUIDE)"
+    },
+    "bureau": {
+      "type": "string",
+      "description": "Bureau rattach\u00e9 (Abidjan, Daloa, Yamoussoukro, Bouafle, Sinfra, Issia)"
+    },
+    "annee": {
+      "type": "number",
+      "description": "Ann\u00e9e du projet"
+    },
+    "chef_projet": {
+      "type": "string",
+      "description": "Chef de projet"
+    },
+    "superficie_text": {
+      "type": "string",
+      "description": "Superficie en format textuel (ex : 113 Ha 70 A 71 Ca)"
+    },
+    "superficie_ha": {
+      "type": "number",
+      "description": "Superficie en hectares"
+    },
+    "date_debut": {
+      "type": "string",
+      "format": "date",
+      "description": "Date de d\u00e9but"
+    },
+    "date_fin_prevue": {
+      "type": "string",
+      "format": "date",
+      "description": "Date de fin pr\u00e9vue"
+    },
+    "date_fin_reelle": {
+      "type": "string",
+      "format": "date",
+      "description": "Date de fin r\u00e9elle"
+    },
+    "statut": {
+      "type": "string",
+      "enum": [
+        "En cours",
+        "Termin\u00e9",
+        "Suspendu"
+      ],
+      "default": "En cours",
+      "description": "Statut global"
+    },
+    "avancement": {
+      "type": "string",
+      "description": "\u00c9tat d'avancement du dossier"
+    },
+    "solutions": {
+      "type": "string",
+      "description": "Solutions / actions \u00e0 suivre"
+    },
+    "partenaire": {
+      "type": "string",
+      "description": "Nom du partenaire (ex : M. KONE SOULEYMANE)"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Notes / observations"
+    },
+    "phase_comments": {
+      "type": "array",
+      "description": "Commentaires de synth\u00e8se par phase",
+      "items": {
+        "type": "object",
+        "properties": {
+          "numero": {
+            "type": "number"
+          },
+          "comment": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "nom",
+    "statut"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "$and": [
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "user"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "viewer"
+              }
+            }
+          ]
+        },
+        {
+          "user_condition": {
+            "data.consentement_version": "1"
+          }
+        },
+        {
+          "$nor": [
+            {
+              "user_condition": {
+                "role": "en_attente"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "suspendu"
+              }
+            },
+            {
+              "user_condition": {
+                "data.statut": "suspendu"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "name": "AnnuaireAttente",
+  "type": "object",
+  "properties": {
+    "nom": {
+      "type": "string",
+      "description": "Nom de la personne"
+    },
+    "prenom": {
+      "type": "string",
+      "description": "Pr\u00e9nom de la personne"
+    },
+    "email": {
+      "type": "string",
+      "description": "Email de la personne (en attente d'invitation)"
+    },
+    "telephone": {
+      "type": "string",
+      "description": "Num\u00e9ro de t\u00e9l\u00e9phone"
+    },
+    "fonction": {
+      "type": "string",
+      "enum": [
+        "admin",
+        "responsable",
+        "adjoint",
+        "secretaire"
+      ],
+      "default": "secretaire",
+      "description": "Fonction pr\u00e9vue"
+    },
+    "bureau_ids": {
+      "type": "array",
+      "description": "IDs des bureaux rattach\u00e9s",
+      "items": {
+        "type": "string"
+      }
+    },
+    "bureau_codes": {
+      "type": "array",
+      "description": "Codes des bureaux rattach\u00e9s",
+      "items": {
+        "type": "string"
+      }
+    },
+    "statut": {
+      "type": "string",
+      "enum": [
+        "actif",
+        "inactif"
+      ],
+      "default": "actif"
+    },
+    "invite": {
+      "type": "boolean",
+      "default": false,
+      "description": "Indique si la fiche a \u00e9t\u00e9 convertie en utilisateur invit\u00e9"
+    }
+  },
+  "required": [
+    "email",
+    "fonction"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

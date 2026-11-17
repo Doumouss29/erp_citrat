@@ -1,0 +1,108 @@
+{
+  "name": "EtapeProjet",
+  "type": "object",
+  "properties": {
+    "projet_id": {
+      "type": "string",
+      "description": "ID du projet parent"
+    },
+    "phase": {
+      "type": "number",
+      "description": "Num\u00e9ro de la phase (1, 2, 3...)"
+    },
+    "phase_titre": {
+      "type": "string",
+      "description": "Titre de la phase"
+    },
+    "titre": {
+      "type": "string",
+      "description": "Titre de l'\u00e9tape"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description de l'\u00e9tape"
+    },
+    "ordre": {
+      "type": "number",
+      "description": "Ordre dans la phase"
+    },
+    "validee": {
+      "type": "boolean",
+      "default": false,
+      "description": "L'\u00e9tape est-elle valid\u00e9e ?"
+    },
+    "date_validation": {
+      "type": "string",
+      "format": "date",
+      "description": "Date de validation"
+    },
+    "commentaire": {
+      "type": "string",
+      "description": "Commentaire lors de la validation"
+    },
+    "piece_jointe_url": {
+      "type": "string",
+      "description": "URL de la pi\u00e8ce jointe"
+    },
+    "piece_jointe_nom": {
+      "type": "string",
+      "description": "Nom du fichier joint"
+    }
+  },
+  "required": [
+    "projet_id",
+    "titre",
+    "ordre",
+    "phase"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

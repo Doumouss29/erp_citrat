@@ -1,0 +1,130 @@
+{
+  "name": "ActivityReport",
+  "properties": {
+    "description": {
+      "description": "Notes / Description",
+      "type": "string"
+    },
+    "employee_code": {
+      "description": "Code de l'employ\u00e9",
+      "type": "string"
+    },
+    "employee_email": {
+      "description": "Email de l'employ\u00e9",
+      "type": "string"
+    },
+    "employee_id": {
+      "description": "R\u00e9f\u00e9rence vers l'employ\u00e9",
+      "type": "string"
+    },
+    "employee_name": {
+      "description": "Nom complet de l'employ\u00e9",
+      "type": "string"
+    },
+    "end_date": {
+      "description": "Date de retour",
+      "format": "date",
+      "type": "string"
+    },
+    "location": {
+      "description": "Lieu / Site",
+      "type": "string"
+    },
+    "mission_status": {
+      "description": "\u00c9tat de la mission (en_cours / terminee)",
+      "type": "string"
+    },
+    "office": {
+      "description": "Bureau de l'employ\u00e9",
+      "type": "string"
+    },
+    "project_name": {
+      "description": "Nom du projet",
+      "type": "string"
+    },
+    "source_id": {
+      "description": "ID d'origine dans l'ancien RH-CGESN (migration)",
+      "type": "string"
+    },
+    "start_date": {
+      "description": "Date de d\u00e9part",
+      "format": "date",
+      "type": "string"
+    },
+    "status": {
+      "default": "active",
+      "description": "Statut de la mission",
+      "enum": [
+        "active",
+        "completed",
+        "cancelled"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "employee_id",
+    "employee_name",
+    "project_name",
+    "start_date"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "data.employee_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "data.employee_email": "{{user.email}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "data.grade": "assistante_rh"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.employee_email": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  },
+  "type": "object"
+}
