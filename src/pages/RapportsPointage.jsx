@@ -1047,7 +1047,7 @@ export default function RapportsPointagePage() {
                               sendMail({
                                 to: emp.email,
                                 subject: "⚠️ Rappel de pointage - Absence non justifiée",
-                                body: `Bonjour ${emp.first_name} ${emp.last_name},\n\nVous n'avez pas encore effectué votre pointage d'arrivée aujourd'hui (${format(now, 'dd/MM/yyyy à HH:mm')}).\n\nSi vous êtes présent(e), merci de pointer immédiatement.\nSi vous êtes absent(e), merci de régulariser votre situation auprès des RH.\n\nCordialement,\nService RH - CGESN`
+                                body: `Bonjour ${emp.first_name} ${emp.last_name},\n\nVous n'avez pas encore effectué votre pointage d'arrivée aujourd'hui (${format(now, 'dd/MM/yyyy à HH:mm')}).\n\nSi vous êtes présent(e), merci de pointer immédiatement.\nSi vous êtes absent(e), merci de régulariser votre situation auprès des RH.\n\nCordialement,\nService RH - CITRAT`
                               }).catch(e => console.log("Email non envoyé:", e));
                             }, count * 200);
                             count++;
@@ -1159,7 +1159,7 @@ export default function RapportsPointagePage() {
                                         await sendMail({
                                           to: emp.email,
                                           subject: "⚠️ Rappel de pointage - Absence non justifiée",
-                                          body: `Bonjour ${emp.first_name} ${emp.last_name},\n\nVous n'avez pas encore effectué votre pointage d'arrivée aujourd'hui.\n\nSi vous êtes présent(e), merci de pointer immédiatement.\nSi vous êtes absent(e), merci de régulariser votre situation auprès des RH.\n\nCordialement,\nService RH - CGESN`
+                                          body: `Bonjour ${emp.first_name} ${emp.last_name},\n\nVous n'avez pas encore effectué votre pointage d'arrivée aujourd'hui.\n\nSi vous êtes présent(e), merci de pointer immédiatement.\nSi vous êtes absent(e), merci de régulariser votre situation auprès des RH.\n\nCordialement,\nService RH - CITRAT`
                                         });
                                         alert("Notification envoyée avec succès");
                                       } catch (error) {
