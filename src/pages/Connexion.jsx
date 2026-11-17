@@ -35,9 +35,9 @@ export default function Connexion() {
   return (
     <>
       <style>{`
-        .cgesn-login-btn:hover{background:#0d4b43 !important}
+        .cgesn-login-btn:hover{background:#08245f !important}
         @media (max-width:480px){
-          .cgesn-login-logo{width:64px !important;height:64px !important}
+          .cgesn-login-logo{width:185px !important;height:70px !important}
           .cgesn-login-title{font-size:16px !important}
           .cgesn-login-sub{font-size:10px !important}
         }
@@ -48,7 +48,7 @@ export default function Connexion() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "linear-gradient(120deg,#0d3b3f 0%,#0f5c52 55%,#0d3b3f 100%)",
+          background: "linear-gradient(120deg,#0d3b3f 0%,#0A347B 55%,#0d3b3f 100%)",
           padding: 24,
           fontFamily: "'Poppins',Helvetica,Arial,sans-serif"
         }}
@@ -56,15 +56,15 @@ export default function Connexion() {
         <div style={{ background: "#fff", borderRadius: 20, boxShadow: "0 20px 50px rgba(0,0,0,0.25)", padding: "clamp(32px,5vw,48px)", width: "100%", maxWidth: 400, boxSizing: "border-box" }}>
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 14, marginBottom: 28 }}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center"}}>
-              <img src={logos.login} alt="CGESN" className="cgesn-login-logo" style={{ width: 82, height: 82, objectFit: "contain", display: "block" }} />
+              <img src={logos.login} alt="CITRAT" className="cgesn-login-logo" style={{ width: 200, height: 74, objectFit: "contain", display: "block" }} />
             </div>
             <div style={{ textAlign: "center" }}>
               <div className="cgesn-login-title" style={{ fontSize: 18, fontWeight: 800, letterSpacing: "0.01em" }}>
-                <span style={{ color: "oklch(0.62 0.13 55)" }}>PORTAIL DIGITAL</span>{" "}
-                <span style={{ color: "oklch(0.22 0.01 90)" }}>CGESN</span>
+                <span style={{ color: "#00A4D6" }}>PORTAIL DIGITAL</span>{" "}
+                <span style={{ color: "#091F68" }}>CITRAT</span>
               </div>
               <div className="cgesn-login-sub" style={{ fontSize: 11, fontWeight: 500, color: "oklch(0.55 0.005 90)", letterSpacing: "0.02em", marginTop: 4 }}>
-                CABINET DE GÉOMÈTRE EXPERT SORO NANGA
+                CABINET IVOIRIEN DES TRAVAUX TOPOGRAPHIQUES · GÉOMÈTRE EXPERT
               </div>
             </div>
           </div>
@@ -77,7 +77,7 @@ export default function Connexion() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 onKeyDown={(e) => { if (e.key === "Enter") login(); }}
-                placeholder="vous@cgesn.com"
+                placeholder="vous@citrat.ci"
                 style={{ width: "100%", boxSizing: "border-box", padding: "12px 14px", borderRadius: 10, border: "1px solid oklch(0.88 0.005 90)", fontSize: 14, fontFamily: "'Poppins',sans-serif", outline: "none" }}
               />
             </div>
@@ -96,7 +96,7 @@ export default function Connexion() {
               onClick={login}
               disabled={authLoading}
               className="cgesn-login-btn"
-              style={{ marginTop: 6, padding: 13, border: "none", borderRadius: 10, background: "#0f5c52", color: "#fff", fontSize: 14, fontWeight: 700, letterSpacing: "0.02em", cursor: authLoading ? "wait" : "pointer", fontFamily: "'Poppins',sans-serif", transition: "background .15s", opacity: authLoading ? 0.8 : 1 }}
+              style={{ marginTop: 6, padding: 13, border: "none", borderRadius: 10, background: "#0A347B", color: "#fff", fontSize: 14, fontWeight: 700, letterSpacing: "0.02em", cursor: authLoading ? "wait" : "pointer", fontFamily: "'Poppins',sans-serif", transition: "background .15s", opacity: authLoading ? 0.8 : 1 }}
             >
               {authLoading ? "CONNEXION…" : "SE CONNECTER"}
             </button>
@@ -106,9 +106,9 @@ export default function Connexion() {
               </div>
             )}
             <div style={{ marginTop: 6, fontSize: "12.5px", textAlign: "center", display: "flex", justifyContent: "center", gap: 14, flexWrap: "wrap" }}>
-              <Link to="/inscription" style={{ color: "#0f5c52", fontWeight: 700, textDecoration: "none" }}>S'inscrire</Link>
+              <Link to="/inscription" style={{ color: "#0A347B", fontWeight: 700, textDecoration: "none" }}>S'inscrire</Link>
               <span style={{ color: "oklch(0.8 0.005 90)" }}>|</span>
-              <Link to="/forgot-password" style={{ color: "#0f5c52", fontWeight: 700, textDecoration: "none" }}>Mot de passe oublié ?</Link>
+              <Link to="/forgot-password" style={{ color: "#0A347B", fontWeight: 700, textDecoration: "none" }}>Mot de passe oublié ?</Link>
             </div>
           </div>
 
