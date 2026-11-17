@@ -9,7 +9,7 @@ import { motion } from "framer-motion";
 import { LogIn, LogOut as LogOutIcon, Clock, User as UserIcon, LogOut, CheckCircle, AlertCircle, Coffee, PlayCircle } from "lucide-react";
 import { resolveOffice } from "../components/utils/officeUtils";
 
-const LOGO = "https://media.base44.com/images/public/68dea3af6d9b2b5362a21577/bde6005cb_logo_CGESN_RH.png";
+const LOGO = "/logo-citrat.svg";
 
 const pad2 = (n) => n.toString().padStart(2, '0');
 const formatClock = (date) => `${pad2(date.getHours())}:${pad2(date.getMinutes())}:${pad2(date.getSeconds())}`;
@@ -129,8 +129,8 @@ export default function PointagePage() {
       <header className="sticky top-0 z-20 bg-white border-b border-slate-100">
         <div className="max-w-6xl mx-auto flex items-center justify-between px-4 sm:px-6 py-3">
           <div className="flex items-center gap-3 min-w-0">
-            <img src={LOGO} alt="RH-CGESN" className="w-9 h-9 sm:w-10 sm:h-10 object-contain rounded-lg flex-shrink-0" />
-            <span className="font-bold text-slate-900 text-base sm:text-lg">RH-CGESN</span>
+            <img src={LOGO} alt="RH-CITRAT" className="w-9 h-9 sm:w-10 sm:h-10 object-contain rounded-lg flex-shrink-0" />
+            <span className="font-bold text-slate-900 text-base sm:text-lg">RH-CITRAT</span>
           </div>
           <Button
             variant="outline"
