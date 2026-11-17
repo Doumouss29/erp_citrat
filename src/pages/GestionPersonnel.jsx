@@ -22,7 +22,8 @@ import { DEPARTURE_REASONS, SOON_DAYS, contractLabel, daysUntil, endDateOf, isIn
 import LeaveFormHR from "@/components/leaves/LeaveFormHR";
 import { canAccessRh, employeeDataFor } from "@/lib/rhAccess";
 import { loadWorkflowValidators, isReadOnlyValidator } from "@/lib/workflowValidators";
-import { syncLeaveBalances } from "@/functions/syncLeaveBalances";
+// Function métier en cours de migration : l’API retourne HTTP 501 tant que non implémentée.
+const syncLeaveBalances = async (payload = {}) => ({ data: await base44.functions.invoke("syncLeaveBalances", payload) });
 import { getEmployees, getMe, invalidateEmployees } from "@/lib/rhSession";
 import { ABSENCE_ALLOWANCE } from "@/components/rh/RequestUi";
 
