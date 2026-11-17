@@ -72,6 +72,15 @@ jobs:
               print("CI ERP CITRAT: utilisateurs, bureaux, départements, profils, consentement OK")
           PY
 
+      - name: Tests parcours inscriptions et sécurité
+        env:
+          DATA_DIR: ${{ runner.temp }}/erp-citrat-onboarding
+          ADMIN_EMAIL: admin@example.invalid
+          ADMIN_PASSWORD: TestAdministrationMotDePasse2026!
+          SESSION_SECRET: ci-test-secret-longue-cle-de-test-ne-pas-utiliser-en-production
+          COOKIE_SECURE: 'true'
+        run: python -m unittest backend.test_onboarding -v
+
       - name: Validation Docker Compose
         run: |
           cp .env.example .env
