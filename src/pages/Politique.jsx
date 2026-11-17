@@ -12,7 +12,7 @@ export default function Politique() {
       <ColorBar />
 
       <div style={{ flex: 1, maxWidth: 820, margin: "0 auto", width: "100%", boxSizing: "border-box", padding: "clamp(36px,5vw,56px) clamp(20px,4vw,32px) 60px" }}>
-        <Link to="/" style={{ fontSize: 13, fontWeight: 600, textDecoration: "none", display: "inline-block", marginBottom: 24, color: "#0f5c52" }}>
+        <Link to="/" style={{ fontSize: 13, fontWeight: 600, textDecoration: "none", display: "inline-block", marginBottom: 24, color: "#0C3D85" }}>
           ← Retour à l'accueil
         </Link>
 
@@ -25,8 +25,8 @@ export default function Politique() {
           <section>
             <h2 style={{ fontSize: 15, fontWeight: 700, color: "oklch(0.28 0.01 90)", margin: "0 0 8px" }}>1. Objet</h2>
             <p style={{ fontSize: 14, lineHeight: 1.7, color: "oklch(0.4 0.005 90)", margin: 0 }}>
-              Le Portail Digital CGESN ("le Portail") est un point d'accès interne mis à disposition par le Cabinet de
-              Géomètre Expert Soro Nanga (CGESN) pour ses collaborateurs. Cette politique décrit les
+              Le Portail Digital CITRAT ("le Portail") est un point d'accès interne mis à disposition par le Cabinet de
+              Géomètre Expert Soro Nanga (CITRAT) pour ses collaborateurs. Cette politique décrit les
               données traitées lors de l'utilisation du Portail.
             </p>
           </section>
@@ -52,7 +52,7 @@ export default function Politique() {
           <section>
             <h2 style={{ fontSize: 15, fontWeight: 700, color: "oklch(0.28 0.01 90)", margin: "0 0 8px" }}>4. Partage avec des applications tierces</h2>
             <p style={{ fontSize: 14, lineHeight: 1.7, color: "oklch(0.4 0.005 90)", margin: 0 }}>
-              Le Portail redirige vers des applications distinctes (RH-CGESN, CGESN-Board, E-Cadastre, E-Guide etc.), chacune opérée sous sa propre politique de
+              Le Portail redirige vers des applications distinctes (RH-CITRAT, CITRAT-Board, E-Cadastre, E-Guide etc.), chacune opérée sous sa propre politique de
               confidentialité. Le Portail ne transmet à ces applications que les informations strictement nécessaires
               à la continuité de session.
             </p>
@@ -60,9 +60,9 @@ export default function Politique() {
           <section>
             <h2 style={{ fontSize: 15, fontWeight: 700, color: "oklch(0.28 0.01 90)", margin: "0 0 8px" }}>5. Conservation et sécurité</h2>
             <p style={{ fontSize: 14, lineHeight: 1.7, color: "oklch(0.4 0.005 90)", margin: 0 }}>
-              Les données sont conservées pendant toute la durée de la collaboration avec le CGESN, puis pendant la
+              Les données sont conservées pendant toute la durée de la collaboration avec le CITRAT, puis pendant la
               durée d'archivage prévue par la loi, et protégées par des mesures techniques appropriées. Chaque accord
-              donné ou retiré est horodaté et conservé comme preuve. Le CGESN met en œuvre des contrôles d'accès limitant l'usage du Portail
+              donné ou retiré est horodaté et conservé comme preuve. Le CITRAT met en œuvre des contrôles d'accès limitant l'usage du Portail
               aux seuls collaborateurs autorisés.
             </p>
           </section>
@@ -71,22 +71,22 @@ export default function Politique() {
             <p style={{ fontSize: 14, lineHeight: 1.7, color: "oklch(0.4 0.005 90)", margin: 0 }}>
               Tout collaborateur peut consulter, corriger ses données ou retirer son accord depuis la page
               « Mes données personnelles » du Portail (le retrait bloque l'accès au Portail). Les demandes de
-              suppression sont traitées par la direction des systèmes d'information du CGESN.
+              suppression sont traitées par la direction des systèmes d'information du CITRAT.
             </p>
           </section>
           <section>
             <h2 style={{ fontSize: 15, fontWeight: 700, color: "oklch(0.28 0.01 90)", margin: "0 0 8px" }}>7. Contact</h2>
             <p style={{ fontSize: 14, lineHeight: 1.7, color: "oklch(0.4 0.005 90)", margin: 0 }}>
-              Pour toute question relative à cette politique, contactez la direction des systèmes d'information du CGESN.
+              Pour toute question relative à cette politique, contactez la direction des systèmes d'information du CITRAT.
             </p>
           </section>
         </div>
 
         <div style={{ display: "flex", gap: 24, flexWrap: "wrap", paddingTop: 24, marginTop: 26, borderTop: "1px solid oklch(0.9 0.005 90)" }}>
-          <Link to="/conditions" style={{ fontSize: "13.5px", fontWeight: 600, textDecoration: "none", color: "#0f5c52" }}>
+          <Link to="/conditions" style={{ fontSize: "13.5px", fontWeight: 600, textDecoration: "none", color: "#0C3D85" }}>
             Conditions d'utilisation
           </Link>
-          <Link to="/" style={{ fontSize: "13.5px", fontWeight: 600, textDecoration: "none", color: "#0f5c52" }}>
+          <Link to="/" style={{ fontSize: "13.5px", fontWeight: 600, textDecoration: "none", color: "#0C3D85" }}>
             Accueil
           </Link>
         </div>
