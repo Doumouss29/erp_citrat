@@ -97,7 +97,7 @@ export default function LeaveFormHR({ employees, initialEmployeeId, onClose, onS
         className="w-full max-w-lg max-h-[min(92vh,740px)] overflow-y-auto rounded-2xl"
       >
         <Card className="shadow-xl border border-[#D8E5E8] bg-white rounded-2xl overflow-hidden">
-          <CardHeader className="bg-[#F2F7F8] text-[#0D5C66] px-4 py-3 pr-12 relative border-b border-[#D8E5E8]">
+          <CardHeader className="bg-[#F2F7F8] text-[#0C3D85] px-4 py-3 pr-12 relative border-b border-[#D8E5E8]">
             <div className="flex items-center gap-2">
               <UserCheck className="w-5 h-5 shrink-0" />
               <CardTitle className="text-base sm:text-lg font-semibold leading-snug">Saisie Congé pour un Collaborateur</CardTitle>
@@ -108,7 +108,7 @@ export default function LeaveFormHR({ employees, initialEmployeeId, onClose, onS
               onClick={onClose}
               className="absolute top-2 right-2 w-9 h-9 hover:bg-[#E2ECEE] rounded-lg flex items-center justify-center"
             >
-              <X className="w-5 h-5 text-[#0D5C66]" />
+              <X className="w-5 h-5 text-[#0C3D85]" />
             </button>
           </CardHeader>
 
@@ -142,11 +142,11 @@ export default function LeaveFormHR({ employees, initialEmployeeId, onClose, onS
               {selectedEmployee && (
                 <div className="grid grid-cols-2 gap-2 p-2.5 bg-[#F2F7F8] rounded-xl border border-[#D8E5E8]">
                   <div className="text-center">
-                    <div className="text-xl font-semibold text-[#0D5C66]">{availableYearDays}</div>
+                    <div className="text-xl font-semibold text-[#0C3D85]">{availableYearDays}</div>
                     <div className="text-xs text-slate-600">JC Individuels restants</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-xl font-semibold text-[#0D5C66]">{availableDecemberDays}</div>
+                    <div className="text-xl font-semibold text-[#0C3D85]">{availableDecemberDays}</div>
                     <div className="text-xs text-slate-600">JC Collectifs restants</div>
                   </div>
                 </div>
@@ -221,7 +221,7 @@ export default function LeaveFormHR({ employees, initialEmployeeId, onClose, onS
               <Button
                 type="submit"
                 disabled={submitting}
-                className="bg-[#0D5C66] hover:bg-[#094A52] text-white rounded-xl"
+                className="bg-[#0C3D85] hover:bg-[#094A52] text-white rounded-xl"
               >
                 {submitting ? "Envoi en cours..." : "Soumettre la Demande"}
               </Button>
