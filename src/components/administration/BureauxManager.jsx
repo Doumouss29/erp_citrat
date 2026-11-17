@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
 import { loadOfficeDirectory, normalizeEmail } from "@/components/utils/officeUtils";
 
-// Configuration des bureaux CGESN (entité OfficeTerminal) :
+// Configuration des bureaux CITRAT (entité OfficeTerminal) :
 // identité, compte du terminal de pointage, coordonnées et gestionnaires.
-// L'e-mail du compte bureau est celui qui ouvre le terminal de pointage RH-CGESN.
+// L'e-mail du compte bureau est celui qui ouvre le terminal de pointage RH-CITRAT.
 
 const inputStyle = {
   height: 38,
@@ -31,7 +31,7 @@ const labelStyle = {
 const sectionTitleStyle = { fontSize: 13, fontWeight: 700, letterSpacing: "0.08em", color: "oklch(0.4 0.1 165)" };
 const hintStyle = { fontSize: 12, color: "oklch(0.5 0.005 90)", lineHeight: 1.5 };
 const primaryBtn = {
-  height: 40, padding: "0 18px", border: "none", borderRadius: 10, background: "#0f5c52", color: "#fff",
+  height: 40, padding: "0 18px", border: "none", borderRadius: 10, background: "#0C3D85", color: "#fff",
   fontSize: 13, fontWeight: 700, cursor: "pointer", fontFamily: "'Poppins',sans-serif", whiteSpace: "nowrap"
 };
 const ghostBtn = {
@@ -340,9 +340,9 @@ export default function BureauxManager() {
     <div style={panelStyle}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12, flexWrap: "wrap", marginBottom: 6 }}>
         <div>
-          <div style={sectionTitleStyle}>BUREAUX CGESN</div>
+          <div style={sectionTitleStyle}>BUREAUX CITRAT</div>
           <div style={{ ...hintStyle, marginTop: 4, maxWidth: 620 }}>
-            Bureaux, gestionnaires et contacts. L'e-mail du compte bureau ouvre le terminal de pointage RH-CGESN.
+            Bureaux, gestionnaires et contacts. L'e-mail du compte bureau ouvre le terminal de pointage RH-CITRAT.
           </div>
         </div>
         <button style={primaryBtn} onClick={openNew}>+ Nouveau bureau</button>
