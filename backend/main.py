@@ -202,6 +202,7 @@ def logout(request:Request,response:Response):
 # API administrateur spécifique : aucune donnée d'authentification sensible n'est exposée.
 @app.get('/api/admin/users')
 def admin_users(current=Depends(user)):
+    if current['role'] != 'admin': raise HTTPException(403, 'Accès administrateur requis')
     with db() as c:
         rows=c.execute('SELECT id,email,name,role,profile_json FROM users ORDER BY email').fetchall()
     result=[]
@@ -214,6 +215,7 @@ def admin_users(current=Depends(user)):
 
 @app.patch('/api/admin/users/{uid}')
 def admin_update_user(uid:str, changes:dict=Body(...),current=Depends(user)):
+    if current['role'] != 'admin': raise HTTPException(403, 'Accès administrateur requis')
     allowed={'name','first_name','last_name','telephone','office','department','grade','access','fonction','bureau_ids'}
     if not set(changes).issubset(allowed): raise HTTPException(422,'Unsupported user property')
     if 'access' in changes and (not isinstance(changes['access'],list) or len(changes['access'])>100 or not all(isinstance(v,str) for v in changes['access'])):
@@ -234,6 +236,7 @@ def admin_update_user(uid:str, changes:dict=Body(...),current=Depends(user)):
 
 @app.delete('/api/admin/users/{uid}')
 def admin_delete_user(uid:str,current=Depends(user)):
+    if current['role'] != 'admin': raise HTTPException(403, 'Accès administrateur requis')
     if uid==current['id']: raise HTTPException(409,'Impossible de supprimer votre compte')
     with db() as c:
         row=c.execute('SELECT role FROM users WHERE id=?',(uid,)).fetchone()
@@ -299,6 +302,7 @@ def delete_record(name:str,record_id:str,current=Depends(user)):
 def function_placeholder(name:str, data:dict=Body(default={}), current=Depends(user)):
     # Actions d'administration déjà migrées. Les autres fonctions ne sont pas simulées.
     if name == 'updateUserAccess':
+        if current['role'] != 'admin': raise HTTPException(403, 'Accès administrateur requis')
         uid=data.get('user_id')
         if not isinstance(uid,str) or not uid:
             raise HTTPException(422,'Identifiant utilisateur manquant')
