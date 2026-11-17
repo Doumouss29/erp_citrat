@@ -47,7 +47,7 @@ with db() as c:
     c.execute('CREATE TABLE IF NOT EXISTS consent_events (id TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id), version TEXT NOT NULL, decision TEXT NOT NULL, recorded_at TEXT NOT NULL)')
     c.execute('CREATE TABLE IF NOT EXISTS access_events (id TEXT PRIMARY KEY, actor_id TEXT NOT NULL, subject TEXT NOT NULL, action TEXT NOT NULL, recorded_at TEXT NOT NULL)')
     if not c.execute('SELECT 1 FROM users').fetchone():
-        c.execute('INSERT INTO users VALUES (?,?,?,?,?)', (str(uuid.uuid4()),ADMIN_EMAIL,'Administrateur',hash_pw(ADMIN_PASSWORD),'admin'))
+        c.execute('INSERT INTO users (id,email,name,password_hash,role) VALUES (?,?,?,?,?)', (str(uuid.uuid4()),ADMIN_EMAIL,'Administrateur',hash_pw(ADMIN_PASSWORD),'admin'))
     # Later boots do not reset credentials; use a dedicated admin password reset procedure.
 
 app = FastAPI(title='PortalManager local API', docs_url=None, redoc_url=None)
