@@ -12,19 +12,19 @@ export const isRemovedApp = (id) => REMOVED_APP_IDS.includes(id);
 
 export const APP_DEFS = [
   {
-    id: 'cgesncom', name: 'CITRAT.COM', href: 'https://cgesn.com',
+    id: 'cgesncom', name: 'CITRAT.COM', href: null,
     icon: '/uploads/pasted-1786225046598-0.png', iconBg: null,
     color: '#9d174d', badgeBg: '#fce7f0', hoverBorder: '#9d174d',
     shadow: '0 4px 10px rgba(157,23,77,0.25)', iconFit: 'cover'
   },
   {
-    id: 'rhcgesn', name: 'RH-CITRAT', href: 'https://rh-cgesn.com',
+    id: 'rhcgesn', name: 'RH-CITRAT', href: null,
     icon: '/logo-citrat.svg', iconBg: '#0d5c66',
     color: '#0d5c66', badgeBg: '#dcf1ef', hoverBorder: '#0d5c66',
     shadow: '0 4px 10px rgba(13,92,102,0.3)', iconFit: 'cover'
   },
   {
-    id: 'cgesnboard', name: 'CITRAT-BOARD', href: 'https://cgesn-board.com',
+    id: 'cgesnboard', name: 'CITRAT-BOARD', href: null,
     icon: '/uploads/pasted-1786225011933-0.png', iconBg: null,
     color: '#0d2b52', badgeBg: '#e1e8f3', hoverBorder: '#0d2b52',
     shadow: '0 4px 10px rgba(13,43,82,0.3)', iconFit: 'cover'
@@ -54,7 +54,7 @@ export const APP_DEFS = [
     shadow: '0 4px 10px rgba(29,63,145,0.25)', iconFit: 'cover'
   },
   {
-    // Messagerie professionnelle @cgesn.com (Zoho Mail) : ouvre la boîte mail dans un nouvel onglet
+    // Messagerie externe Zoho : à reconfigurer pour le nouveau client
     id: 'messagerie', name: 'MESSAGERIE', href: 'https://mail.zoho.eu/zm/',
     icon: '/uploads/zoho-mail-logo.svg', iconBg: '#fff',
     color: '#2f5597', badgeBg: '#e3eaf6', hoverBorder: '#426aa7',
@@ -76,9 +76,9 @@ export const APP_DEFS = [
 ];
 
 export const DEFAULT_APPS = [
-  { id: 'cgesncom', name: 'CITRAT.COM', href: 'https://cgesn.com', status: 'ok' },
-  { id: 'rhcgesn', name: 'RH-CITRAT', href: 'https://rh-cgesn.com', status: 'ok' },
-  { id: 'cgesnboard', name: 'CITRAT-BOARD', href: 'https://cgesn-board.com', status: 'ok' },
+  { id: 'cgesncom', name: 'CITRAT.COM', href: null, status: 'off' },
+  { id: 'rhcgesn', name: 'RH-CITRAT', href: null, status: 'off' },
+  { id: 'cgesnboard', name: 'CITRAT-BOARD', href: null, status: 'off' },
   { id: 'ecadastre', name: 'E-CADASTRE', href: 'https://lmcollecte.com', status: 'ok' },
   { id: 'lotissement', name: 'E-GUIDE', href: 'https://lotissement-manager.com', status: 'ok' },
   { id: 'assistancenum', name: 'ASSISTANCE', href: '/assistance', status: 'ok' },
