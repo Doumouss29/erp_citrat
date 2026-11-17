@@ -55,6 +55,10 @@ export const base44 = {
     isAuthenticated: async () => !!(await request('/auth/me').catch(() => null)),
   },
   app: {getPublicSettings: () => request('/public-settings')},
+  permissions: {
+    catalog: () => request('/permissions/catalog'),
+    mine: () => request('/permissions/me')
+  },
   onboarding: {
     config: () => request('/public/auth-config'),
     registrations: () => request('/admin/registrations'),
