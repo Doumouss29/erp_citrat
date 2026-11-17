@@ -14,7 +14,7 @@ export const LEGAL_FRAMEWORK = `${LEGAL_LAW} en Côte d'Ivoire, qui encadre le t
 
 // Textes de la notice (modifiables ici ; incrémenter CONSENT_VERSION après une modification de fond)
 export const NOTICE = [
-  { titre: "Responsable", texte: "Cabinet de Géomètre Expert Soro Nanga (CITRAT)" },
+  { titre: "Responsable", texte: "CITRAT — DAGNOKO HAMED" },
   { titre: "Données concernées", texte: "Nom, prénom, date de naissance (âge), téléphone, adresse e-mail" },
   { titre: "Finalités", texte: "Vous identifier, vous contacter dans le cadre professionnel, gestion administrative et RH interne" },
   { titre: "Qui y a accès", texte: "Service RH, direction et administrateurs du portail. Aucune cession à des tiers." },
