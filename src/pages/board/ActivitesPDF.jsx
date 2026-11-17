@@ -185,7 +185,7 @@ export default function ActivitesPDF() {
                 className="h-20 mx-auto mb-10"
               />
               <h1 className="text-5xl font-bold mb-4 text-center">CITRAT</h1>
-              <p className="text-xl text-slate-300 mb-12 text-center">Cabinet de Géomètre-Expert Soro Nanga</p>
+              <p className="text-xl text-slate-300 mb-12 text-center">Cabinet de Géomètre-Expert CITRAT</p>
               <div className="w-24 h-1 bg-white/30 mb-12"></div>
 
               <div className="cover-box px-12 py-8 rounded-2xl mb-12 text-center" style={{ backgroundColor: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)' }}>
@@ -311,7 +311,7 @@ export default function ActivitesPDF() {
                 </div>
               </div>
               <div style={{ borderTop: '1px solid #e2e8f0', paddingTop: '12px', textAlign: 'center' }}>
-                <p style={{ fontSize: '11px', color: '#94a3b8' }}>Cabinet de Géomètre-Expert Soro Nanga — CITRAT · Fiche de Suivi d'Activités — Semaine {numeroSemaine}/{annee}</p>
+                <p style={{ fontSize: '11px', color: '#94a3b8' }}>Cabinet de Géomètre-Expert CITRAT — CITRAT · Fiche de Suivi d'Activités — Semaine {numeroSemaine}/{annee}</p>
               </div>
             </div>
           </div>
