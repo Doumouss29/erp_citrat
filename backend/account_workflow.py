@@ -347,7 +347,7 @@ def install(app, db, hash_pw, verify_pw, secret):
             raise HTTPException(503,"Récupération indisponible : service e-mail non configuré")
         with db() as c:
             row=c.execute("SELECT id FROM users WHERE email=?",(em,)).fetchone()
-            last=c.execute("SELECT MAX(created_at) FROM auth_events WHERE subject_email=? AND action='password_reset_requested'",(em,)).fetchone()[0]
+            last=c.execute("SELECT MAX(occurred_at) FROM auth_events WHERE subject_email=? AND action='password_reset_requested'",(em,)).fetchone()[0]
             if last:
                 try:
                     if (datetime.now(timezone.utc)-datetime.fromisoformat(last)).total_seconds()<120:
