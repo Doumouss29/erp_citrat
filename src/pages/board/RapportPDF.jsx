@@ -232,11 +232,11 @@ export default function RapportPDF() {
               <div className="mb-16">
                 <img 
                   src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/696fe5195586fd61f32bcb08/47c566a2e_images.png" 
-                  alt="CGESN Logo" 
+                  alt="CITRAT Logo" 
                   className="h-24 mx-auto"
                 />
               </div>
-              <h1 className="text-5xl font-bold mb-6 text-center">CGESN</h1>
+              <h1 className="text-5xl font-bold mb-6 text-center">CITRAT</h1>
               <p className="text-2xl mb-4 text-blue-100">Cabinet de Géomètre-Expert Soro Nanga</p>
               <div className="w-24 h-1 bg-white/30 mb-16"></div>
               
@@ -259,7 +259,7 @@ export default function RapportPDF() {
                   <p className="text-white font-medium mb-1">
                     Rapport généré le {new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
                   </p>
-                  <p className="text-blue-200 text-sm">Cabinet de Géomètre-Expert Soro Nanga - CGESN</p>
+                  <p className="text-blue-200 text-sm">Cabinet de Géomètre-Expert Soro Nanga - CITRAT</p>
                 </div>
               </div>
             </div>
