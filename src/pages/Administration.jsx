@@ -1082,6 +1082,10 @@ export default function Administration() {
                 <BureauxManager />
               )}
 
+              {tab === "departments" && (
+                <DepartementsManager />
+              )}
+
               {tab === "validators" && (
                 <WorkflowValidatorsManager />
               )}
