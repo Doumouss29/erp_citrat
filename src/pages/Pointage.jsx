@@ -135,7 +135,7 @@ export default function PointagePage() {
           <Button
             variant="outline"
             onClick={() => base44.auth.logout("/connexion")}
-            className="border-[#0d5c66] text-[#0d5c66] hover:bg-[#e6f4f5]"
+            className="border-[#0C3D85] text-[#0C3D85] hover:bg-[#e6f4f5]"
           >
             <LogOut className="w-4 h-4 sm:mr-2" />
             <span className="hidden sm:inline">Déconnexion</span>
@@ -144,12 +144,12 @@ export default function PointagePage() {
       </header>
 
       {/* Terminal */}
-      <section className="relative flex-1 flex items-center justify-center overflow-hidden bg-gradient-to-br from-[#0d5c66] to-[#0e4b53] p-4 sm:p-8">
+      <section className="relative flex-1 flex items-center justify-center overflow-hidden bg-gradient-to-br from-[#0C3D85] to-[#0e4b53] p-4 sm:p-8">
         <div className="absolute -top-20 -right-20 w-72 h-72 rounded-full bg-[#ff9d7b]/15 blur-3xl" />
-        <div className="absolute -bottom-24 -left-16 w-72 h-72 rounded-full bg-[#0d5c66]/40 blur-3xl" />
+        <div className="absolute -bottom-24 -left-16 w-72 h-72 rounded-full bg-[#0C3D85]/40 blur-3xl" />
 
         <Card className="relative w-full max-w-3xl shadow-2xl border-0 bg-white rounded-2xl overflow-hidden">
-          <CardHeader className="bg-gradient-to-r from-[#0d5c66] to-[#0e4b53] p-6 sm:p-8">
+          <CardHeader className="bg-gradient-to-r from-[#0C3D85] to-[#0e4b53] p-6 sm:p-8">
             <motion.div
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -195,7 +195,7 @@ export default function PointagePage() {
                     animate={{ opacity: 1, scale: 1 }}
                     className="absolute inset-0 flex flex-col items-center justify-center bg-[#e6f4f5] p-6"
                   >
-                    <UserIcon className="w-12 h-12 mb-3 text-[#0d5c66]" />
+                    <UserIcon className="w-12 h-12 mb-3 text-[#0C3D85]" />
                     <p className="text-2xl font-bold text-slate-900 mb-1">
                       {employee.first_name} {employee.last_name}
                     </p>
@@ -215,14 +215,14 @@ export default function PointagePage() {
                     }`}
                   >
                     {message.type === 'success' ? (
-                      <CheckCircle className="w-14 h-14 mb-3 text-[#0d5c66]" />
+                      <CheckCircle className="w-14 h-14 mb-3 text-[#0C3D85]" />
                     ) : message.type === 'warning' ? (
                       <AlertCircle className="w-14 h-14 mb-3 text-orange-600" />
                     ) : (
                       <AlertCircle className="w-14 h-14 mb-3 text-red-600" />
                     )}
                     <p className={`text-xl font-semibold text-center ${
-                      message.type === 'success' ? 'text-[#0d5c66]' : message.type === 'warning' ? 'text-orange-800' : 'text-red-800'
+                      message.type === 'success' ? 'text-[#0C3D85]' : message.type === 'warning' ? 'text-orange-800' : 'text-red-800'
                     }`}>
                       {message.text}
                     </p>
@@ -242,7 +242,7 @@ export default function PointagePage() {
                         }
                       }}
                       placeholder="CODE SALARIÉ"
-                      className="text-center text-xl font-bold h-16 rounded-xl border-2 border-slate-300 focus:border-[#0d5c66] uppercase tracking-wider bg-white"
+                      className="text-center text-xl font-bold h-16 rounded-xl border-2 border-slate-300 focus:border-[#0C3D85] uppercase tracking-wider bg-white"
                       disabled={loading || terminalInactive}
                     />
                   </div>
@@ -254,7 +254,7 @@ export default function PointagePage() {
                 <Button
                   onClick={() => handleSubmit("entry")}
                   disabled={loading || terminalInactive || !code.trim()}
-                  className="h-16 sm:h-18 text-base sm:text-lg font-bold bg-[#0d5c66] hover:bg-[#053e3e] shadow-xl rounded-xl flex flex-col items-center justify-center gap-1 disabled:opacity-50"
+                  className="h-16 sm:h-18 text-base sm:text-lg font-bold bg-[#0C3D85] hover:bg-[#053e3e] shadow-xl rounded-xl flex flex-col items-center justify-center gap-1 disabled:opacity-50"
                 >
                   <LogIn className="w-5 h-5 sm:w-6 sm:h-6" />
                   <span>Arrivée</span>
@@ -297,12 +297,12 @@ export default function PointagePage() {
               </DialogTitle>
             </DialogHeader>
             <div className="space-y-4 py-4">
-              <div className="bg-[#e6f4f5] rounded-xl p-4 md:p-5 border border-[#0d5c66]/20">
+              <div className="bg-[#e6f4f5] rounded-xl p-4 md:p-5 border border-[#0C3D85]/20">
                 <p className="text-sm md:text-base text-slate-700 mb-2">
-                  Vous avez travaillé <span className="font-bold text-[#0d5c66]">{overtimeDialog?.hoursWorked.toFixed(2)}h</span> aujourd'hui.
+                  Vous avez travaillé <span className="font-bold text-[#0C3D85]">{overtimeDialog?.hoursWorked.toFixed(2)}h</span> aujourd'hui.
                 </p>
                 <p className="text-sm md:text-base text-slate-700">
-                  Heures supplémentaires : <span className="font-bold text-[#0d5c66]">+{overtimeDialog?.overtime.toFixed(2)}h</span>
+                  Heures supplémentaires : <span className="font-bold text-[#0C3D85]">+{overtimeDialog?.overtime.toFixed(2)}h</span>
                 </p>
               </div>
 
@@ -325,13 +325,13 @@ export default function PointagePage() {
               <Button
                 onClick={handleOvertimeSkip}
                 variant="outline"
-                className="w-full sm:w-auto rounded-xl h-10 md:h-11 text-sm md:text-base border-[#0d5c66] text-[#0d5c66] hover:bg-[#e6f4f5]"
+                className="w-full sm:w-auto rounded-xl h-10 md:h-11 text-sm md:text-base border-[#0C3D85] text-[#0C3D85] hover:bg-[#e6f4f5]"
               >
                 Passer
               </Button>
               <Button
                 onClick={handleOvertimeSubmit}
-                className="w-full sm:w-auto bg-[#0d5c66] hover:bg-[#053e3e] rounded-xl h-10 md:h-11 text-sm md:text-base"
+                className="w-full sm:w-auto bg-[#0C3D85] hover:bg-[#053e3e] rounded-xl h-10 md:h-11 text-sm md:text-base"
               >
                 Enregistrer
               </Button>
