@@ -34,7 +34,7 @@ export default function DeleteAccountDialog({ open, onOpenChange, user }) {
       await base44.functions.invoke("deleteMyAccount", { confirm_email: email.trim() });
       base44.auth.logout("/connexion");
     } catch (err) {
-      setError(err?.response?.data?.error || err?.data?.error || "La suppression a échoué. Réessayez ou contactez la DSI du CGESN.");
+      setError(err?.response?.data?.error || err?.data?.error || "La suppression a échoué. Réessayez ou contactez la DSI du CITRAT.");
       setBusy(false);
     }
   };
