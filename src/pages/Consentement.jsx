@@ -182,7 +182,7 @@ export default function Consentement({ mode = "accord" }) {
   if (refused) {
     return (
       <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", background: C.page, fontFamily: "'Poppins',Helvetica,Arial,sans-serif" }}>
-        <BrandHeader subtitle="CABINET DE GÉOMÈTRE EXPERT SORO NANGA" nowrap maxWidth={880} menuUser={{ name: user.full_name, email: user.email }}
+        <BrandHeader subtitle="DAGNOKO HAMED" nowrap maxWidth={880} menuUser={{ name: user.full_name, email: user.email }}
           mobileMenuItems={[{ label: "Se déconnecter", icon: LogOut, danger: true, onSelect: logout }]} />
         <ColorBar />
         <main style={{ flex: 1, width: "100%", maxWidth: 640, margin: "0 auto", boxSizing: "border-box", padding: "clamp(32px,6vw,64px) 20px" }}>
@@ -210,7 +210,7 @@ export default function Consentement({ mode = "accord" }) {
     <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", background: C.page, fontFamily: "'Poppins',Helvetica,Arial,sans-serif", color: "#1f2523", overflowX: "hidden" }}>
       <style>{`.cgesn-consent input:focus-visible,.cgesn-consent button:focus-visible,.cgesn-consent a:focus-visible{outline:3px solid rgba(15,92,82,0.35);outline-offset:2px}`}</style>
       <BrandHeader
-        subtitle="CABINET DE GÉOMÈTRE EXPERT SORO NANGA"
+        subtitle="DAGNOKO HAMED"
         nowrap
         maxWidth={880}
         menuUser={{ name: user.full_name, email: user.email }}
