@@ -1,7 +1,7 @@
 import React from "react";
 
 /**
- * En-tête commun des pages de l'espace RH (charte RH-CGESN : vert pétrole + doré).
+ * En-tête commun des pages de l'espace RH (charte RH-CITRAT : vert pétrole + doré).
  *
  * <RhPageHeader icon={Clock} title="Rapports de Pointage" mobileTitle="Pointages"
  *   subtitle="…" actions={<Button …/>}>
