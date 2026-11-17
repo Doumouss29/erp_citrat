@@ -280,6 +280,7 @@ export default function UsersByOrgManager({
     return () => { active = false; };
   }, []);
   const DEPARTEMENTS = configuredDepartments;
+  const departmentLabel = value => DEPARTEMENTS.find(d => d.value === value)?.label || value || "Non affecté";
   const [search, setSearch] = useState("");
   const [officeFilter, setOfficeFilter] = useState(""); // "" = aucun bureau choisi (tuiles seules)
   const [deptFilter, setDeptFilter] = useState("all");
@@ -702,11 +703,11 @@ export default function UsersByOrgManager({
               value={r.department}
               onChange={(e) => changeDepartment(r, e.target.value)}
               disabled={saving}
-              title={r.deptFromRh ? "Repris de la fiche RH-CITRAT" : deptLabel(r.department)}
+              title={r.deptFromRh ? "Repris de la fiche RH-CITRAT" : departmentLabel(r.department)}
             >
               <option value="">À définir</option>
               {DEPARTEMENTS.map((d) => <option key={d.value} value={d.value}>{d.label}</option>)}
-              {r.department && !DEPARTEMENTS.some((d) => d.value === r.department) && <option value={r.department}>{deptLabel(r.department)}</option>}
+              {r.department && !DEPARTEMENTS.some((d) => d.value === r.department) && <option value={r.department}>{departmentLabel(r.department)}</option>}
             </FormSelect>
           </div>
 
@@ -841,7 +842,7 @@ export default function UsersByOrgManager({
           </div>
           <div className="uo-cell">
             <div className="uo-cell-label">Département</div>
-            <div className="uo-ghost rh" style={{ display: "flex", alignItems: "center" }} title="Repris de la fiche employé">{deptLabel(e.department)}</div>
+            <div className="uo-ghost rh" style={{ display: "flex", alignItems: "center" }} title="Repris de la fiche employé">{departmentLabel(e.department)}</div>
           </div>
           <div className="uo-cell">
             <div className="uo-cell-label">Grade</div>
