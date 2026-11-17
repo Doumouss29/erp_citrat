@@ -81,6 +81,15 @@ jobs:
           COOKIE_SECURE: 'true'
         run: python -m unittest backend.test_onboarding -v
 
+      - name: Tests des permissions par application et bureau
+        env:
+          DATA_DIR: ${{ runner.temp }}/erp-citrat-rbac
+          ADMIN_EMAIL: admin@example.invalid
+          ADMIN_PASSWORD: TestAdministrationMotDePasse2026!
+          SESSION_SECRET: ci-test-secret-longue-cle-de-test-ne-pas-utiliser-en-production
+          COOKIE_SECURE: 'true'
+        run: python -m unittest backend.test_permissions -v
+
       - name: Validation Docker Compose
         run: |
           cp .env.example .env
