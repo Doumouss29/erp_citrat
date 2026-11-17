@@ -73,7 +73,7 @@ export default function HseAlertRecipientsManager({ users = [], profiles = [] })
     if (!account) return { label: "Pas de compte : ne reçoit rien", color: "oklch(0.45 0.16 25)", bg: "oklch(0.96 0.03 25)" };
     if (account.statut === "suspendu") return { label: "Compte suspendu : ne reçoit rien", color: "oklch(0.45 0.16 25)", bg: "oklch(0.96 0.03 25)" };
     if (!effectiveAccess(account, profiles).includes("hse")) return { label: "Sans accès à HSE-PRESFOR", color: "oklch(0.45 0.12 70)", bg: "oklch(0.96 0.05 85)" };
-    return { label: "Compte actif", color: "#0f5c52", bg: "oklch(0.95 0.04 165)" };
+    return { label: "Compte actif", color: "#0C3D85", bg: "oklch(0.95 0.04 165)" };
   };
 
   const run = async (action, doneMessage) => {
@@ -138,7 +138,7 @@ export default function HseAlertRecipientsManager({ users = [], profiles = [] })
       </div>
 
       {error && <div role="alert" style={{ marginBottom: 12, padding: "10px 14px", borderRadius: 10, background: "oklch(0.96 0.03 25)", color: "oklch(0.42 0.16 25)", fontSize: 12.5, fontWeight: 600 }}>{error}</div>}
-      {message && <div style={{ marginBottom: 12, padding: "10px 14px", borderRadius: 10, background: "oklch(0.95 0.04 165)", color: "#0f5c52", fontSize: 12.5, fontWeight: 600 }}>{message}</div>}
+      {message && <div style={{ marginBottom: 12, padding: "10px 14px", borderRadius: 10, background: "oklch(0.95 0.04 165)", color: "#0C3D85", fontSize: 12.5, fontWeight: 600 }}>{message}</div>}
 
       <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 18 }}>
         <FormSelect aria-label="Compte à ajouter" style={{ ...field, flex: "2 1 220px" }} value={selectedEmail} onChange={(e) => setSelectedEmail(e.target.value)}>
@@ -148,7 +148,7 @@ export default function HseAlertRecipientsManager({ users = [], profiles = [] })
         <FormSelect aria-label="Profil" style={{ ...field, flex: "1 1 170px" }} value={profil} onChange={(e) => setProfil(e.target.value)}>
           {PROFILS.map((p) => <option key={p} value={p}>{p}</option>)}
         </FormSelect>
-        <button type="button" style={{ ...button, background: "#0f5c52", color: "#fff", border: "none" }} disabled={!selectedEmail || saving} onClick={addSelected}>Ajouter</button>
+        <button type="button" style={{ ...button, background: "#0C3D85", color: "#fff", border: "none" }} disabled={!selectedEmail || saving} onClick={addSelected}>Ajouter</button>
         <label style={{ ...button, display: "inline-flex", alignItems: "center" }}>
           Importer un CSV
           <input type="file" accept=".csv,text/csv" onChange={importCsv} disabled={saving} style={{ display: "none" }} />
@@ -175,7 +175,7 @@ export default function HseAlertRecipientsManager({ users = [], profiles = [] })
                 </FormSelect>
                 <span style={{ fontSize: 11.5, fontWeight: 600, padding: "4px 10px", borderRadius: 100, color: status.color, background: status.bg }}>{status.label}</span>
                 <label style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 12.5 }}>
-                  <input type="checkbox" checked={row.actif !== false} disabled={saving} onChange={(e) => run(() => base44.entities.ResponsableHSE.update(row.id, { actif: e.target.checked }))} style={{ accentColor: "#0f5c52", width: 15, height: 15 }} />
+                  <input type="checkbox" checked={row.actif !== false} disabled={saving} onChange={(e) => run(() => base44.entities.ResponsableHSE.update(row.id, { actif: e.target.checked }))} style={{ accentColor: "#0C3D85", width: 15, height: 15 }} />
                   Reçoit les alertes
                 </label>
                 {confirmDeleteId === row.id ? (
