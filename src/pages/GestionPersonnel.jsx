@@ -459,17 +459,17 @@ export default function GestionPersonnelPage() {
           {currentUser?.role === "admin" && (
             <div className="flex justify-end -mt-3">
               <Button size="sm" variant="outline" onClick={handleSyncLeaveBalances} disabled={syncingBalances}
-                className="rounded-xl border-[#0d5c66]/30 text-[#0d5c66] hover:bg-[#0d5c66]/5"
+                className="rounded-xl border-[#0C3D85]/30 text-[#0C3D85] hover:bg-[#0C3D85]/5"
                 title="Recalcule les soldes de congés et d'absences de tous les employés à partir des demandes approuvées de l'année">
                 <RefreshCw className={`w-4 h-4 mr-2 ${syncingBalances ? "animate-spin" : ""}`} />
                 {syncingBalances ? "Recalcul en cours…" : "Recalculer les soldes"}
               </Button>
             </div>
           )}
-          <TabsList className="bg-white p-1 w-full grid grid-cols-3 gap-1 h-auto rounded-2xl shadow-sm ring-1 ring-[#0d5c66]/10">
+          <TabsList className="bg-white p-1 w-full grid grid-cols-3 gap-1 h-auto rounded-2xl shadow-sm ring-1 ring-[#0C3D85]/10">
             <TabsTrigger 
               value="employees" 
-              className="rounded-xl m-0 px-1 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold transition-all bg-transparent text-[#0d5c66]/70 hover:bg-[#0d5c66]/5 hover:text-[#0d5c66] data-[state=active]:bg-[#0d5c66] data-[state=active]:text-white data-[state=active]:shadow-md"
+              className="rounded-xl m-0 px-1 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold transition-all bg-transparent text-[#0C3D85]/70 hover:bg-[#0C3D85]/5 hover:text-[#0C3D85] data-[state=active]:bg-[#0C3D85] data-[state=active]:text-white data-[state=active]:shadow-md"
             >
               <div className="flex flex-col items-center gap-1">
                 <div className="flex items-center gap-1 sm:gap-2">
@@ -481,7 +481,7 @@ export default function GestionPersonnelPage() {
             </TabsTrigger>
             <TabsTrigger 
               value="interns" 
-              className="rounded-xl m-0 px-1 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold transition-all bg-transparent text-[#0d5c66]/70 hover:bg-[#0d5c66]/5 hover:text-[#0d5c66] data-[state=active]:bg-[#0d5c66] data-[state=active]:text-white data-[state=active]:shadow-md"
+              className="rounded-xl m-0 px-1 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold transition-all bg-transparent text-[#0C3D85]/70 hover:bg-[#0C3D85]/5 hover:text-[#0C3D85] data-[state=active]:bg-[#0C3D85] data-[state=active]:text-white data-[state=active]:shadow-md"
             >
               <div className="flex flex-col items-center gap-1">
                 <div className="flex items-center gap-1 sm:gap-2">
@@ -493,7 +493,7 @@ export default function GestionPersonnelPage() {
             </TabsTrigger>
             <TabsTrigger 
               value="departures" 
-              className="group rounded-xl m-0 px-1 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold transition-all bg-transparent text-[#0d5c66]/70 hover:bg-[#0d5c66]/5 hover:text-[#0d5c66] data-[state=active]:bg-[#0d5c66] data-[state=active]:text-white data-[state=active]:shadow-md"
+              className="group rounded-xl m-0 px-1 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold transition-all bg-transparent text-[#0C3D85]/70 hover:bg-[#0C3D85]/5 hover:text-[#0C3D85] data-[state=active]:bg-[#0C3D85] data-[state=active]:text-white data-[state=active]:shadow-md"
             >
               <div className="flex flex-col items-center gap-1">
                 <div className="flex items-center gap-1 sm:gap-2">
@@ -518,21 +518,21 @@ export default function GestionPersonnelPage() {
           {/* Onglet Salariés */}
           <TabsContent value="employees" className="space-y-6">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-              <p className="text-sm font-bold uppercase tracking-[0.12em] text-[#0d5c66]">Gestion des salariés</p>
+              <p className="text-sm font-bold uppercase tracking-[0.12em] text-[#0C3D85]">Gestion des salariés</p>
               <Button
                 onClick={() => {
                   setEditingEmployee(null);
                   setEmployeeFormTab("employees");
                   setShowEmployeeForm(true);
                 }}
-                className="w-full sm:w-auto bg-[#0d5c66] hover:bg-[#0e4b53] text-white ring-1 ring-[#d4af6a]/40 shadow-xl rounded-2xl h-11 px-6"
+                className="w-full sm:w-auto bg-[#0C3D85] hover:bg-[#0e4b53] text-white ring-1 ring-[#d4af6a]/40 shadow-xl rounded-2xl h-11 px-6"
               >
                 <Plus className="w-5 h-5 mr-2" />
                 Nouvel Employé
               </Button>
             </div>
 
-            <Card className="rounded-2xl shadow-sm ring-1 ring-[#0d5c66]/10 border-0 bg-gradient-to-b from-[#f1f6f7] to-white">
+            <Card className="rounded-2xl shadow-sm ring-1 ring-[#0C3D85]/10 border-0 bg-gradient-to-b from-[#f1f6f7] to-white">
               <CardContent className="p-3 sm:p-6 space-y-3 sm:space-y-4">
                 <MobileSearchBar value={searchTerm} onChange={setSearchTerm} placeholder="Nom, prénom ou code..." open={showFilters} onToggle={() => setShowFilters(v => !v)} count={(departmentFilter !== "all") + (contractFilter !== "all")} />
                 <div className={`${showFilters ? "grid" : "hidden"} md:grid grid-cols-1 md:grid-cols-3 gap-4`}>
@@ -542,7 +542,7 @@ export default function GestionPersonnelPage() {
                       Filtrer par département
                     </Label>
                     <Select value={departmentFilter} onValueChange={setDepartmentFilter}>
-                      <SelectTrigger className="h-12 border border-[#0d5c66]/15 bg-white rounded-xl focus:ring-[#0d5c66]/30">
+                      <SelectTrigger className="h-12 border border-[#0C3D85]/15 bg-white rounded-xl focus:ring-[#0C3D85]/30">
                         <SelectValue placeholder="Tous les départements" />
                       </SelectTrigger>
                       <SelectContent>
@@ -566,7 +566,7 @@ export default function GestionPersonnelPage() {
                       Type de contrat
                     </Label>
                     <Select value={contractFilter} onValueChange={setContractFilter}>
-                      <SelectTrigger className="h-12 border border-[#0d5c66]/15 bg-white rounded-xl focus:ring-[#0d5c66]/30">
+                      <SelectTrigger className="h-12 border border-[#0C3D85]/15 bg-white rounded-xl focus:ring-[#0C3D85]/30">
                         <SelectValue placeholder="Tous les contrats" />
                       </SelectTrigger>
                       <SelectContent>
@@ -589,7 +589,7 @@ export default function GestionPersonnelPage() {
                         placeholder="Nom, prénom ou code salarié..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="h-12 border border-[#0d5c66]/15 bg-white rounded-xl pr-10"
+                        className="h-12 border border-[#0C3D85]/15 bg-white rounded-xl pr-10"
                       />
                       {searchTerm && (
                         <button
@@ -632,14 +632,14 @@ export default function GestionPersonnelPage() {
                   whileHover={{ scale: 1.02 }}
                 >
                   <Card 
-                    className="rounded-2xl shadow-sm ring-1 ring-[#0d5c66]/10 border-0 bg-white hover:shadow-lg hover:ring-[#0d5c66]/30 transition-all cursor-pointer overflow-hidden"
+                    className="rounded-2xl shadow-sm ring-1 ring-[#0C3D85]/10 border-0 bg-white hover:shadow-lg hover:ring-[#0C3D85]/30 transition-all cursor-pointer overflow-hidden"
                     onClick={() => {
                       setEditingEmployee(employee);
                       setShowEmployeeForm(true);
                       setTimeout(() => formRef.current?.scrollIntoView({ behavior: 'smooth' }), 100);
                     }}
                   >
-                    <CardHeader className="border-b border-[#0d5c66]/10 p-4 sm:p-5 bg-gradient-to-br from-[#eef5f6] to-white">
+                    <CardHeader className="border-b border-[#0C3D85]/10 p-4 sm:p-5 bg-gradient-to-br from-[#eef5f6] to-white">
                       <div className="flex items-start justify-between gap-3">
                         <div className="flex items-start gap-3 flex-1 min-w-0">
                           {employee.photo_url ? (
@@ -739,7 +739,7 @@ export default function GestionPersonnelPage() {
             </div>
 
             {filteredEmployees.length === 0 && !loading && (
-              <Card className="rounded-2xl shadow-sm ring-1 ring-[#0d5c66]/10 border-0 bg-gradient-to-b from-[#f1f6f7] to-white">
+              <Card className="rounded-2xl shadow-sm ring-1 ring-[#0C3D85]/10 border-0 bg-gradient-to-b from-[#f1f6f7] to-white">
                 <CardContent className="p-12 text-center">
                   <UserIcon className="w-16 h-16 text-slate-300 mx-auto mb-4" />
                   <p className="text-slate-500 text-lg">Aucun salarié trouvé</p>
@@ -751,7 +751,7 @@ export default function GestionPersonnelPage() {
           {/* Onglet Stagiaires */}
           <TabsContent value="interns" className="space-y-6">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-              <p className="text-sm font-bold uppercase tracking-[0.12em] text-[#0d5c66]">Gestion des stagiaires</p>
+              <p className="text-sm font-bold uppercase tracking-[0.12em] text-[#0C3D85]">Gestion des stagiaires</p>
               <Button
                 onClick={() => {
                   setEditingEmployee({ internship_type: "PERFECTIONNEMENT", contract_type: "Stage", socio_professional_category: "Stagiaire", attendance_status: "Actif - Pointage non requis" });
@@ -759,14 +759,14 @@ export default function GestionPersonnelPage() {
                   setShowEmployeeForm(true);
                   setTimeout(() => formRef.current?.scrollIntoView({ behavior: 'smooth' }), 100);
                 }}
-                className="w-full sm:w-auto bg-[#0d5c66] hover:bg-[#0e4b53] text-white ring-1 ring-[#d4af6a]/40 shadow-xl rounded-2xl h-11 px-6"
+                className="w-full sm:w-auto bg-[#0C3D85] hover:bg-[#0e4b53] text-white ring-1 ring-[#d4af6a]/40 shadow-xl rounded-2xl h-11 px-6"
               >
                 <Plus className="w-5 h-5 mr-2" />
                 Nouveau Stagiaire
               </Button>
             </div>
 
-            <Card className="rounded-2xl shadow-sm ring-1 ring-[#0d5c66]/10 border-0 bg-gradient-to-b from-[#f1f6f7] to-white">
+            <Card className="rounded-2xl shadow-sm ring-1 ring-[#0C3D85]/10 border-0 bg-gradient-to-b from-[#f1f6f7] to-white">
               <CardContent className="p-3 sm:p-6 space-y-3 sm:space-y-4">
                 <MobileSearchBar value={searchTerm} onChange={setSearchTerm} placeholder="Nom, prénom ou code..." open={showFilters} onToggle={() => setShowFilters(v => !v)} count={(departmentFilter !== "all") + (contractFilter !== "all")} />
                 <div className={`${showFilters ? "grid" : "hidden"} md:grid grid-cols-1 md:grid-cols-2 gap-4`}>
@@ -776,7 +776,7 @@ export default function GestionPersonnelPage() {
                       Filtrer par département
                     </Label>
                     <Select value={departmentFilter} onValueChange={setDepartmentFilter}>
-                      <SelectTrigger className="h-12 border border-[#0d5c66]/15 bg-white rounded-xl focus:ring-[#0d5c66]/30">
+                      <SelectTrigger className="h-12 border border-[#0C3D85]/15 bg-white rounded-xl focus:ring-[#0C3D85]/30">
                         <SelectValue placeholder="Tous les départements" />
                       </SelectTrigger>
                       <SelectContent>
@@ -804,7 +804,7 @@ export default function GestionPersonnelPage() {
                         placeholder="Nom, prénom ou code..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="h-12 border border-[#0d5c66]/15 bg-white rounded-xl pr-10"
+                        className="h-12 border border-[#0C3D85]/15 bg-white rounded-xl pr-10"
                       />
                       {searchTerm && (
                         <button
@@ -889,7 +889,7 @@ export default function GestionPersonnelPage() {
                     </CardHeader>
                     <CardContent className="p-4 space-y-3">
                       <div className="min-w-0">
-                        <p className="text-xs font-semibold text-[#0D5C66] break-words">{departmentLabels[employee.department] || employee.department || "Département non renseigné"}</p>
+                        <p className="text-xs font-semibold text-[#0C3D85] break-words">{departmentLabels[employee.department] || employee.department || "Département non renseigné"}</p>
                         <p className="text-sm text-slate-700 break-words mt-1">{employee.position || "Poste non renseigné"}</p>
                         <p className="text-xs text-slate-500 mt-1 break-words">{employee.internship_type || "Stagiaire"}</p>
                       </div>
@@ -913,7 +913,7 @@ export default function GestionPersonnelPage() {
             </div>
 
             {filteredInterns.length === 0 && !loading && (
-              <Card className="rounded-2xl shadow-sm ring-1 ring-[#0d5c66]/10 border-0 bg-gradient-to-b from-[#f1f6f7] to-white">
+              <Card className="rounded-2xl shadow-sm ring-1 ring-[#0C3D85]/10 border-0 bg-gradient-to-b from-[#f1f6f7] to-white">
                 <CardContent className="p-12 text-center">
                   <UserIcon className="w-16 h-16 text-slate-300 mx-auto mb-4" />
                   <p className="text-slate-500 text-lg">Aucun stagiaire trouvé</p>
@@ -925,7 +925,7 @@ export default function GestionPersonnelPage() {
           {/* Onglet Départs */}
           <TabsContent value="departures" className="space-y-6">
             <div>
-              <p className="text-sm font-bold uppercase tracking-[0.12em] text-[#0d5c66]">Fins de contrat et départs</p>
+              <p className="text-sm font-bold uppercase tracking-[0.12em] text-[#0C3D85]">Fins de contrat et départs</p>
               <p className="text-xs text-slate-500 mt-1 leading-relaxed">
                 Chaque fin de contrat se termine par une décision : <b>renouveler</b> (ou changer de contrat) ou <b>enregistrer le départ</b> avec son motif. Rien n'est désactivé automatiquement.
               </p>
@@ -972,7 +972,7 @@ export default function GestionPersonnelPage() {
             )}
 
             {depTile && (
-              <Card className="rounded-2xl shadow-sm ring-1 ring-[#0d5c66]/10 border-0 bg-white">
+              <Card className="rounded-2xl shadow-sm ring-1 ring-[#0C3D85]/10 border-0 bg-white">
                 <CardContent className="p-4 sm:p-5 space-y-3">
                   <div className="flex flex-col sm:flex-row sm:items-center gap-3">
                     <p className="text-base font-bold uppercase tracking-wide text-slate-900 flex-1">
@@ -992,7 +992,7 @@ export default function GestionPersonnelPage() {
                         if (r.value !== "all" && !n) return null;
                         const on = depReason === r.value;
                         return (
-                          <button key={r.value} onClick={() => setDepReason(r.value)} className={`h-8 px-3 rounded-full text-xs font-semibold border transition ${on ? "bg-[#0f5c52] border-[#0f5c52] text-white" : "bg-white border-slate-200 text-slate-600 hover:border-[#0f5c52]"}`}>
+                          <button key={r.value} onClick={() => setDepReason(r.value)} className={`h-8 px-3 rounded-full text-xs font-semibold border transition ${on ? "bg-[#0C3D85] border-[#0C3D85] text-white" : "bg-white border-slate-200 text-slate-600 hover:border-[#0C3D85]"}`}>
                             {r.label} <span className={on ? "text-white/70" : "text-slate-400"}>{n}</span>
                           </button>
                         );
@@ -1004,7 +1004,7 @@ export default function GestionPersonnelPage() {
             )}
 
             {depTile && (depShown.length === 0 ? (
-              <Card className="rounded-2xl shadow-sm ring-1 ring-[#0d5c66]/10 border-0">
+              <Card className="rounded-2xl shadow-sm ring-1 ring-[#0C3D85]/10 border-0">
                 <CardContent className="p-10 text-center">
                   <LogOut className="w-12 h-12 text-slate-300 mx-auto mb-3" />
                   <p className="text-slate-500">{depTile === "a_statuer" ? "Aucune décision en attente." : depTile === "a_venir" ? "Aucune fin de stage dans les 30 prochains jours." : depTile === "contract_future" ? "Aucune fin de contrat ou de stage dans les 30 prochains jours." : depTile === "intern_future" ? "Aucune fin de stage dans les 30 prochains jours." : depTile === "cdd_future" ? "Aucun CDD ou CDDTI arrivant à échéance dans les 30 prochains jours." : "Aucun départ pour ce filtre."}</p>
@@ -1034,18 +1034,18 @@ export default function GestionPersonnelPage() {
                   };
                   return (
                     <div key={employee.id} className={`rounded-2xl bg-white border shadow-sm overflow-hidden flex flex-col ${tone === "amber" ? "border-amber-200" : tone === "teal" ? "border-teal-200" : "border-slate-200"}`}>
-                      <div className={`h-1 ${tone === "amber" ? "bg-amber-400" : tone === "teal" ? "bg-[#0f5c52]" : "bg-slate-300"}`} />
+                      <div className={`h-1 ${tone === "amber" ? "bg-amber-400" : tone === "teal" ? "bg-[#0C3D85]" : "bg-slate-300"}`} />
                       <div className="p-4 flex-1 flex flex-col gap-3">
                         <button type="button" onClick={openProfile} className="flex items-start gap-3 text-left group">
                           {employee.photo_url ? (
                             <img src={employee.photo_url} alt="" className="w-11 h-11 rounded-xl object-cover flex-none" />
                           ) : (
-                            <div className={`w-11 h-11 rounded-xl flex items-center justify-center text-white font-bold flex-none ${tone === "slate" ? "bg-slate-400" : "bg-gradient-to-br from-[#0d3b3f] to-[#0f5c52]"}`}>
+                            <div className={`w-11 h-11 rounded-xl flex items-center justify-center text-white font-bold flex-none ${tone === "slate" ? "bg-slate-400" : "bg-gradient-to-br from-[#081F69] to-[#0C3D85]"}`}>
                               {(employee.first_name?.[0] || employee.last_name?.[0] || "?").toUpperCase()}
                             </div>
                           )}
                           <div className="min-w-0 flex-1">
-                            <p className="font-bold text-slate-900 leading-snug group-hover:text-[#0f5c52] break-words">{employee.first_name} {employee.last_name}</p>
+                            <p className="font-bold text-slate-900 leading-snug group-hover:text-[#0C3D85] break-words">{employee.first_name} {employee.last_name}</p>
                             <p className="text-xs text-slate-500">{employee.employee_code} · {employee.position || "Poste non renseigné"}</p>
                           </div>
                         </button>
@@ -1063,7 +1063,7 @@ export default function GestionPersonnelPage() {
                             <Button variant="outline" onClick={() => setDepDialog({ mode: "reinstate", employee })} className="h-9 rounded-xl text-xs font-semibold">Réintégrer</Button>
                           ) : (
                             <>
-                              <Button onClick={() => setDepDialog({ mode: "renew", employee })} className="h-9 rounded-xl text-xs font-semibold bg-[#0f5c52] hover:bg-[#0c4c44] text-white">Renouveler</Button>
+                              <Button onClick={() => setDepDialog({ mode: "renew", employee })} className="h-9 rounded-xl text-xs font-semibold bg-[#0C3D85] hover:bg-[#0c4c44] text-white">Renouveler</Button>
                               <Button variant="outline" onClick={() => setDepDialog({ mode: "leave", employee })} className="h-9 rounded-xl text-xs font-semibold border-rose-200 text-rose-700 hover:bg-rose-50">Enregistrer le départ</Button>
                             </>
                           )}
@@ -1115,8 +1115,8 @@ export default function GestionPersonnelPage() {
       <Dialog open={showAbsenceDeductDialog} onOpenChange={setShowAbsenceDeductDialog}>
         <DialogContent className="sm:max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl border border-[#D8E5E8]">
           <DialogHeader>
-            <DialogTitle className="text-lg sm:text-xl font-semibold text-[#0D5C66] flex items-center gap-2 leading-snug">
-            <MinusCircle className="w-5 h-5 shrink-0 text-[#0D5C66]" />
+            <DialogTitle className="text-lg sm:text-xl font-semibold text-[#0C3D85] flex items-center gap-2 leading-snug">
+            <MinusCircle className="w-5 h-5 shrink-0 text-[#0C3D85]" />
             Absence — {absenceDeductEmployee?.first_name} {absenceDeductEmployee?.last_name}
             </DialogTitle>
           </DialogHeader>
@@ -1164,7 +1164,7 @@ export default function GestionPersonnelPage() {
             <Button
               onClick={handleAbsenceDeductSubmit}
               disabled={absenceDeductLoading || !absenceDeductForm.start_date || !absenceDeductForm.end_date || !absenceDeductForm.total_days}
-              className="bg-[#0D5C66] hover:bg-[#094A52] text-white"
+              className="bg-[#0C3D85] hover:bg-[#094A52] text-white"
             >
               {absenceDeductLoading ? "Enregistrement..." : "Déduire l'absence"}
             </Button>
