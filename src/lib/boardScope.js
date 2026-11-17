@@ -1,4 +1,4 @@
-// Périmètre CGESN-Board : chaque bureau ne voit que ses propres activités.
+// Périmètre CITRAT-Board : chaque bureau ne voit que ses propres activités.
 // Seuls la Direction (fonction « admin ») et le super administrateur voient tous les bureaux.
 
 export const isBoardDirection = (u) =>
