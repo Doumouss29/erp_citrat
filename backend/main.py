@@ -82,6 +82,14 @@ def select(name, q=None, sort='-created_date', limit=100, skip=0):
     if not (0 <= skip <= 100000 and 1 <= limit <= 500): raise HTTPException(422,'Invalid pagination')
     with db() as c:
         rows=[decorate(r) for r in c.execute('SELECT * FROM records WHERE entity=?',(name,))]
+        if name == 'ConsentementDonnees':
+            for e in c.execute('SELECT e.id,e.version,e.decision,e.recorded_at,u.email,u.name,u.profile_json FROM consent_events e JOIN users u ON u.id=e.user_id'):
+                p=json.loads(e['profile_json'] or '{}')
+                rows.append({'id':e['id'], 'version':e['version'], 'decision':e['decision'],
+                             'user_email':e['email'], 'user_name':e['name'],
+                             'nom':p.get('last_name',''), 'prenom':p.get('first_name',''),
+                             'telephone':p.get('telephone',''),
+                             'created_date':e['recorded_at'], 'updated_date':e['recorded_at']})
     q=q or {}
     def matches(record, flt):
         if not isinstance(flt,dict): return False
