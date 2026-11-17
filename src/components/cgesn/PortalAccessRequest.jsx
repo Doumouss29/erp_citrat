@@ -58,7 +58,7 @@ export default function PortalAccessRequest({ userId, darkMode, refreshUser }) {
       {error && <p role="alert" style={{ color: darkMode ? "#fca5a5" : "#b91c1c" }}>{error}</p>}
       {(!request || request.status === "aucune") && (
         <button type="button" onClick={submit} disabled={loading}
-          style={{ marginTop: 8, border: 0, borderRadius: 100, padding: "13px 24px", background: "#0f5c52", color: "#fff", fontFamily: "inherit", fontSize: 13, fontWeight: 600, cursor: loading ? "wait" : "pointer", opacity: loading ? 0.65 : 1 }}>
+          style={{ marginTop: 8, border: 0, borderRadius: 100, padding: "13px 24px", background: "#0C3D85", color: "#fff", fontFamily: "inherit", fontSize: 13, fontWeight: 600, cursor: loading ? "wait" : "pointer", opacity: loading ? 0.65 : 1 }}>
           {loading ? "VÉRIFICATION…" : "DEMANDER UN ACCÈS"}
         </button>
       )}
