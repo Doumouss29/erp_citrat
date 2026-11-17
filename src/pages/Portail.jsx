@@ -192,7 +192,7 @@ export default function Portail() {
 
       `}</style>
       <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh", background: pageBg, fontFamily: "'Poppins',Helvetica,Arial,sans-serif", overflowX: "hidden" }}>
-        <BrandHeader className="cgesn-portal-header" subtitle="CABINET DE GÉOMÈTRE EXPERT SORO NANGA" nowrap
+        <BrandHeader className="cgesn-portal-header" subtitle="DAGNOKO HAMED" nowrap
           menuUser={user ? { name: user.full_name, email: user.email, initials: getUserInitials(user) } : undefined}
           mobileMenuItems={[
           ...(user && user.super_admin === true ? [{ label: "Administration", to: "/administration", icon: Settings }] : []),
