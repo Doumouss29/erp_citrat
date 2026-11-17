@@ -1,6 +1,6 @@
 import { base44 } from "@/api/base44Client";
 
-// Cache partagé RH-CGESN : l'utilisateur connecté et l'annuaire des employés étaient
+// Cache partagé RH-CITRAT : l'utilisateur connecté et l'annuaire des employés étaient
 // rechargés par le menu puis par chaque page. Ils sont maintenant chargés une fois,
 // partagés entre les pages, et rafraîchis après un court délai.
 //
