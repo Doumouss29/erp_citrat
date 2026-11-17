@@ -94,7 +94,7 @@ function buildPrintHtml({ bureauLabel, periodLabel, metrics, rows }) {
         <section class="page cover page-break">
           <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/696fe5195586fd61f32bcb08/47c566a2e_images.png" alt="CITRAT Logo" />
           <h1 class="brand">CITRAT</h1>
-          <p class="subtitle">Cabinet de Géomètre-Expert Soro Nanga</p>
+          <p class="subtitle">Cabinet de Géomètre-Expert CITRAT</p>
           <div class="divider"></div>
           <div class="cover-box">
             <h2>Rapport de caisse</h2>
@@ -158,7 +158,7 @@ function buildPrintHtml({ bureauLabel, periodLabel, metrics, rows }) {
             </table>
           </div>
 
-          <div class="footer">Cabinet de Géomètre-Expert Soro Nanga — CITRAT · Rapport de caisse</div>
+          <div class="footer">Cabinet de Géomètre-Expert CITRAT — CITRAT · Rapport de caisse</div>
         </section>
       </body>
     </html>
