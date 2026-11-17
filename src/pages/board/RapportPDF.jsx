@@ -237,7 +237,7 @@ export default function RapportPDF() {
                 />
               </div>
               <h1 className="text-5xl font-bold mb-6 text-center">CITRAT</h1>
-              <p className="text-2xl mb-4 text-blue-100">Cabinet de Géomètre-Expert Soro Nanga</p>
+              <p className="text-2xl mb-4 text-blue-100">Cabinet de Géomètre-Expert CITRAT</p>
               <div className="w-24 h-1 bg-white/30 mb-16"></div>
               
               <div className="cover-box px-12 py-8 rounded-2xl mb-16 mx-auto" style={{ maxWidth: '500px', backgroundColor: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)' }}>
@@ -259,7 +259,7 @@ export default function RapportPDF() {
                   <p className="text-white font-medium mb-1">
                     Rapport généré le {new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
                   </p>
-                  <p className="text-blue-200 text-sm">Cabinet de Géomètre-Expert Soro Nanga - CITRAT</p>
+                  <p className="text-blue-200 text-sm">Cabinet de Géomètre-Expert CITRAT - CITRAT</p>
                 </div>
               </div>
             </div>
