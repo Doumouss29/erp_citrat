@@ -53,7 +53,7 @@ export default function AvisProjetDGModal({ open, onOpenChange, projets = [], bu
       if (responsableExistsInApp) {
         await sendMail({
           to: bureau.responsable_email,
-          from_name: 'CGESN – Direction Générale',
+          from_name: 'CITRAT – Direction Générale',
           subject: `📋 Avis DG – Projet ${selectedProjet.titre}`,
           html: `
             <div style="font-family:Arial,sans-serif;max-width:680px;margin:0 auto;background:#ffffff;padding:24px;color:#334155;">
