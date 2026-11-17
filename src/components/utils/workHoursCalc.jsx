@@ -1,5 +1,5 @@
 /**
- * Calcule les heures travaillées selon les règles CGESN:
+ * Calcule les heures travaillées selon les règles CITRAT:
  * - Fenêtre normale : 08:00 → 17:00
  * - Si entrée < 08:00 : ne pas compter avant 08:00
  * - Si sortie > 17:00 : le temps après 17:00 est en heures supplémentaires
