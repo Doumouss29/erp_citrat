@@ -83,6 +83,8 @@ export default function Inscription() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [otpSent, setOtpSent] = useState(false);
+  const [verified, setVerified] = useState(false);
+  const [registrationEnabled, setRegistrationEnabled] = useState(null);
   const [otp, setOtp] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -92,6 +94,11 @@ export default function Inscription() {
       navigate("/portail", { replace: true });
     }
   }, [isLoadingAuth, isAuthenticated]);
+
+  useEffect(() => {
+    base44.onboarding.config().then(c => setRegistrationEnabled(c.registration_enabled))
+      .catch(() => setRegistrationEnabled(false));
+  }, []);
 
   const submit = async () => {
     setError(null);
@@ -107,8 +114,8 @@ export default function Inscription() {
       setError("Indiquez un numéro de téléphone valide.");
       return;
     }
-    if (password.length < 6) {
-      setError("Le mot de passe doit contenir au moins 6 caractères.");
+    if (password.length < 14) {
+      setError("Le mot de passe doit contenir au moins 14 caractères.");
       return;
     }
     if (password !== confirm) {
@@ -139,17 +146,8 @@ export default function Inscription() {
     }
     setLoading(true);
     try {
-      const result = await base44.auth.verifyOtp({ email: email.trim(), otpCode: otp.trim() });
-      if (result?.access_token) {
-        base44.auth.setToken(result.access_token);
-      }
-      try {
-        await base44.auth.updateMe({ first_name: firstName.trim(), last_name: lastName.trim(), telephone: telephone.trim() });
-      } catch (e) {
-        /* non bloquant */
-      }
-      await base44.functions.invoke('requestPortalAccess', { action: 'welcome' }).catch(() => console.error('Avis de bienvenue indisponible'));
-      window.location.href = "/portail";
+      await base44.auth.verifyOtp({ email: email.trim(), otpCode: otp.trim() });
+      setVerified(true);
     } catch (err) {
       setError((err && err.message) || "Code de vérification invalide.");
     } finally {
