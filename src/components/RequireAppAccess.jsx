@@ -26,7 +26,7 @@ export default function RequireAppAccess({ appId }) {
   if (!isAuthenticated || !user) return <Navigate to="/connexion" replace />;
 
   if (isAuthenticated && user) {
-    // Comptes bureaux : accès au terminal de pointage RH-CGESN, sans profil d'accès à configurer
+    // Comptes bureaux : accès au terminal de pointage RH-CITRAT, sans profil d'accès à configurer
     if (appId === 'rhcgesn' && isOfficeAccount(user.email)) return <Outlet />;
     if (!access.includes(appId)) {
       const def = APP_DEFS.find((d) => d.id === appId);
