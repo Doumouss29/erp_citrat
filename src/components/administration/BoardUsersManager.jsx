@@ -98,14 +98,14 @@ export default function BoardUsersManager({ users, setUsers, currentUser, refres
   useEffect(() => {
     let alive = true;
     Promise.all([
-      base44.entities.Bureau.list("nom", 200),
+      base44.entities.OfficeTerminal.list("office_name", 200),
       base44.entities.AnnuaireAttente.list(null, 500),
       base44.entities.OfficeTerminal.list(null, 200),
       fetchProfiles({ force: true }),
     ])
       .then(([b, a, t, p]) => {
         if (!alive) return;
-        setBureaux(b || []);
+        setBureaux((b || []).map(x => ({ ...x, nom: x.office_name, code: x.code || x.office_name })));
         setAnnuaire(a || []);
         setProfiles(p || []);
         setTerminalEmails((t || []).map((x) => norm(x.email)));
