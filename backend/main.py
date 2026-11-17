@@ -220,7 +220,7 @@ def admin_users(current=Depends(user)):
 @app.patch('/api/admin/users/{uid}')
 def admin_update_user(uid:str, changes:dict=Body(...),current=Depends(user)):
     if current['role'] != 'admin': raise HTTPException(403, 'Accès administrateur requis')
-    allowed={'name','first_name','last_name','telephone','office','department','grade','access','fonction','bureau_ids'}
+    allowed={'name','role','first_name','last_name','telephone','office','department','grade','access','fonction','bureau_ids'}
     if not set(changes).issubset(allowed): raise HTTPException(422,'Unsupported user property')
     if 'access' in changes and (not isinstance(changes['access'],list) or len(changes['access'])>100 or not all(isinstance(v,str) for v in changes['access'])):
         raise HTTPException(422,'Invalid access list')
@@ -233,10 +233,22 @@ def admin_update_user(uid:str, changes:dict=Body(...),current=Depends(user)):
         row=c.execute('SELECT * FROM users WHERE id=?',(uid,)).fetchone()
         if not row: raise HTTPException(404,'Utilisateur introuvable')
         profile=json.loads(row['profile_json'] or '{}')
-        profile.update({k:v for k,v in changes.items() if k!='name'})
+        new_role=changes.get('role',row['role'])
+        if new_role not in ('admin','user'):
+            raise HTTPException(422,'Rôle système inconnu')
+        if uid==current['id'] and new_role!='admin':
+            raise HTTPException(409,'Vous ne pouvez pas retirer vos privilèges administrateur')
+        if row['role']=='admin' and new_role!='admin':
+            admin_count=c.execute("SELECT COUNT(*) FROM users WHERE role='admin'").fetchone()[0]
+            if admin_count <= 1:
+                raise HTTPException(409,'Dernier administrateur : modification interdite')
+        profile.update({k:v for k,v in changes.items() if k not in ('name','role')})
         name=changes.get('name',row['name'])
-        c.execute('UPDATE users SET name=?,profile_json=? WHERE id=?',(name,json.dumps(profile,ensure_ascii=False),uid))
-    return {'id':uid,'email':row['email'],'name':name,'full_name':name,'role':row['role'],**profile,'super_admin':row['role']=='admin'}
+        c.execute('UPDATE users SET name=?,role=?,profile_json=? WHERE id=?',
+                  (name,new_role,json.dumps(profile,ensure_ascii=False),uid))
+        if new_role!=row['role']:
+            c.execute('DELETE FROM sessions WHERE user_id=?',(uid,))
+    return {'id':uid,'email':row['email'],'name':name,'full_name':name,'role':new_role,**profile,'super_admin':new_role=='admin'}
 
 @app.delete('/api/admin/users/{uid}')
 def admin_delete_user(uid:str,current=Depends(user)):
