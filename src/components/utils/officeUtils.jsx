@@ -5,15 +5,7 @@ import { base44 } from "@/api/base44Client";
 // Source : l'entité OfficeTerminal, gérée depuis Administration → Bureaux ; la liste ci-dessous
 // sert de filet de sécurité tant que l'annuaire n'est pas chargé.
 // Un compte bureau, actif ou non, ne voit jamais que la page de pointage.
-export const OFFICE_ACCOUNTS = {
-  'abidjan.cgesn@gmail.com': 'ABIDJAN',
-  'moussneko@gmail.com': 'CAG',
-  'yakro.cgesn@gmail.com': 'YAMOUSSOUKRO',
-  'bouafle.cgesn@gmail.com': 'BOUAFLE',
-  'sinfra.cgesn@gmail.com': 'SINFRA',
-  'daloa.cgesn@gmail.com': 'DALOA',
-  'issia.cgesn@gmail.com': 'ISSIA'
-};
+export const OFFICE_ACCOUNTS = {};
 
 // Normalise un e-mail : minuscules, sans espaces ni accents
 export const normalizeEmail = (email) =>
@@ -33,13 +25,6 @@ export function loadOfficeDirectory(force = false) {
       (rows || []).forEach((t) => {
         if (t?.email) map.set(normalizeEmail(t.email), t);
       });
-      // Comptes Gmail connus mais absents de la fiche du bureau → rattachés au bureau du même nom
-      Object.entries(OFFICE_ACCOUNTS).forEach(([email, officeName]) => {
-        const key = normalizeEmail(email);
-        if (map.has(key)) return;
-        const bureau = (rows || []).find((t) => t && normalizeEmail(t.office_name) === normalizeEmail(officeName));
-        if (bureau) map.set(key, bureau);
-      });
       directory = map;
       return map;
     })
@@ -55,7 +40,7 @@ export function loadOfficeDirectory(force = false) {
 export const isOfficeAccount = (email) => {
   const e = normalizeEmail(email);
   if (!e) return false;
-  return directory.has(e) || !!LEGACY[e];
+  return directory.has(e);
 };
 
 // Version fiable : attend l'annuaire avant de répondre
@@ -69,7 +54,7 @@ export const getOfficeName = (email) => {
   const e = normalizeEmail(email);
   if (!e) return null;
   if (directory.has(e)) return directory.get(e).office_name;
-  return LEGACY[e] || null;
+  return null;
 };
 
 // Fiche complète du bureau connecté (nom, localisation, statut actif…)
