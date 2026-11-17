@@ -130,6 +130,8 @@ def resolve_rule(current, db, app, module):
 
 def may(current, db, entity, action):
     if current["role"]=="admin": return {"scope":"all"}
+    if current.get("consentement_version") != "1":
+        raise HTTPException(403,"Veuillez valider la notice de protection des données")
     module=ENTITY_MODULE.get(entity)
     if not module: raise HTTPException(403,"Entité réservée à l'administration")
     app, section=module
