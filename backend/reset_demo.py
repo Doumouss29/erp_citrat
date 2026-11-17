@@ -39,6 +39,10 @@ def main():
                 raise RuntimeError("Aucun administrateur à conserver : abandon.")
             records_count = c.execute("SELECT COUNT(*) FROM records").fetchone()[0]
             users_count = c.execute("SELECT COUNT(*) FROM users WHERE role!='admin'").fetchone()[0]
+            # Les tables du nouveau parcours d'inscription sont également réinitialisées.
+            for table in ("signup_requests", "password_reset_tokens", "auth_events"):
+                if c.execute("SELECT name FROM sqlite_master WHERE type='table' AND name=?",(table,)).fetchone():
+                    c.execute('DELETE FROM "' + table + '"')
             c.execute("DELETE FROM sessions")
             c.execute("DELETE FROM consent_events")
             c.execute("DELETE FROM records")
