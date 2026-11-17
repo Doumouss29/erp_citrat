@@ -63,7 +63,12 @@ export const base44 = {
   },
   functions: {invoke: async (name, payload = {}) => request(`/functions/${encodeURIComponent(name)}`,{method:'POST',body:body(payload)})},
   integrations: {Core: new Proxy({}, {get: (_, name) => async () => {throw new Error(`Integration ${String(name)} not migrated yet`);}})},
-  users: new Proxy({}, {get: (_, name) => async () => {throw new Error(`User management ${String(name)} not migrated yet`);}}),
+  users: {
+    inviteUser: (email, role = 'user') => {
+      if (role !== 'user') throw new Error("L'invitation publique ne crée jamais un administrateur.");
+      return request('/admin/invitations',{method:'POST',body:body({email})});
+    }
+  },
   asServiceRole: null
 };
 base44.asServiceRole = base44; // still subject to server-side admin-only authorization
