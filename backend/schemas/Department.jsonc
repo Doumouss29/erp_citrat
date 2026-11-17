@@ -1,0 +1,11 @@
+{
+  "name": "Department",
+  "description": "Départements et services créés par l'administrateur CITRAT, sans valeurs initiales",
+  "type": "object",
+  "properties": {
+    "value": {"type": "string", "description": "Identifiant stable du département"},
+    "label": {"type": "string", "description": "Libellé affiché"},
+    "office_id": {"type": "string", "description": "Bureau de rattachement (optionnel)"}
+  },
+  "required": ["value", "label"]
+}
