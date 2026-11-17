@@ -1,6 +1,6 @@
 import PageSuspense from "@/components/PageSuspense";
 /**
- * COQUILLE COMMUNE des applications internes du Portail Digital CGESN.
+ * COQUILLE COMMUNE des applications internes du Portail Digital CITRAT.
  * Chaque application garde SON logo et SA couleur (définis dans l'administration du portail) ;
  * le vert reste réservé à l'accueil du portail.
  *
@@ -28,7 +28,7 @@ import { APP_DEFS } from "@/lib/cgesnData";
 import usePortalAppIcon from "@/hooks/usePortalAppIcon";
 import useAppTheme from "@/hooks/useAppTheme";
 
-export const PORTAL_GREEN = "#0f5c52";
+export const PORTAL_GREEN = "#0C3D85";
 
 const same = (a, b) => String(a || "").toLowerCase() === String(b || "").toLowerCase();
 // Page active : URL exacte, ou l'un des préfixes de `match` (sous-pages d'une entrée)
@@ -38,8 +38,8 @@ const isOn = (item, path, full) =>
 
 // Fil d'Ariane : noms d'applications en casse harmonisée (sigles en capitales, le reste en minuscules)
 const CRUMB_NAMES = {
-  rhcgesn: "RH-CGESN",
-  cgesnboard: "CGESN-Board",
+  rhcgesn: "RH-CITRAT",
+  cgesnboard: "CITRAT-Board",
   ecadastre: "e-Cadastre",
   lotissement: "e-Guide",
   assistancenum: "Assistance",
