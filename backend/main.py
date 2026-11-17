@@ -45,6 +45,7 @@ with db() as c:
     c.execute('CREATE TABLE IF NOT EXISTS sessions (token_hash TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id), expires INTEGER NOT NULL)')
     c.execute('CREATE TABLE IF NOT EXISTS records (entity TEXT NOT NULL, id TEXT NOT NULL, payload TEXT NOT NULL, created_date TEXT NOT NULL, updated_date TEXT NOT NULL, PRIMARY KEY(entity,id))')
     c.execute('CREATE TABLE IF NOT EXISTS consent_events (id TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id), version TEXT NOT NULL, decision TEXT NOT NULL, recorded_at TEXT NOT NULL)')
+    c.execute('CREATE TABLE IF NOT EXISTS access_events (id TEXT PRIMARY KEY, actor_id TEXT NOT NULL, subject TEXT NOT NULL, action TEXT NOT NULL, recorded_at TEXT NOT NULL)')
     if not c.execute('SELECT 1 FROM users').fetchone():
         c.execute('INSERT INTO users VALUES (?,?,?,?,?)', (str(uuid.uuid4()),ADMIN_EMAIL,'Administrateur',hash_pw(ADMIN_PASSWORD),'admin'))
     # Later boots do not reset credentials; use a dedicated admin password reset procedure.
@@ -251,6 +252,8 @@ def admin_update_user(uid:str, changes:dict=Body(...),current=Depends(user)):
                   (name,new_role,json.dumps(profile,ensure_ascii=False),uid))
         if new_role!=row['role']:
             c.execute('DELETE FROM sessions WHERE user_id=?',(uid,))
+        if 'role' in changes or 'grade' in changes or 'access' in changes or 'permission_denials' in changes:
+            audit_access(c,current['id'],uid,'user_access_changed')
     return {'id':uid,'email':row['email'],'name':name,'full_name':name,'role':new_role,**profile,'super_admin':new_role=='admin'}
 
 @app.delete('/api/admin/users/{uid}')
@@ -265,6 +268,11 @@ def admin_delete_user(uid:str,current=Depends(user)):
         c.execute('DELETE FROM consent_events WHERE user_id=?',(uid,))
         c.execute('DELETE FROM users WHERE id=?',(uid,))
     return {'success':True}
+
+
+def audit_access(c, actor, subject, action):
+    c.execute("INSERT INTO access_events VALUES (?,?,?,?,?)",
+              (str(uuid.uuid4()),actor,subject,action,datetime.now(timezone.utc).isoformat()))
 
 @app.get('/api/permissions/catalog')
 def permission_catalog(current=Depends(account_user)):
@@ -324,6 +332,19 @@ def filter_records(name:str,data:dict=Body(...),current=Depends(account_user)):
     return scoped_list(name,current,data.get('query',{}),data.get('sort','-created_date'),
                        data.get('limit',100),data.get('skip',0))
 
+@app.get('/api/entities/{name}/export')
+def export_records(name:str,current=Depends(account_user)):
+    if current['role']!='admin':
+        may(current,db,name,'export')
+        may(current,db,name,'view')
+    # JSON export plafonné à 5000 lignes, filtré sur le même périmètre que la lecture.
+    return scoped_list(name,current,limit=5000)
+
+@app.get('/api/admin/access-events')
+def list_access_events(current=Depends(user)):
+    with db() as c:
+        return [dict(r) for r in c.execute('SELECT * FROM access_events ORDER BY recorded_at DESC LIMIT 500')]
+
 @app.get('/api/entities/{name}/{record_id}')
 def get_record(name:str,record_id:str,current=Depends(account_user)):
     require_entity(name)
@@ -351,7 +372,11 @@ def create_one(name,data,current):
     now=datetime.now(timezone.utc).isoformat(); record_id=str(uuid.uuid4())
     payload={k:v for k,v in data.items() if k not in ('id','created_date','updated_date')}
     with db() as c:
+        c.execute('BEGIN IMMEDIATE')
         c.execute('INSERT INTO records VALUES (?,?,?,?,?)',(name,record_id,json.dumps(payload,ensure_ascii=False),now,now))
+        if name=='AccessProfile':
+            audit_access(c,current['id'],record_id,'profile_created')
+        c.execute('COMMIT')
     return {**payload,'id':record_id,'created_date':now,'updated_date':now}
 
 @app.post('/api/entities/{name}')
@@ -386,6 +411,8 @@ def update_record(name:str,record_id:str,data:dict=Body(...),current=Depends(acc
         now=datetime.now(timezone.utc).isoformat()
         c.execute('UPDATE records SET payload=?,updated_date=? WHERE entity=? AND id=?',
                   (json.dumps(updated,ensure_ascii=False),now,name,record_id))
+        if name=='AccessProfile':
+            audit_access(c,current['id'],record_id,'profile_updated')
     return {**updated,'id':record_id,'created_date':row['created_date'],'updated_date':now}
 
 @app.delete('/api/entities/{name}/{record_id}')
@@ -397,6 +424,8 @@ def delete_record(name:str,record_id:str,current=Depends(account_user)):
         if current['role']!='admin':
             require_record(current,db,name,'delete',decorate(row))
         c.execute('DELETE FROM records WHERE entity=? AND id=?',(name,record_id))
+        if name=='AccessProfile':
+            audit_access(c,current['id'],record_id,'profile_deleted')
     return {'success':True}
 
 @app.post('/api/functions/{name}')
