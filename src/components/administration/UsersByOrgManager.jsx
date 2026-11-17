@@ -1,25 +1,13 @@
 import { FormSelect } from "@/components/ui/form-select";
 import React, { useEffect, useMemo, useState } from "react";
 import { base44 } from "@/api/base44Client";
-import { DEPARTEMENTS } from "@/lib/rhReferentiels";
+import { DEPARTEMENTS as LEGACY_DEPARTEMENTS } from "@/lib/rhReferentiels";
 import { profileApps, getProfile } from "@/lib/accessProfiles";
 import { OrgTiles, OrgTile } from "@/components/administration/OrgTiles";
 import { invalidateEmployees } from "@/lib/rhSession";
 
 // Bureau par défaut de chaque département (identique à la fiche employé RH)
-const DEPT_OFFICE = {
-  direction_generale: "ABIDJAN",
-  administratif_financier: "ABIDJAN",
-  grand_projet_developpement: "CAG",
-  bureau_abidjan: "ABIDJAN",
-  bureau_yamoussoukro: "YAMOUSSOUKRO",
-  bureau_daloa: "DALOA",
-  bureau_bouafle: "BOUAFLE",
-  bureau_sinfra: "SINFRA",
-  bureau_issia: "ISSIA",
-  cag_secretariat: "CAG",
-  grand_projet_secretariat: "CAG"
-};
+const DEPT_OFFICE = {}; // Pas de rattachement historique automatique.
 
 const NONE = "__none__";
 
@@ -28,7 +16,7 @@ const NONE = "__none__";
 let EMP_CACHE = null;
 let REVIEW_CACHE = null;
 const DEPT_ALIASES = { grand_projet_secretariat: "Grand Projet & Secrétariat", cag_secretariat: "Grand Projet & Secrétariat" };
-const deptLabel = (v) => (DEPARTEMENTS.find((d) => d.value === v) || {}).label || DEPT_ALIASES[v] || v || "Non affecté";
+const deptLabel = (v) => v || "Non affecté";
 const titleCase = (s) => (s || "").toLowerCase().replace(/(^|[\s'-])(\p{L})/gu, (m, a, b) => a + b.toUpperCase());
 
 function initials(u) {
@@ -283,6 +271,15 @@ export default function UsersByOrgManager({
     return () => { active = false; };
   }, []);
   const BUREAUX = bureauList;
+  const [configuredDepartments, setConfiguredDepartments] = useState([]);
+  useEffect(() => {
+    let active = true;
+    base44.entities.Department.list("label", 200)
+      .then(rows => { if (active) setConfiguredDepartments((rows || []).map(d => ({value:d.value,label:d.label}))); })
+      .catch(() => { if (active) setConfiguredDepartments([]); });
+    return () => { active = false; };
+  }, []);
+  const DEPARTEMENTS = configuredDepartments;
   const [search, setSearch] = useState("");
   const [officeFilter, setOfficeFilter] = useState(""); // "" = aucun bureau choisi (tuiles seules)
   const [deptFilter, setDeptFilter] = useState("all");
