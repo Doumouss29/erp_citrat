@@ -36,6 +36,14 @@ const tileOf = (u, empByEmail = {}) => {
   return BUREAUX.includes(o) ? o : o || NONE;
 };
 export default function ConsentementsManager() {
+  const [configuredOffices, setConfiguredOffices] = useState([]);
+  useEffect(() => {
+    let active = true;
+    base44.entities.OfficeTerminal.list("office_name", 200)
+      .then(rows => { if (active) setConfiguredOffices((rows || []).map(x => String(x.office_name || "").trim().toUpperCase()).filter(Boolean)); })
+      .catch(() => { if (active) setConfiguredOffices([]); });
+    return () => { active = false; };
+  }, []);
   const [users, setUsers] = useState([]);
   const [employees, setEmployees] = useState([]);
   const [journal, setJournal] = useState([]);
@@ -105,7 +113,7 @@ export default function ConsentementsManager() {
   // Bureau affiché : la tuile choisie ; une recherche sans tuile porte sur tous les comptes
   const effTile = tile || (q ? "all" : "");
   const tiles = useMemo(() => {
-    const keys = [ADMIN, ...BUREAUX];
+    const keys = [ADMIN, ...configuredOffices];
     rows.forEach(({ u }) => { const k = tileOfU(u); if (!keys.includes(k)) keys.push(k); });
     return keys.map((k) => {
       const list = rows.filter((r) => tileOfU(r.u) === k);
@@ -114,7 +122,7 @@ export default function ConsentementsManager() {
       const exempt = list.filter((r) => r.status === "exempt").length;
       return { key: k, label: k === ADMIN ? "Administration" : k === NONE ? "Sans bureau" : k, total: list.length, ok, todo, exempt, admin: k === ADMIN, none: k === NONE };
     });
-  }, [rows, empByEmail]);
+  }, [rows, empByEmail, configuredOffices]);
   const shown = rows.filter((r) =>
     !!effTile && (effTile === "all" || tileOfU(r.u) === effTile) &&
     (filter === "all" || r.status === filter || (filter === "todo" && TODO.includes(r.status))) &&
