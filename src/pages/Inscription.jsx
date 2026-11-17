@@ -77,6 +77,7 @@ export default function Inscription() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
+  const [telephone, setTelephone] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [error, setError] = useState(null);
@@ -102,6 +103,10 @@ export default function Inscription() {
       setError("Indiquez votre e-mail.");
       return;
     }
+    if (telephone.replace(/\D/g, "").length < 8 || telephone.length > 24) {
+      setError("Indiquez un numéro de téléphone valide.");
+      return;
+    }
     if (password.length < 6) {
       setError("Le mot de passe doit contenir au moins 6 caractères.");
       return;
@@ -114,10 +119,10 @@ export default function Inscription() {
     // Nom et prénom officiels gardés sur l'appareil : ils préremplissent le consentement
     // même si leur enregistrement sur le compte échoue après la vérification du code.
     try {
-      localStorage.setItem("cgesn_signup_name", JSON.stringify({ email: email.trim().toLowerCase(), first_name: firstName.trim(), last_name: lastName.trim() }));
+      localStorage.setItem("cgesn_signup_name", JSON.stringify({ email: email.trim().toLowerCase(), first_name: firstName.trim(), last_name: lastName.trim(), telephone: telephone.trim() }));
     } catch (e) { /* stockage indisponible */ }
     try {
-      await base44.auth.register({ email: email.trim(), password });
+      await base44.auth.register({ email: email.trim(), password, first_name: firstName.trim(), last_name: lastName.trim(), telephone: telephone.trim() });
       setOtpSent(true);
     } catch (err) {
       setError((err && err.message) || "Échec de la création du compte. Réessayez.");
@@ -139,7 +144,7 @@ export default function Inscription() {
         base44.auth.setToken(result.access_token);
       }
       try {
-        await base44.auth.updateMe({ first_name: firstName.trim(), last_name: lastName.trim() });
+        await base44.auth.updateMe({ first_name: firstName.trim(), last_name: lastName.trim(), telephone: telephone.trim() });
       } catch (e) {
         /* non bloquant */
       }
@@ -233,6 +238,22 @@ export default function Inscription() {
                   onChange={(e) => setEmail(e.target.value)}
                   onKeyDown={(e) => { if (e.key === "Enter") submit(); }}
                   placeholder="vous@citrat.ci"
+                  className="cgesn-reg-input"
+                  style={inputStyle}
+                />
+              </div>
+              <div>
+                <label style={labelStyle} htmlFor="signup-telephone">Numéro de téléphone *</label>
+                <input
+                  id="signup-telephone"
+                  type="tel"
+                  value={telephone}
+                  onChange={(e) => setTelephone(e.target.value)}
+                  onKeyDown={(e) => { if (e.key === "Enter") submit(); }}
+                  placeholder="+225 07 00 00 00 00"
+                  autoComplete="tel"
+                  required
+                  maxLength={24}
                   className="cgesn-reg-input"
                   style={inputStyle}
                 />
