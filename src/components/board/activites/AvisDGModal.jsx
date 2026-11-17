@@ -59,7 +59,7 @@ export default function AvisDGModal({ open, onOpenChange, fiche, bureau, onSucce
 
         await sendMail({
           to: bureau.responsable_email,
-          from_name: 'CGESN – Direction Générale',
+          from_name: 'CITRAT – Direction Générale',
           subject: `📋 Avis DG – Fiche d'activités ${bureau.nom} – ${semainLabel}`,
           html: `
             <div style="font-family:Arial,sans-serif;max-width:680px;margin:0 auto;background:#ffffff;padding:24px;color:#334155;">
