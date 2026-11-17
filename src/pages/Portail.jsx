@@ -85,6 +85,11 @@ export default function Portail() {
   const appStatus = (app) => {
     const entry = adminApps.find((a) => a.app_id === app.id);
     if (entry) return { isOff: entry.status !== "ok", href: entry.href };
+    // Les modules embarqués n'ont pas besoin d'URL externe.
+    // Seul l'administrateur local peut les tester sans configuration PortalApp.
+    if (user?.super_admin === true && user?.role === "admin" && INTERNAL_APP_IDS.includes(app.id)) {
+      return { isOff: false, href: null };
+    }
     return { isOff: !app.href, href: app.href };
   };
 
