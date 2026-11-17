@@ -40,7 +40,7 @@ def main():
             records_count = c.execute("SELECT COUNT(*) FROM records").fetchone()[0]
             users_count = c.execute("SELECT COUNT(*) FROM users WHERE role!='admin'").fetchone()[0]
             # Les tables du nouveau parcours d'inscription sont également réinitialisées.
-            for table in ("signup_requests", "password_reset_tokens", "auth_events"):
+            for table in ("signup_requests", "password_reset_tokens", "auth_events", "access_events"):
                 if c.execute("SELECT name FROM sqlite_master WHERE type='table' AND name=?",(table,)).fetchone():
                     c.execute('DELETE FROM "' + table + '"')
             c.execute("DELETE FROM sessions")
