@@ -225,6 +225,31 @@ def install(app, db, hash_pw, verify_pw, secret):
                   "Code de confirmation : "+otp+"\nValable 15 minutes.")
         return {"success":True}
 
+    @app.post("/api/admin/invitations")
+    def invite(data: dict = Body(...), current=Depends(admin_user)):
+        if not mail_ready():
+            raise HTTPException(503,"Messagerie non configurée")
+        em=email(data.get("email"))
+        with db() as c:
+            if c.execute("SELECT 1 FROM users WHERE email=?",(em,)).fetchone():
+                raise HTTPException(409,"Cette adresse possède déjà un compte")
+            last=c.execute("SELECT MAX(occurred_at) FROM auth_events WHERE subject_email=? AND action='invited'",(em,)).fetchone()[0]
+            if last:
+                try:
+                    if (datetime.now(timezone.utc)-datetime.fromisoformat(last)).total_seconds()<120:
+                        raise HTTPException(429,"Invitation déjà envoyée récemment")
+                except ValueError:
+                    pass
+        send_mail(em,"ERP CITRAT — Invitation à demander un accès",
+                  "Vous êtes invité à demander un compte sur ERP CITRAT.\n"
+                  "Inscrivez-vous et confirmez votre e-mail ici :\n"
+                  +PUBLIC_URL+"/inscription\n\n"
+                  "Votre compte sera activé après validation administrative.")
+        with db() as c:
+            c.execute("INSERT INTO auth_events VALUES (?,?,?,?,?)",
+                      (str(uuid.uuid4()),current["id"],em,"invited",now()))
+        return {"success":True,"message":"Invitation envoyée. La validation reste obligatoire."}
+
     @app.get("/api/admin/registrations")
     def registrations(current=Depends(admin_user)):
         with db() as c:
