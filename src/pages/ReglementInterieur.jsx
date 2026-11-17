@@ -36,7 +36,7 @@ export default function ReglementInterieurPage() {
             <div className="relative z-10">
               <img 
                 src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/68dea3af6d9b2b5362a21577/567047ce7_cgesn.jpg" 
-                alt="Logo CGESN" 
+                alt="Logo CITRAT" 
                 className="w-16 h-16 md:w-24 md:h-24 mx-auto mb-4 md:mb-8 rounded-xl shadow-2xl bg-white p-2"
               />
               <h1 className="text-2xl md:text-5xl font-bold mb-2 md:mb-4">RÈGLEMENT INTÉRIEUR</h1>
@@ -107,7 +107,7 @@ export default function ReglementInterieurPage() {
 
           {/* Footer */}
           <div className="bg-slate-100 p-4 md:p-6 text-center text-xs md:text-sm text-slate-600 border-t-2 border-slate-200">
-            <p className="font-semibold">Cabinet de Géomètre Expert - Soro Nanga (CGESN)</p>
+            <p className="font-semibold">Cabinet de Géomètre Expert - Soro Nanga (CITRAT)</p>
             <p className="mt-1">BP 718 Abidjan 06, Adjamé Williamsville CR 51099</p>
             <p className="mt-1 text-xs md:text-sm">cgesn2007@yahoo.fr • Tél/Fax: 20-37-02-05 • 22-78-18-18 • 08-85-02-52</p>
             <p className="mt-2 md:mt-3 text-xs text-slate-500">Document officiel approuvé par l'Inspection du Travail et déposé au greffe du Tribunal du Travail d'Abidjan</p>
