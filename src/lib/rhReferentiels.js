@@ -1,5 +1,5 @@
 // Référentiels RH partagés : bureaux et départements.
-// Valeurs identiques à celles utilisées dans la fiche employé (RH-CGESN).
+// Valeurs identiques à celles utilisées dans la fiche employé (RH-CITRAT).
 export const BUREAUX = [
   "ABIDJAN",
   "YAMOUSSOUKRO",
