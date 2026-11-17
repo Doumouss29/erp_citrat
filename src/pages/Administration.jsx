@@ -39,7 +39,7 @@ const tabBase = {
   cursor: "pointer",
   fontFamily: "'Poppins',sans-serif"
 };
-const tabActive = { background: "#0f5c52", color: "#fff", borderColor: "#0f5c52" };
+const tabActive = { background: "#0C3D85", color: "#fff", borderColor: "#0C3D85" };
 const tabInactive = { background: "#fff", color: "oklch(0.35 0.005 90)" };
 
 // Flèche retour en SVG (remplace le caractère "←", au rendu inconsistant en gras)
@@ -71,7 +71,7 @@ function getInitials(u) {
   return letters.join("").toUpperCase();
 }
 
-// Initiales d'une application pour son icône (ex: "CGESN-BOARD" -> "CB")
+// Initiales d'une application pour son icône (ex: "CITRAT-BOARD" -> "CB")
 function getAppInitials(name) {
   const parts = (name || "?").trim().split(/[\s-]+/).filter(Boolean);
   const letters = parts.length > 1 ? [parts[0][0], parts[1][0]] : [(name || "?")[0]];
@@ -103,7 +103,7 @@ export default function Administration() {
   // Page réservée au super administrateur (les autres administrateurs n'y ont pas accès).
   const isAdmin = !!user && user.super_admin === true;
 
-  // ?tab=board ouvre directement l'onglet demandé (lien depuis CGESN-Board).
+  // ?tab=board ouvre directement l'onglet demandé (lien depuis CITRAT-Board).
   const [tab, setTab] = useState(() => new URLSearchParams(window.location.search).get("tab") || "apps");
   // Onglet Profils : grade ouvert ("" = tuiles seules)
   const [profileTile, setProfileTile] = useState("");
@@ -657,7 +657,7 @@ export default function Administration() {
     padding: "0 20px",
     border: "none",
     borderRadius: 10,
-    background: "#0f5c52",
+    background: "#0C3D85",
     color: "#fff",
     fontSize: 13,
     fontWeight: 700,
@@ -720,7 +720,7 @@ export default function Administration() {
                   Utilisateurs
                 </button>
                 <button onClick={() => setTab("board")} style={{ ...tabBase, ...(tab === "board" ? tabActive : tabInactive) }}>
-                  CGESN-Board
+                  CITRAT-Board
                 </button>
                 <button onClick={() => setTab("bureaux")} style={{ ...tabBase, ...(tab === "bureaux" ? tabActive : tabInactive) }}>
                   Bureaux
@@ -760,13 +760,13 @@ export default function Administration() {
                   ) : (
                   <div style={{ display: "flex", flexDirection: "column", gap: 22, marginBottom: 20 }}>
                   {[
-                    ["internes", "Applications internes", "Développées et hébergées par CGESN", managedApps.filter((x) => x.isInternal)],
+                    ["internes", "Applications internes", "Développées et hébergées par CITRAT", managedApps.filter((x) => x.isInternal)],
                     ["externes", "Applications externes", "Services tiers ouverts par lien", managedApps.filter((x) => !x.isInternal)]
                   ].filter((grp) => grp[3].length > 0).map(([gKey, gTitle, gHint, gApps]) => (
                   <section key={gKey}>
                     <div style={{ display: "flex", alignItems: "baseline", gap: 10, flexWrap: "wrap", marginBottom: 10 }}>
                       <span style={{ fontSize: 13, fontWeight: 700, color: "oklch(0.28 0.01 90)" }}>{gTitle}</span>
-                      <span style={{ fontSize: 11, fontWeight: 700, color: "#0f5c52", background: "oklch(0.94 0.06 165)", padding: "1px 8px", borderRadius: 100 }}>{gApps.length}</span>
+                      <span style={{ fontSize: 11, fontWeight: 700, color: "#0C3D85", background: "oklch(0.94 0.06 165)", padding: "1px 8px", borderRadius: 100 }}>{gApps.length}</span>
                       <span style={{ fontSize: 11.5, color: "oklch(0.58 0.005 90)" }}>{gHint}</span>
                     </div>
                   <div className="cgesn-admin-apps-grid" style={{ display: "grid", gap: 12 }}>
@@ -780,7 +780,7 @@ export default function Administration() {
                         <div key={a.app_id} className="cgesn-admin-app-card" style={{ border: "1px solid oklch(0.91 0.005 90)", borderRadius: 12, padding: "14px", minWidth: 0, gridColumn: isEditing ? "1 / -1" : undefined }}>
                           <div className="cgesn-app-row" style={{ display: "flex", flexDirection: "column", alignItems: "stretch", gap: 12 }}>
                             <div style={{ display: "flex", alignItems: "center", gap: 10, minWidth: 0 }}>
-                            <div style={{ width: 38, height: 38, borderRadius: 10, overflow: "hidden", flexShrink: 0, background: iconSrc ? (iconBg || "#fff") : (a.status === "ok" ? "linear-gradient(135deg,#0f5c52,#14806f)" : "oklch(0.92 0.005 90)"), border: iconSrc && !iconBg ? "1px solid oklch(0.91 0.005 90)" : "none", color: a.status === "ok" ? "#fff" : "oklch(0.6 0.005 90)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, fontWeight: 700 }}>
+                            <div style={{ width: 38, height: 38, borderRadius: 10, overflow: "hidden", flexShrink: 0, background: iconSrc ? (iconBg || "#fff") : (a.status === "ok" ? "linear-gradient(135deg,#0C3D85,#14806f)" : "oklch(0.92 0.005 90)"), border: iconSrc && !iconBg ? "1px solid oklch(0.91 0.005 90)" : "none", color: a.status === "ok" ? "#fff" : "oklch(0.6 0.005 90)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, fontWeight: 700 }}>
                               {iconSrc ? (
                                 <img src={iconSrc} alt={a.name} style={{ width: "100%", height: "100%", objectFit: iconFit, display: "block" }} />
                               ) : (
@@ -825,7 +825,7 @@ export default function Administration() {
                                     title={a.isInternal ? "Modifier le logo" : "Modifier"}
                                     aria-label="Modifier l'application"
                                     className="cgesn-remove"
-                                    style={{ width: 32, height: 32, borderRadius: 8, border: "1px solid transparent", background: isEditing ? "oklch(0.94 0.003 90)" : "none", color: isEditing ? "#0f5c52" : "oklch(0.55 0.01 90)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", flexShrink: 0 }}
+                                    style={{ width: 32, height: 32, borderRadius: 8, border: "1px solid transparent", background: isEditing ? "oklch(0.94 0.003 90)" : "none", color: isEditing ? "#0C3D85" : "oklch(0.55 0.01 90)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", flexShrink: 0 }}
                                   >
                                     <PencilIcon />
                                   </button>
@@ -902,7 +902,7 @@ export default function Administration() {
                                   onClick={() => saveAppEdit(a)}
                                   disabled={savingEdit}
                                   className="cgesn-admin-btn"
-                                  style={{ height: 40, padding: "0 18px", border: "none", borderRadius: 10, background: "#0f5c52", color: "#fff", fontSize: 13, fontWeight: 700, cursor: savingEdit ? "wait" : "pointer", fontFamily: "'Poppins',sans-serif" }}
+                                  style={{ height: 40, padding: "0 18px", border: "none", borderRadius: 10, background: "#0C3D85", color: "#fff", fontSize: 13, fontWeight: 700, cursor: savingEdit ? "wait" : "pointer", fontFamily: "'Poppins',sans-serif" }}
                                 >
                                   {savingEdit ? "…" : "Enregistrer"}
                                 </button>
@@ -1000,7 +1000,7 @@ export default function Administration() {
                         return (
                           <div key={slot.key} style={{ border: "1px solid oklch(0.91 0.005 90)", borderRadius: 12, padding: "14px 16px" }}>
                             <div className="cgesn-app-row" style={{ display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
-                              <div style={{ width: 72, height: 72, borderRadius: 12, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", padding: 8, boxSizing: "border-box", background: onGreen ? "linear-gradient(120deg,#0d3b3f 0%,#0f5c52 60%,#0d3b3f 100%)" : "#fff", border: onGreen ? "none" : "1px solid oklch(0.88 0.005 90)" }}>
+                              <div style={{ width: 72, height: 72, borderRadius: 12, flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", padding: 8, boxSizing: "border-box", background: onGreen ? "linear-gradient(120deg,#081F69 0%,#0C3D85 60%,#081F69 100%)" : "#fff", border: onGreen ? "none" : "1px solid oklch(0.88 0.005 90)" }}>
                                 <img src={preview} alt={slot.label} style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain", display: "block" }} />
                               </div>
                               <div style={{ flex: 1, minWidth: 160 }}>
@@ -1142,8 +1142,8 @@ export default function Administration() {
                                     style={{
                                       padding: "6px 14px",
                                       borderRadius: 100,
-                                      border: `1px solid ${has ? "#0f5c52" : "oklch(0.88 0.005 90)"}`,
-                                      background: has ? "#0f5c52" : "#fff",
+                                      border: `1px solid ${has ? "#0C3D85" : "oklch(0.88 0.005 90)"}`,
+                                      background: has ? "#0C3D85" : "#fff",
                                       color: has ? "#fff" : "oklch(0.4 0.005 90)",
                                       fontSize: "11.5px",
                                       fontWeight: 600,
@@ -1218,7 +1218,7 @@ export default function Administration() {
                   height: 40,
                   padding: "0 20px",
                   borderRadius: 10,
-                  background: "#0f5c52",
+                  background: "#0C3D85",
                   color: "#fff",
                   fontSize: 13,
                   fontWeight: 700,
