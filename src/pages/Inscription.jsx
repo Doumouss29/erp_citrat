@@ -164,13 +164,13 @@ export default function Inscription() {
   return (
     <>
       <style>{`
-        .cgesn-reg-btn:hover{background:#0d4b43 !important}
+        .cgesn-reg-btn:hover{background:#081F69 !important}
         @media (max-width:480px){
           .cgesn-reg-wrap{padding:14px !important}
           .cgesn-reg-card{padding:22px 18px !important;border-radius:16px !important}
           .cgesn-reg-head{gap:10px !important;margin-bottom:18px !important}
-          .cgesn-reg-logo{width:56px !important;height:56px !important;border-radius:12px !important}
-          .cgesn-reg-logo img{width:40px !important;height:40px !important}
+          .cgesn-reg-logo{width:180px !important;max-width:90% !important;height:auto !important;}
+          .cgesn-reg-logo img{width:100% !important;height:auto !important}
           .cgesn-reg-title{font-size:16px !important}
           .cgesn-reg-form{gap:10px !important}
           .cgesn-reg-input{padding:10px 12px !important;font-size:13px !important}
@@ -185,13 +185,17 @@ export default function Inscription() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "linear-gradient(120deg,#0d3b3f 0%,#0f5c52 55%,#0d3b3f 100%)",
+          background: "linear-gradient(125deg,#061A58 0%,#0C3D85 58%,#087DA4 100%)",
           padding: 24,
           fontFamily: "'Poppins',Helvetica,Arial,sans-serif"
         }}
       >
         <div className="cgesn-reg-card" style={{ background: "#fff", borderRadius: 20, boxShadow: "0 20px 50px rgba(0,0,0,0.25)", padding: "clamp(32px,5vw,48px)", width: "100%", maxWidth: 400, boxSizing: "border-box" }}>
-          <div className="cgesn-reg-head" style={{ marginBottom: 28 }} />
+          <div className="cgesn-reg-head" style={{ marginBottom: 26, display: "flex", flexDirection: "column", alignItems: "center", gap: 10, textAlign: "center" }}>
+            <img src="/logo-citrat.svg" alt="Logo CITRAT" style={{ width: 196, maxWidth: "90%", height: "auto" }} />
+            <div style={{ fontWeight: 800, fontSize: 17, color: "#081F69", letterSpacing: ".015em" }}>PORTAIL DIGITAL <span style={{ color: "#0A95C7" }}>CITRAT</span></div>
+            <div style={{ fontSize: 12, fontWeight: 600, color: "#42536B" }}>DAGNOKO HAMED</div>
+          </div>
 
           {!otpSent ? (
             <div className="cgesn-reg-form" style={{ display: "flex", flexDirection: "column", gap: 14 }}>
@@ -228,7 +232,7 @@ export default function Inscription() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   onKeyDown={(e) => { if (e.key === "Enter") submit(); }}
-                  placeholder="vous@cgesn.com"
+                  placeholder="vous@citrat.ci"
                   className="cgesn-reg-input"
                   style={inputStyle}
                 />
@@ -255,7 +259,7 @@ export default function Inscription() {
                 onClick={submit}
                 disabled={loading}
                 className="cgesn-reg-btn"
-                style={{ marginTop: 6, padding: 13, border: "none", borderRadius: 10, background: "#0f5c52", color: "#fff", fontSize: 14, fontWeight: 700, letterSpacing: "0.02em", cursor: loading ? "wait" : "pointer", fontFamily: "'Poppins',sans-serif", transition: "background .15s", opacity: loading ? 0.8 : 1 }}
+                style={{ marginTop: 6, padding: 13, border: "none", borderRadius: 10, background: "#0C3D85", color: "#fff", fontSize: 14, fontWeight: 700, letterSpacing: "0.02em", cursor: loading ? "wait" : "pointer", fontFamily: "'Poppins',sans-serif", transition: "background .15s", opacity: loading ? 0.8 : 1 }}
               >
                 {loading ? "CRÉATION…" : "CRÉER MON COMPTE"}
               </button>
@@ -266,7 +270,7 @@ export default function Inscription() {
               )}
               <div style={{ marginTop: 6, fontSize: "12.5px", textAlign: "center" }}>
                 <span style={{ color: "oklch(0.5 0.005 90)" }}>Déjà un compte ? </span>
-                <Link to="/connexion" style={{ color: "#0f5c52", fontWeight: 700, textDecoration: "none" }}>Se connecter</Link>
+                <Link to="/connexion" style={{ color: "#0C3D85", fontWeight: 700, textDecoration: "none" }}>Se connecter</Link>
               </div>
             </div>
           ) : (
@@ -292,7 +296,7 @@ export default function Inscription() {
                 onClick={verify}
                 disabled={loading}
                 className="cgesn-reg-btn"
-                style={{ marginTop: 6, padding: 13, border: "none", borderRadius: 10, background: "#0f5c52", color: "#fff", fontSize: 14, fontWeight: 700, letterSpacing: "0.02em", cursor: loading ? "wait" : "pointer", fontFamily: "'Poppins',sans-serif", transition: "background .15s", opacity: loading ? 0.8 : 1 }}
+                style={{ marginTop: 6, padding: 13, border: "none", borderRadius: 10, background: "#0C3D85", color: "#fff", fontSize: 14, fontWeight: 700, letterSpacing: "0.02em", cursor: loading ? "wait" : "pointer", fontFamily: "'Poppins',sans-serif", transition: "background .15s", opacity: loading ? 0.8 : 1 }}
               >
                 {loading ? "VÉRIFICATION…" : "VALIDER LE CODE"}
               </button>
@@ -303,7 +307,7 @@ export default function Inscription() {
               )}
               <div style={{ marginTop: 4, fontSize: "12.5px", textAlign: "center" }}>
                 <span style={{ color: "oklch(0.5 0.005 90)" }}>Pas reçu le code ? </span>
-                <button onClick={resend} style={{ background: "none", border: "none", color: "#0f5c52", fontWeight: 700, cursor: "pointer", fontFamily: "'Poppins',sans-serif", fontSize: "12.5px", padding: 0 }}>Renvoyer</button>
+                <button onClick={resend} style={{ background: "none", border: "none", color: "#0C3D85", fontWeight: 700, cursor: "pointer", fontFamily: "'Poppins',sans-serif", fontSize: "12.5px", padding: 0 }}>Renvoyer</button>
               </div>
             </div>
           )}
