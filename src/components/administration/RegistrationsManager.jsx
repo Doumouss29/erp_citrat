@@ -63,10 +63,13 @@ export default function RegistrationsManager() {
         {pending.map(r=><article key={r.id} style={{border:"1px solid #E0E7F1",borderRadius:12,padding:16}}>
           <div style={{fontWeight:800,color:"#081F69"}}>{r.last_name} {r.first_name}</div>
           <div style={{fontSize:12,color:"#64748B",margin:"4px 0 14px"}}>{r.email} · {r.telephone} · Vérifié le {new Date(r.verified_at).toLocaleString("fr-FR")}</div>
+          {profiles.length === 0 && <div role="status" style={{background:"#FFF7E8",border:"1px solid #F3D6A2",borderRadius:10,padding:12,marginBottom:12,fontSize:13,color:"#704916"}}>
+            Aucun profil d'accès n'a encore été créé. Ouvrez l'onglet <strong>Profils</strong>, créez un profil et choisissez les applications autorisées, puis revenez ici pour approuver cette demande.
+          </div>}
           <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(170px,1fr))",gap:10}}>
             <label style={{display:"grid",fontSize:12,gap:4,fontWeight:700}}>Profil d'accès *
               <select style={input} value={(forms[r.id]||empty).grade} onChange={e=>change(r.id,"grade",e.target.value)}>
-                <option value="">Choisir un profil</option>{profiles.map(p=><option key={p.id} value={p.profile_id}>{p.name}</option>)}
+                <option value="">{profiles.length ? "Choisir un profil" : "Aucun profil créé"}</option>{profiles.map(p=><option key={p.id} value={p.profile_id}>{p.name}</option>)}
               </select>
             </label>
             <label style={{display:"grid",fontSize:12,gap:4,fontWeight:700}}>Bureau *
@@ -81,7 +84,7 @@ export default function RegistrationsManager() {
             </label>
           </div>
           <div style={{display:"flex",gap:10,flexWrap:"wrap",marginTop:14}}>
-            <button style={btn} disabled={busy===r.id} onClick={()=>act(r,"approve")}>Approuver et activer</button>
+            <button style={btn} disabled={busy===r.id || !profiles.length || !offices.length} onClick={()=>act(r,"approve")}>Approuver et activer</button>
             <button style={{...btn,background:"#FFF0F0",color:"#A32129"}} disabled={busy===r.id} onClick={()=>act(r,"reject")}>Refuser</button>
           </div>
         </article>)}
