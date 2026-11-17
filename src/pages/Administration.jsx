@@ -18,6 +18,7 @@ import { OrgTiles, OrgTile } from "@/components/administration/OrgTiles";
 import ConsentementsManager from "@/components/administration/ConsentementsManager";
 import BureauxManager from "@/components/administration/BureauxManager";
 import DepartementsManager from "@/components/administration/DepartementsManager";
+import RegistrationsManager from "@/components/administration/RegistrationsManager";
 
 // Liens d'applications externes : http(s) uniquement (pas de javascript:/data:).
 function isHttpUrl(value) {
@@ -743,6 +744,9 @@ export default function Administration() {
                 <button onClick={() => setTab("users")} style={{ ...tabBase, ...(tab === "users" ? tabActive : tabInactive) }}>
                   Utilisateurs
                 </button>
+                <button onClick={() => setTab("registrations")} style={{ ...tabBase, ...(tab === "registrations" ? tabActive : tabInactive) }}>
+                  Inscriptions
+                </button>
                 <button onClick={() => setTab("board")} style={{ ...tabBase, ...(tab === "board" ? tabActive : tabInactive) }}>
                   CITRAT-Board
                 </button>
@@ -1230,6 +1234,10 @@ export default function Administration() {
 
               {tab === "board" && (
                 <BoardUsersManager users={users} setUsers={setUsers} currentUser={user} refreshUser={refreshUser} />
+              )}
+
+              {tab === "registrations" && (
+                <RegistrationsManager />
               )}
 
               {tab === "users" && (
