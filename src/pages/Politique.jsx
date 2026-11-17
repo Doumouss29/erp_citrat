@@ -8,7 +8,7 @@ import { LEGAL_FRAMEWORK } from "@/lib/consentement";
 export default function Politique() {
   return (
     <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", background: "oklch(0.965 0.004 90)", fontFamily: "'Poppins',Helvetica,Arial,sans-serif", overflowX: "hidden" }}>
-      <BrandHeader subtitle="CABINET DE GÉOMÈTRE EXPERT SORO NANGA" nowrap maxWidth={820} />
+      <BrandHeader subtitle="DAGNOKO HAMED" nowrap maxWidth={820} />
       <ColorBar />
 
       <div style={{ flex: 1, maxWidth: 820, margin: "0 auto", width: "100%", boxSizing: "border-box", padding: "clamp(36px,5vw,56px) clamp(20px,4vw,32px) 60px" }}>
