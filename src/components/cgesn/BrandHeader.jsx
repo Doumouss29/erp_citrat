@@ -63,7 +63,7 @@ export default function BrandHeader({ subtitle, maxWidth = 1180, nowrap = false,
               alignItems: "center",
               justifyContent: "center",
               flex: "none",
-              filter: "drop-shadow(0 4px 10px rgba(0,0,0,0.25))"
+              background: "#fff", borderRadius: 12, padding: "6px 10px", boxShadow: "0 5px 18px rgba(3,14,48,.16)"
             }}>
             <Image
               src={logos.header}
