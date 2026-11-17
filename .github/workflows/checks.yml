@@ -1,0 +1,27 @@
+name: PortalManager - CI technique
+on:
+  push:
+    branches: [main, 'feature/**']
+  pull_request:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Vérification de la structure du projet
+        shell: bash
+        run: |
+          if [ ! -f backend/main.py ] || [ ! -f package.json ] || [ ! -f compose.yml ]; then
+            echo "::warning::Le code du paquet PortalManager n'est pas encore importé dans ce dépôt."
+            exit 0
+          fi
+          python -m py_compile backend/main.py
+          docker compose -f compose.yml config -q
+      - name: Vérification anti-fichiers sensibles
+        shell: bash
+        run: |
+          if git ls-files | grep -E '(^|/)(\.env|[^/]+\.(sqlite|sqlite3|db))$' | grep -v '^\.env.example$'; then
+            echo "::error::Fichier de configuration sensible ou base SQLite suivi par Git."
+            exit 1
+          fi
