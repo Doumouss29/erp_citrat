@@ -128,7 +128,7 @@ export default function Portail() {
 
   if (isLoadingAuth || !isAuthenticated || accessLoading) {
     return (
-      <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(120deg,#0d3b3f 0%,#0f5c52 55%,#0d3b3f 100%)", fontFamily: "'Poppins',Helvetica,Arial,sans-serif" }}>
+      <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(125deg,#061A58 0%,#0C3D85 60%,#087DA4 100%)", fontFamily: "'Poppins',Helvetica,Arial,sans-serif" }}>
         <div className="w-8 h-8 border-4 border-white/30 border-t-white rounded-full animate-spin" />
       </div>
     );
@@ -220,7 +220,7 @@ export default function Portail() {
             {appGroups.map((grp, gi) => (
             <section key={grp.key} style={{ marginTop: gi === 0 ? 0 : 30 }}>
             <div className="cgesn-apps-grid" style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14 }}>
-              <span style={{ fontSize: 11.5, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: dm ? "oklch(0.78 0.06 165)" : "#0f5c52", whiteSpace: "nowrap" }}>{grp.title}</span>
+              <span style={{ fontSize: 11.5, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: dm ? "oklch(0.78 0.06 165)" : "#0C3D85", whiteSpace: "nowrap" }}>{grp.title}</span>
               <span style={{ fontSize: 11, fontWeight: 700, color: dm ? "oklch(0.8 0.005 90)" : "oklch(0.5 0.005 90)", background: dm ? "oklch(0.28 0.01 250)" : "oklch(0.95 0.003 90)", padding: "1px 8px", borderRadius: 100 }}>{grp.apps.length}</span>
               <span style={{ flex: 1, height: 1, background: dm ? "oklch(0.3 0.01 250)" : "oklch(0.92 0.005 90)" }} />
             </div>
@@ -245,7 +245,7 @@ export default function Portail() {
                       justifyContent: "center",
                       gap: 10,
                       cursor: "pointer",
-                      "--hover-border": app.hoverBorder || "#0f5c52"
+                      "--hover-border": app.hoverBorder || "#0C3D85"
                     }}
                     onClick={() => openApp(app)}
                   >
@@ -262,7 +262,7 @@ export default function Portail() {
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
-                        background: app.iconBg || (app.icon ? undefined : "linear-gradient(135deg,#0f5c52,#14806f)"),
+                        background: app.iconBg || (app.icon ? undefined : "linear-gradient(135deg,#0C3D85,#0A95C7)"),
                         color: "#fff",
                         fontSize: 17,
                         fontWeight: 700
@@ -274,7 +274,7 @@ export default function Portail() {
                         getAppInitials(app.name)
                       )}
                     </div>
-                    <span className="cgesn-app-badge" style={{ fontSize: "10.5px", fontWeight: 700, letterSpacing: "0.03em", whiteSpace: "nowrap", color: app.color || "#0f5c52", background: app.badgeBg || "oklch(0.94 0.06 165)", padding: "4px 12px", borderRadius: 100 }}>
+                    <span className="cgesn-app-badge" style={{ fontSize: "10.5px", fontWeight: 700, letterSpacing: "0.03em", whiteSpace: "nowrap", color: app.color || "#0C3D85", background: app.badgeBg || "oklch(0.94 0.06 165)", padding: "4px 12px", borderRadius: 100 }}>
                       {app.name}
                     </span>
                   </div>
