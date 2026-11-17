@@ -27,7 +27,7 @@ export default function ModulesHome() {
           <div className="mx-auto max-w-4xl text-center">
             <h1 className="font-garamond text-2xl font-black uppercase tracking-tight text-slate-900 xs:text-3xl sm:text-5xl lg:text-6xl">
               <span className="block">BIENVENUE SUR</span>
-              <span className="mt-2 block text-blue-700">CGESN-BOARD</span>
+              <span className="mt-2 block text-blue-700">CITRAT-BOARD</span>
             </h1>
             <div className="mt-4 sm:mt-5 inline-flex items-center rounded-full border border-slate-200 bg-white px-4 py-1.5 sm:px-5 sm:py-2 text-xs sm:text-sm font-semibold text-slate-700 shadow-sm">
               {isAdmin ? 'Direction Générale' : `Bureau de ${userBureau?.nom || ''}`}
