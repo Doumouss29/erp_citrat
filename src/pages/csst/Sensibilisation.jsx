@@ -22,7 +22,7 @@ import {
 } from "@/utils/csst/certificatePdf";
 
 const QUIZ_ICONS = { terrain: HardHat, route: Car, ergonomie: Monitor, isole: Trees };
-const CABINET_NAME = "Cabinet de Géomètre-Expert Soro Nanga";
+const CABINET_NAME = "Cabinet de Géomètre-Expert CITRAT";
 
 // Ordre aléatoire des réponses : la bonne réponse n'occupe plus presque toujours la position B.
 function shuffledIndexes(count) {
