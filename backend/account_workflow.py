@@ -251,7 +251,7 @@ def install(app, db, hash_pw, verify_pw, secret):
                 raise HTTPException(409, "Demande déjà traitée ou non vérifiée")
             if action=="approve":
                 profile=c.execute("SELECT 1 FROM records WHERE entity='AccessProfile' AND json_extract(payload,'$.profile_id')=?",(grade,)).fetchone()
-                bureau=c.execute("SELECT 1 FROM records WHERE entity='OfficeTerminal' AND json_extract(payload,'$.office_name')=?",(office,)).fetchone()
+                bureau=c.execute("SELECT id,payload FROM records WHERE entity='OfficeTerminal' AND json_extract(payload,'$.office_name')=?",(office,)).fetchone()
                 if not profile or not bureau:
                     c.execute("ROLLBACK")
                     raise HTTPException(422, "Profil ou bureau inexistant")
@@ -267,7 +267,9 @@ def install(app, db, hash_pw, verify_pw, secret):
                 name=req["last_name"]+" "+req["first_name"]
                 profile_json={"first_name":req["first_name"],"last_name":req["last_name"],
                               "telephone":req["telephone"],"grade":grade,"office":office,
-                              "department":department,"access":[]}
+                              "department":department,"access":[],
+                              "bureau_id":bureau["id"],"bureau_ids":[bureau["id"]],
+                              "bureau_code":json.loads(bureau["payload"]).get("code","")}
                 c.execute("""INSERT INTO users(id,email,name,password_hash,role,profile_json,account_status)
                     VALUES (?,?,?,?,?,?,?)""",
                     (uid,req["email"],name,req["password_hash"],"user",
