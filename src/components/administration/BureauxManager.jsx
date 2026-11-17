@@ -246,7 +246,7 @@ export default function BureauxManager() {
           <section>
             <div style={{ ...labelStyle, fontSize: 12, color: "oklch(0.4 0.1 165)", marginBottom: 10 }}>Identité</div>
             <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-              <Field label="Nom du bureau" required value={form.office_name} onChange={(v) => set("office_name", v)} placeholder="DALOA" flex="2 1 220px" />
+              <Field label="Nom du bureau" required value={form.office_name} onChange={(v) => set("office_name", v)} placeholder="NOM DU BUREAU" flex="2 1 220px" />
               <Field label="Code" value={form.code} onChange={(v) => set("code", v)} placeholder="DLA" flex="1 1 100px" />
               <div style={{ flex: "1 1 140px", minWidth: 0 }}>
                 <label style={labelStyle}>Statut</label>
@@ -263,7 +263,7 @@ export default function BureauxManager() {
             <div style={{ ...hintStyle, marginBottom: 10 }}>
               Le compte connecté avec cet e-mail (Gmail du bureau) ne voit que le terminal de pointage, avec le nom du bureau. Si le bureau est inactif, le terminal s'affiche mais le pointage est bloqué.
             </div>
-            <Field label="E-mail du compte bureau" required type="email" value={form.email} onChange={(v) => set("email", v)} placeholder="daloa.cgesn@gmail.com" />
+            <Field label="E-mail du compte bureau" required type="email" value={form.email} onChange={(v) => set("email", v)} placeholder="bureau@citrat.ci" />
           </section>
 
           <section>
