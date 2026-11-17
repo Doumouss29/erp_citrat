@@ -1,0 +1,35 @@
+# Secrets et paramètres locaux
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Données / sauvegardes SQLite
+*.db
+*.db-*
+*.sqlite
+*.sqlite3
+*.sqlite-*
+*.sqlite3-*
+backups/
+data/
+volumes/
+
+# Dépendances, builds et caches
+node_modules/
+dist/
+.output/
+.wrangler/
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.vite/
+
+# Éditeurs et logs
+.vscode/
+.idea/
+*.log
+.DS_Store
+base44/.app.jsonc
