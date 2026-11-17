@@ -286,7 +286,7 @@ export default function ReportingSyncPage() {
               sendMail({
                 to: emp.email,
                 subject: "⏰ Rappel de pointage - Arrivée",
-                body: `Bonjour ${emp.first_name} ${emp.last_name},\n\nNous remarquons que vous n'avez pas encore effectué votre pointage d'arrivée aujourd'hui (${format(now, 'dd/MM/yyyy à HH:mm')}).\n\nSi vous êtes présent(e) au bureau, merci de bien vouloir pointer dès que possible.\n\nCordialement,\nSystème RH - CGESN`
+                body: `Bonjour ${emp.first_name} ${emp.last_name},\n\nNous remarquons que vous n'avez pas encore effectué votre pointage d'arrivée aujourd'hui (${format(now, 'dd/MM/yyyy à HH:mm')}).\n\nSi vous êtes présent(e) au bureau, merci de bien vouloir pointer dès que possible.\n\nCordialement,\nSystème RH - CITRAT`
               }).catch(e => console.log("Email non envoyé:", e));
             }, count * 200);
 
@@ -340,7 +340,7 @@ export default function ReportingSyncPage() {
               sendMail({
                 to: emp.email,
                 subject: "🔔 Rappel de pointage - Sortie",
-                body: `Bonjour ${emp.first_name} ${emp.last_name},\n\nCeci est un rappel pour ne pas oublier d'effectuer votre pointage de sortie en fin de journée avant de quitter le bureau.\n\nMerci de votre coopération.\n\nCordialement,\nSystème RH - CGESN`
+                body: `Bonjour ${emp.first_name} ${emp.last_name},\n\nCeci est un rappel pour ne pas oublier d'effectuer votre pointage de sortie en fin de journée avant de quitter le bureau.\n\nMerci de votre coopération.\n\nCordialement,\nSystème RH - CITRAT`
               }).catch(e => console.log("Email non envoyé:", e));
             }, count * 200);
 
@@ -399,8 +399,8 @@ export default function ReportingSyncPage() {
               : "📋 Fin de contrat de stage - Action requise";
             
             const emailBody = isExpired
-              ? `Bonjour ${intern.first_name} ${intern.last_name},\n\nVotre contrat de stage a EXPIRÉ le ${format(new Date(intern.internship_end_date), 'dd/MM/yyyy')}.\n\nIl est URGENT de régulariser votre situation administrative. Nous vous invitons à prendre contact IMMÉDIATEMENT avec le responsable des ressources humaines :\n\n👤 Monsieur ABOUBACAR SIDIBE\n📞 Téléphone : 07 57 92 15 62\n📧 Email : asidibe0021@gmail.com\n\nMerci de votre prompte réaction.\n\nCordialement,\nSystème RH - CGESN`
-              : `Bonjour ${intern.first_name} ${intern.last_name},\n\nVotre contrat de stage arrive à échéance le ${format(new Date(intern.internship_end_date), 'dd/MM/yyyy')}.\n\nAfin de déclencher la procédure administrative nécessaire, nous vous invitons à prendre contact avec le responsable des ressources humaines :\n\n👤 Monsieur ABOUBACAR SIDIBE\n📞 Téléphone : 07 57 92 15 62\n📧 Email : asidibe0021@gmail.com\n\nMerci de votre coopération.\n\nCordialement,\nSystème RH - CGESN`;
+              ? `Bonjour ${intern.first_name} ${intern.last_name},\n\nVotre contrat de stage a EXPIRÉ le ${format(new Date(intern.internship_end_date), 'dd/MM/yyyy')}.\n\nIl est URGENT de régulariser votre situation administrative. Nous vous invitons à prendre contact IMMÉDIATEMENT avec le responsable des ressources humaines :\n\n👤 Monsieur ABOUBACAR SIDIBE\n📞 Téléphone : 07 57 92 15 62\n📧 Email : asidibe0021@gmail.com\n\nMerci de votre prompte réaction.\n\nCordialement,\nSystème RH - CITRAT`
+              : `Bonjour ${intern.first_name} ${intern.last_name},\n\nVotre contrat de stage arrive à échéance le ${format(new Date(intern.internship_end_date), 'dd/MM/yyyy')}.\n\nAfin de déclencher la procédure administrative nécessaire, nous vous invitons à prendre contact avec le responsable des ressources humaines :\n\n👤 Monsieur ABOUBACAR SIDIBE\n📞 Téléphone : 07 57 92 15 62\n📧 Email : asidibe0021@gmail.com\n\nMerci de votre coopération.\n\nCordialement,\nSystème RH - CITRAT`;
 
             // Notification interne
             await base44.entities.Notification.create({
