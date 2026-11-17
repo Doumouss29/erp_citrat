@@ -4,7 +4,7 @@ from pathlib import Path
 from contextlib import contextmanager
 from fastapi import FastAPI, Request, Response, HTTPException, Depends, Body
 from fastapi.responses import JSONResponse
-from backend.permissions import public_catalog, validate_permissions, may, require_record, within_scope, ENTITY_MODULE, resolve_rule
+from backend.permissions import public_catalog, validate_permissions, validate_denials, may, require_record, within_scope, ENTITY_MODULE, resolve_rule
 
 ROOT = Path(__file__).resolve().parent
 DATA = Path(os.environ.get('DATA_DIR', '/data'))
@@ -221,14 +221,16 @@ def admin_users(current=Depends(user)):
 @app.patch('/api/admin/users/{uid}')
 def admin_update_user(uid:str, changes:dict=Body(...),current=Depends(user)):
     if current['role'] != 'admin': raise HTTPException(403, 'Accès administrateur requis')
-    allowed={'name','role','first_name','last_name','telephone','office','department','grade','access','fonction','bureau_ids'}
+    allowed={'name','role','first_name','last_name','telephone','office','department','grade','access','fonction','bureau_ids','permission_denials'}
     if not set(changes).issubset(allowed): raise HTTPException(422,'Unsupported user property')
+    if 'permission_denials' in changes:
+        changes={**changes, 'permission_denials':validate_denials(changes['permission_denials'])}
     if 'access' in changes and (not isinstance(changes['access'],list) or len(changes['access'])>100 or not all(isinstance(v,str) for v in changes['access'])):
         raise HTTPException(422,'Invalid access list')
     if 'bureau_ids' in changes and (not isinstance(changes['bureau_ids'],list) or len(changes['bureau_ids'])>100 or not all(isinstance(v,str) for v in changes['bureau_ids'])):
         raise HTTPException(422,'Invalid bureau list')
     for k,v in changes.items():
-        if k not in ('access','bureau_ids') and (not isinstance(v,str) or len(v)>160):
+        if k not in ('access','bureau_ids','permission_denials') and (not isinstance(v,str) or len(v)>160):
             raise HTTPException(422,'Invalid '+k)
     with db() as c:
         row=c.execute('SELECT * FROM users WHERE id=?',(uid,)).fetchone()
