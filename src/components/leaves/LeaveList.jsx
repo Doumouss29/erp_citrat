@@ -89,7 +89,7 @@ export default function LeaveList({ leaves, loading, isHR, currentUser, onUpdate
               const steps = [
                 { n: 1, label: "Hiérarchie", who: leave.level1_approver || "Non défini", status: leave.level1_status, date: leave.level1_date, current: leave.status === "pending_level1" },
                 { n: 2, label: "RH", who: "SIDIBE ABOUBACAR", status: leave.level2_status, date: leave.level2_date, current: leave.status === "pending_level2" },
-                { n: 3, label: "Direction", who: "SORO NANGA", status: leave.level3_status, date: leave.level3_date, current: leave.status === "pending_level3" },
+                { n: 3, label: "Direction", who: "CITRAT", status: leave.level3_status, date: leave.level3_date, current: leave.status === "pending_level3" },
               ];
               const comments = [
                 leave.level1_comment && { who: "Hiérarchie", text: leave.level1_comment },
