@@ -71,7 +71,7 @@ Durée: ${dates.duration}
 ${balance ? balance + '\n' : ''}
 ${comment ? `Commentaire RH: ${comment}\n` : ''}
 Cordialement,
-Service RH - CGESN
+Service RH - CITRAT
   `;
 
   await notifyAndEmailUser(requesterEmail, notificationType, title, message, subject, body);
