@@ -79,6 +79,24 @@ def validate_permissions(value):
         result[app]=normalized
     return result
 
+def validate_denials(value):
+    """Individual exceptions only remove rights granted by a profile."""
+    if not isinstance(value,dict) or len(value)>20:
+        raise HTTPException(422,"Restrictions individuelles invalides")
+    out={}
+    for app,modules in value.items():
+        if app not in CATALOG or not isinstance(modules,dict):
+            raise HTTPException(422,"Application de restrictions inconnue")
+        clean={}
+        for module,actions in modules.items():
+            if module not in CATALOG[app] or not isinstance(actions,list) or len(actions)>len(ACTIONS):
+                raise HTTPException(422,"Module ou restrictions inconnues")
+            if not all(isinstance(x,str) and x in ACTIONS for x in actions):
+                raise HTTPException(422,"Action de restriction inconnue")
+            clean[module]=sorted(set(actions))
+        out[app]=clean
+    return out
+
 def resolve_rule(current, db, app, module):
     """The profile is read from SQLite for each request, never from client claims."""
     if current["role"]=="admin":
@@ -104,7 +122,11 @@ def resolve_rule(current, db, app, module):
         rules=validate_permissions({app:{module:rule}})
     except HTTPException:
         return None
-    return rules[app][module]
+    effective=rules[app][module]
+    for action in ((current.get("permission_denials") or {}).get(app) or {}).get(module,[]):
+        if action in ACTIONS:
+            effective[action]=False
+    return effective
 
 def may(current, db, entity, action):
     if current["role"]=="admin": return {"scope":"all"}
