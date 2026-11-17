@@ -530,7 +530,7 @@ export default function Administration() {
     try {
       await base44.users.inviteUser(email, newUserRole);
       const gradeToSet = newUserGrade;
-      setInviteMsg(`Invitation envoyée à ${email}. L'utilisateur recevra un e-mail pour définir son mot de passe et rejoindre le portail.`);
+      setInviteMsg(`Invitation envoyée à ${email}. L'utilisateur doit s'inscrire, vérifier son e-mail, puis vous devrez approuver son compte et attribuer son profil et son bureau dans l'onglet Inscriptions.`);
       setNewUserEmail("");
       setNewUserRole("user");
       setNewUserGrade("");
@@ -563,7 +563,7 @@ export default function Administration() {
     setInviteMsg(null);
     try {
       await base44.users.inviteUser(email, role || "user");
-      setInviteMsg(`Invitation envoyée à ${email}. L'utilisateur recevra un e-mail pour définir son mot de passe et rejoindre le portail.`);
+      setInviteMsg(`Invitation envoyée à ${email}. L'utilisateur doit s'inscrire, vérifier son e-mail, puis vous devrez approuver son compte et attribuer son profil et son bureau dans l'onglet Inscriptions.`);
       const list = await loadUsers();
       const patch = {};
       if (grade) patch.grade = grade;
