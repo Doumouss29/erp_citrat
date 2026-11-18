@@ -84,10 +84,13 @@ export default function Portail() {
 
   const appStatus = (app) => {
     const entry = adminApps.find((a) => a.app_id === app.id);
+    if (INTERNAL_APP_IDS.includes(app.id)) {
+      return { isOff: Boolean(entry && entry.status === "off"), href: null };
+    }
     if (entry) return { isOff: entry.status !== "ok", href: entry.href };
-    // Les modules embarqués n'ont pas besoin d'URL externe.
-    // Seul l'administrateur local peut les tester sans configuration PortalApp.
-    if (user?.super_admin === true && user?.role === "admin" && INTERNAL_APP_IDS.includes(app.id)) {
+    // Tous les utilisateurs autorisés peuvent ouvrir les applications internes.
+    // Les permissions de chaque module sont vérifiées par FastAPI.
+    if (INTERNAL_APP_IDS.includes(app.id)) {
       return { isOff: false, href: null };
     }
     return { isOff: !app.href, href: app.href };
