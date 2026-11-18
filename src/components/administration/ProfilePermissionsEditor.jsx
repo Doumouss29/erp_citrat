@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { base44 } from "@/api/base44Client";
 
+const APP_NAMES = { rhcgesn:"RH-CITRAT", cgesnboard:"CITRAT-BOARD", ecadastre:"E-CADASTRE", lotissement:"E-GUIDE", assistancenum:"ASSISTANCE", csst:"CSST", hse:"HSE", coprociv:"COPROCIV" };
 const ACTIONS = [
   ["view","Consulter"],["create","Créer"],["edit","Modifier"],
   ["delete","Supprimer"],["export","Exporter"],["approve","Valider"]
@@ -64,7 +65,7 @@ export default function ProfilePermissionsEditor({profile,onSaved}) {
     {enabled.map(([app,modules])=><div key={app} style={{background:"#fff",border:"1px solid #E1E8F4",borderRadius:10,marginTop:12,overflow:"hidden"}}>
       <button type="button" onClick={()=>setExpanded(expanded===app?null:app)}
         style={{border:0,background:"transparent",width:"100%",textAlign:"left",padding:13,display:"flex",justifyContent:"space-between",cursor:"pointer",color:"#081F69",fontWeight:700}}>
-        <span>{app.toUpperCase()} · {Object.keys(modules).length} module(s)</span>
+        <span>{APP_NAMES[app] || app.toUpperCase()} · {Object.keys(modules).length} module(s)</span>
         <span>{expanded===app?"Masquer":"Configurer"}</span>
       </button>
       {expanded===app&&<div style={{padding:12,borderTop:"1px solid #E1E8F4",display:"grid",gap:12}}>
