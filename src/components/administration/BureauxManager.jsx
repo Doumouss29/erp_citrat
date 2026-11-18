@@ -86,6 +86,7 @@ function InfoLine({ icon, children, mono }) {
 export default function BureauxManager() {
   const [bureaux, setBureaux] = useState([]);
   const [employees, setEmployees] = useState([]);
+  const [accounts, setAccounts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [notice, setNotice] = useState(null);
@@ -99,12 +100,14 @@ export default function BureauxManager() {
     setLoading(true);
     setError(null);
     try {
-      const [rows, emps] = await Promise.all([
+      const [rows, emps, users] = await Promise.all([
         base44.entities.OfficeTerminal.list("office_name", 200),
-        base44.entities.Employee.list(null, 500).catch(() => [])
+        base44.entities.Employee.list(null, 500).catch(() => []),
+        base44.entities.User.list().catch(() => [])
       ]);
       setBureaux(rows || []);
       setEmployees(emps || []);
+      setAccounts(users || []);
     } catch (e) {
       setError("Impossible de charger les bureaux.");
     }
@@ -118,10 +121,32 @@ export default function BureauxManager() {
     setTimeout(() => setNotice(null), 2500);
   };
 
-  // Effectif rattaché à chaque bureau (champ « office » de la fiche employé)
+  // L'effectif correspond aux comptes actifs rattachés au bureau ; les fiches RH
+  // supplémentaires sont prises en compte sans compter deux fois le même e-mail.
+  // Un utilisateur sans fiche employé reste bien un agent du bureau.
   const staffCount = (b) => {
-    const key = normalizeEmail(b.office_name);
-    return employees.filter((e) => e.is_active !== false && normalizeEmail(e.office) === key).length;
+    const norm = (v) => String(v || "").trim().toUpperCase();
+    const matches = (u) => (u.role !== "admin") &&
+      (norm(u.office) === norm(b.office_name) ||
+       (b.id && (u.bureau_id === b.id || (u.bureau_ids || []).includes(b.id))) ||
+       (b.code && norm(u.bureau_code) === norm(b.code)));
+    const emails = new Set();
+    let count = 0;
+    for (const u of accounts) {
+      if (u.account_status === "suspended" || !matches(u)) continue;
+      const email = normalizeEmail(u.email);
+      if (email && emails.has(email)) continue;
+      if (email) emails.add(email);
+      count++;
+    }
+    for (const e of employees) {
+      if (e.is_active === false || norm(e.office) !== norm(b.office_name)) continue;
+      const email = normalizeEmail(e.email || e.email_pro || e.email_professionnel);
+      if (email && emails.has(email)) continue;
+      if (email) emails.add(email);
+      count++;
+    }
+    return count;
   };
 
   const openNew = () => {
@@ -247,7 +272,7 @@ export default function BureauxManager() {
             <div style={{ ...labelStyle, fontSize: 12, color: "oklch(0.4 0.1 165)", marginBottom: 10 }}>Identité</div>
             <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
               <Field label="Nom du bureau" required value={form.office_name} onChange={(v) => set("office_name", v)} placeholder="NOM DU BUREAU" flex="2 1 220px" />
-              <Field label="Code" value={form.code} onChange={(v) => set("code", v)} placeholder="DLA" flex="1 1 100px" />
+              <Field label="Code" value={form.code} onChange={(v) => set("code", v)} placeholder="ABJ" flex="1 1 100px" />
               <div style={{ flex: "1 1 140px", minWidth: 0 }}>
                 <label style={labelStyle}>Statut</label>
                 <label style={{ ...inputStyle, display: "flex", alignItems: "center", gap: 8, cursor: "pointer" }}>
@@ -270,10 +295,10 @@ export default function BureauxManager() {
             <div style={{ ...labelStyle, fontSize: 12, color: "oklch(0.4 0.1 165)", marginBottom: 10 }}>Coordonnées</div>
             <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
               <Field label="Localisation (quartier)" value={form.location} onChange={(v) => set("location", v)} placeholder="Commerce" />
-              <Field label="Ville" value={form.ville} onChange={(v) => set("ville", v)} placeholder="Daloa" />
+              <Field label="Ville" value={form.ville} onChange={(v) => set("ville", v)} placeholder="Ville du bureau" />
               <Field label="Adresse / repère" value={form.adresse} onChange={(v) => set("adresse", v)} placeholder="Face à la mairie" flex="2 1 280px" />
               <Field label="Téléphone du bureau" value={form.telephone} onChange={(v) => set("telephone", v)} placeholder="+225 07 00 00 00 00" />
-              <Field label="E-mail de contact" type="email" value={form.email_contact} onChange={(v) => set("email_contact", v)} placeholder="contact.daloa@gmail.com" />
+              <Field label="E-mail de contact" type="email" value={form.email_contact} onChange={(v) => set("email_contact", v)} placeholder="contact@exemple.ci" />
             </div>
           </section>
 
